@@ -23,6 +23,11 @@ public class WesearchImpl implements Wesearch {
 	}
 
 	@Override
+	public Query combineQuery(Query q, Subject s, Property p, ValueSelector v) {
+		throw new UnsupportedOperationException("Unimplemented");
+	}
+
+	@Override
 	public String version() {
 		return "0.1";
 	}

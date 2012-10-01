@@ -15,7 +15,9 @@ public class TestWesearch {
 	@Test
 	public void testVersionFailed() {
 		WesearchImpl ws = new WesearchImpl();
-		assertEquals(ws.version(),"0.3415");
+		Subjects subjects = ws.getSubjects();
+		Subject s = subjects.getSubject();
+		assertEquals(s.label(), "Ministro");
 	}
 
 }

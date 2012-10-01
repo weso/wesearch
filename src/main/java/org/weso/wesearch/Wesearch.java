@@ -23,6 +23,11 @@ public interface Wesearch {
 	Query createQuery(Subject s, Property p, ValueSelector v);
 	
 	/*
+	 * Given a query, returns a new query for a given subject, property and value 
+	 */
+	Query combineQuery(Query q, Subject s, Property p, ValueSelector v);
+
+	/*
 	 * Returns the version
 	 */
 	String version();
