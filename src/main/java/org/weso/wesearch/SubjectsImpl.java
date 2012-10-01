@@ -1,20 +1,33 @@
 package org.weso.wesearch;
 
 import java.util.Iterator;
-import org.weso.utils.NotImplementedException;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.weso.utils.WesearchException;
 
 public class SubjectsImpl implements Matters {
-
-	@Override
-	public Iterator<Matter> iterator() {
-		// TODO Auto-generated method stub
-		throw new NotImplementedException("Interator");
+	
+	private List<Matter> matters;
+	
+	public SubjectsImpl() {
+		matters = new LinkedList<Matter>();
 	}
 
 	@Override
-	public Matter findMatter(String Label) {
-		// TODO Auto-generated method stub
-		throw new NotImplementedException("Interator");
+	public Iterator<Matter> iterator() {
+		return matters.iterator();
+	}
+
+	@Override
+	public Matter findMatter(String label) 
+			throws WesearchException {
+		for(Matter m : matters) {
+			if(m.label().equals(label)) {
+				return m;
+			}
+		}
+		throw new WesearchException("There isn't any matter with label " + label);
 	}
 
 }

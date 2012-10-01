@@ -3,6 +3,7 @@ package org.weso.wesearch;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.weso.utils.WesearchException;
 
 public class TestWesearch {
 
@@ -16,8 +17,13 @@ public class TestWesearch {
 	public void testVersionFailed() {
 		WesearchImpl ws = new WesearchImpl();
 		Matters subjects = ws.getSubjects();
-		Matter s = subjects.findMatter("Ministro");
-		assertEquals(s.label(), "Ministro");
+		Matter s = null;
+		try {
+			s = subjects.findMatter("Ministro");
+			assertEquals(s.label(), "Ministro");
+		} catch (WesearchException e) {
+			assertNotNull(s);
+		}
 	}
 
 }
