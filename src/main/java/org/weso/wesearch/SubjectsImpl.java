@@ -3,16 +3,16 @@ package org.weso.wesearch;
 import java.util.Iterator;
 import org.weso.utils.NotImplementedException;
 
-public class SubjectsImpl implements Subjects {
+public class SubjectsImpl implements Matters {
 
 	@Override
-	public Iterator<Subject> iterator() {
+	public Iterator<Matter> iterator() {
 		// TODO Auto-generated method stub
 		throw new NotImplementedException("Interator");
 	}
 
 	@Override
-	public Subject findSubject(String Label) {
+	public Matter findMatter(String Label) {
 		// TODO Auto-generated method stub
 		throw new NotImplementedException("Interator");
 	}

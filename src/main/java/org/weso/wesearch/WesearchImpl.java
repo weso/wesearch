@@ -10,27 +10,27 @@ public class WesearchImpl implements Wesearch {
 	}
 
 	@Override
-	public Subjects getSubjects() {
+	public Matters getSubjects() {
 		throw new NotImplementedException("getSubjects");
 	}
 
 	@Override
-	public Properties getProperties(Subject s) {
+	public Properties getProperties(Matter s) {
 		throw new NotImplementedException("getProperties");
 	}
 
 	@Override
-	public ValueSelector getValueSelector(Subject s, Property p) {
+	public ValueSelector getValueSelector(Matter s, Property p) {
 		throw new NotImplementedException("getValueSelector");
 	}
 
 	@Override
-	public Query createQuery(Subject s, Property p, ValueSelector v) {
+	public Query createQuery(Matter s, Property p, ValueSelector v) {
 		throw new NotImplementedException("createQuery");
 	}
 
 	@Override
-	public Query combineQuery(Query q, Subject s, Property p, ValueSelector v) {
+	public Query combineQuery(Query q, Matter s, Property p, ValueSelector v) {
 		throw new NotImplementedException("combineQuery");
 	}
 
