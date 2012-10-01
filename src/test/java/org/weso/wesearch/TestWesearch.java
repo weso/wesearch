@@ -7,9 +7,15 @@ import org.junit.Test;
 public class TestWesearch {
 
 	@Test
-	public void test() {
+	public void testVersion() {
 		WesearchImpl ws = new WesearchImpl();
 		assertEquals(ws.version(),"0.1");
+	}
+
+	@Test
+	public void testVersionFailed() {
+		WesearchImpl ws = new WesearchImpl();
+		assertEquals(ws.version(),"0.3415");
 	}
 
 }
