@@ -30,4 +30,17 @@ public class SubjectsImpl implements Matters {
 		throw new WesearchException("There isn't any matter with label " + label);
 	}
 
+	@Override
+	public void addMatter(Matter m) {
+		if(m == null) {
+			throw new IllegalArgumentException("The parameter can not be null");
+		}
+		matters.add(m);
+	}
+
+	@Override
+	public int size() {
+		return matters.size();
+	}
+
 }

@@ -13,4 +13,12 @@ public class MatterImpl implements Matter {
 		return label;
 	}
 
+	@Override
+	public boolean equals(Matter m) {
+		if(m == null) {
+			throw new IllegalArgumentException("The paramenter can not be null");
+		}
+		return this.label.equals(m.label());
+	}
+
 }
