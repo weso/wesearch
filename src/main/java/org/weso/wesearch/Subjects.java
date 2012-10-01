@@ -6,7 +6,7 @@ package org.weso.wesearch;
 public interface Subjects extends Iterable<Subject> {
   
 	/*
-	 * Returns the first subject in the container
+	 * Returns the a subject with a given label
 	 */
-	Subject getSubject();
+	Subject findSubject(String Label);
 }

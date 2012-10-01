@@ -16,7 +16,7 @@ public class TestWesearch {
 	public void testVersionFailed() {
 		WesearchImpl ws = new WesearchImpl();
 		Subjects subjects = ws.getSubjects();
-		Subject s = subjects.getSubject();
+		Subject s = subjects.findSubjectByLabel("Ministro");
 		assertEquals(s.label(), "Ministro");
 	}
 

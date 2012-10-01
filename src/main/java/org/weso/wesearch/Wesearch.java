@@ -3,6 +3,11 @@ package org.weso.wesearch;
 public interface Wesearch {
 	
 	/*
+	 * Initialize the search engine
+	 */
+	void initialize(Context ctx);
+	
+	/*
 	 * Returns a container of subjects
 	 */
 	Subjects getSubjects();

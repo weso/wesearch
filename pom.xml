@@ -10,14 +10,24 @@
 
 <dependencies>
 
+<!--Apache Commons-->
+	<dependency>
+		<groupId>org.apache.commons</groupId>
+		<artifactId>commons-lang3</artifactId>
+		<version>3.1</version>
+	</dependency>
+	<dependency>
+		<groupId>commons-logging</groupId>
+		<artifactId>commons-logging</artifactId>
+		<version>1.0.3</version>
+	</dependency>
+
 <!--Logging-->
 	<dependency>
 		<groupId>log4j</groupId>
 		<artifactId>log4j</artifactId>
 		<version>1.2.14</version>
 	</dependency>
-
-<!--Hadoop-->
 
 <!--Jena-->
 	<dependency>
