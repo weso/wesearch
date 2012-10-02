@@ -27,7 +27,7 @@ public class TestSubjectsImpl {
 	@Test
 	public void testSize() {
 		assertEquals(0, matters.size());
-		Matter m = new MatterImpl("Label test");
+		Matter m = new MatterImpl("Label test", "http://www.weso.es/testOntology#Matter");
 		matters.addMatter(m);
 		assertEquals(1, matters.size());
 		Iterator<Matter> iterator = matters.iterator();
@@ -38,10 +38,10 @@ public class TestSubjectsImpl {
 	
 	@Test
 	public void testAddMatter() {
-		Matter m = new MatterImpl("Label 1");
+		Matter m = new MatterImpl("Label 1", "http://www.weso.es/testOntology#Matter");
 		matters.addMatter(m);
 		assertEquals(1, matters.size());
-		m = new MatterImpl("Label 2");
+		m = new MatterImpl("Label 2", "http://www.weso.es/testOntology#Matter");
 		matters.addMatter(m);
 		assertEquals(2, matters.size());
 		try {
@@ -54,15 +54,15 @@ public class TestSubjectsImpl {
 	
 	@Test
 	public void testFindMatter() {
-		Matter expected = new MatterImpl("Matter test 3");
-		Matter unexpected = new MatterImpl("Matter test");
-		Matter m = new MatterImpl("Matter test 1");
+		Matter expected = new MatterImpl("Matter test 3", "http://www.weso.es/testOntology#Matter");
+		Matter unexpected = new MatterImpl("Matter test", "http://www.weso.es/testOntology#MatterTest");
+		Matter m = new MatterImpl("Matter test 1", "http://www.weso.es/testOntology#Person");
 		matters.addMatter(m);
-		m = new MatterImpl("Matter test 2");
+		m = new MatterImpl("Matter test 2", "http://www.weso.es/testOntology#Thing");
 		matters.addMatter(m);
-		m = new MatterImpl("Matter test 3");
+		m = new MatterImpl("Matter test 3", "http://www.weso.es/testOntology#Matter");
 		matters.addMatter(m);
-		m = new MatterImpl("Matter test 4");
+		m = new MatterImpl("Matter test 4", "http://www.weso.es/testOntology#Place");
 		matters.addMatter(m);
 		Matter actual = null;
 		try {
