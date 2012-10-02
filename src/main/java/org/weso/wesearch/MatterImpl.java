@@ -1,6 +1,10 @@
 package org.weso.wesearch;
 
+import org.apache.log4j.Logger;
+
 public class MatterImpl implements Matter {
+	
+	private static Logger logger = Logger.getLogger(MatterImpl.class);
 	
 	private String label;
 	private String uri;
@@ -18,6 +22,7 @@ public class MatterImpl implements Matter {
 	@Override
 	public boolean equals(Matter m) {
 		if(m == null) {
+			logger.error("The paramenter can not be null");
 			throw new IllegalArgumentException("The paramenter can not be null");
 		}
 		return this.label.equals(m.label());

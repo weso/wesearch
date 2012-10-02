@@ -4,9 +4,12 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.weso.utils.WesearchException;
 
 public class SubjectsImpl implements Matters {
+	
+	private static Logger logger = Logger.getLogger(SubjectsImpl.class);
 	
 	private List<Matter> matters;
 	
@@ -27,6 +30,7 @@ public class SubjectsImpl implements Matters {
 				return m;
 			}
 		}
+		logger.error("There isn't any matter with label " + label);
 		throw new WesearchException("There isn't any matter with label " + label);
 	}
 
