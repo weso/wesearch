@@ -3,6 +3,7 @@ package org.weso.wesearch;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
+import org.weso.utils.WesearchException;
 
 public class TestWesearch {
 
@@ -18,8 +19,13 @@ public class TestWesearch {
 		Context ctx = new DefaultContext();
 		JenaWesearch ws = new JenaWesearch(ctx);
 		Matters subjects = ws.getMatters();
-		Matter s = subjects.findMatter("Ministro");
-		assertEquals(s.label(), "Ministro");
+		Matter s = null;
+		try {
+			s = subjects.findMatter("Ministro");
+			assertEquals(s.label(), "Ministro");
+		} catch (WesearchException e) {
+			assertNotNull(s);
+		}
 	}
 
 }
