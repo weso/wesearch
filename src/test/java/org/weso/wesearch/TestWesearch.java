@@ -16,15 +16,14 @@ public class TestWesearch {
 
 	@Test
 	public void testGetMatters() {
-		Context ctx = new DefaultContext();
-		JenaWesearch ws = new JenaWesearch(ctx);
-		Matters subjects = ws.getMatters();
-		Matter s = null;
 		try {
-			s = subjects.findMatter("Ministro");
-			assertEquals(s.label(), "Ministro");
+		 Context ctx = new DefaultContext();
+		 JenaWesearch ws = new JenaWesearch(ctx);
+		 Matters ms = ws.getMatters();
+		 Matter s = ms.findMatter("Ministro");
+		 assertEquals(s.label(), "Ministro");
 		} catch (WesearchException e) {
-			assertNotNull(s);
+		  fail("Wesearch exception: " + e);
 		}
 	}
 
