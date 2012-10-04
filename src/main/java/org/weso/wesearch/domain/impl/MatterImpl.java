@@ -1,6 +1,7 @@
-package org.weso.wesearch;
+package org.weso.wesearch.domain.impl;
 
 import org.apache.log4j.Logger;
+import org.weso.wesearch.domain.Matter;
 
 public class MatterImpl implements Matter {
 	

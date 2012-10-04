@@ -1,6 +1,13 @@
 package org.weso.wesearch;
 
 import org.weso.utils.NotImplementedException;
+import org.weso.wesearch.context.Context;
+import org.weso.wesearch.domain.Matter;
+import org.weso.wesearch.domain.Matters;
+import org.weso.wesearch.domain.Properties;
+import org.weso.wesearch.domain.Property;
+import org.weso.wesearch.domain.Query;
+import org.weso.wesearch.domain.ValueSelector;
 
 /*
  * Implementation based on Jena

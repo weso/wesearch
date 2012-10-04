@@ -1,6 +1,8 @@
-package org.weso.wesearch;
+package org.weso.wesearch.context.impl;
 
 import java.util.List;
+
+import org.weso.wesearch.context.Context;
 
 public class DefaultContext implements Context {
 

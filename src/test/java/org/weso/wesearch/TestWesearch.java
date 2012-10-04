@@ -4,6 +4,10 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.weso.utils.WesearchException;
+import org.weso.wesearch.context.Context;
+import org.weso.wesearch.context.impl.DefaultContext;
+import org.weso.wesearch.domain.Matter;
+import org.weso.wesearch.domain.Matters;
 
 public class TestWesearch {
 

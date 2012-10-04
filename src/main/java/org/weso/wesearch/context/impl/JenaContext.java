@@ -1,9 +1,10 @@
-package org.weso.wesearch;
+package org.weso.wesearch.context.impl;
 
 import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.weso.wesearch.context.Context;
 
 public class JenaContext implements Context {
 	

@@ -8,6 +8,10 @@ import java.util.Iterator;
 import org.junit.Before;
 import org.junit.Test;
 import org.weso.utils.WesearchException;
+import org.weso.wesearch.domain.Matter;
+import org.weso.wesearch.domain.Matters;
+import org.weso.wesearch.domain.impl.MatterImpl;
+import org.weso.wesearch.domain.impl.SubjectsImpl;
 
 public class TestSubjectsImpl {
 	

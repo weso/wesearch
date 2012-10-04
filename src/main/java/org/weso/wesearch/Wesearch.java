@@ -1,5 +1,12 @@
 package org.weso.wesearch;
 
+import org.weso.wesearch.domain.Matter;
+import org.weso.wesearch.domain.Matters;
+import org.weso.wesearch.domain.Properties;
+import org.weso.wesearch.domain.Property;
+import org.weso.wesearch.domain.Query;
+import org.weso.wesearch.domain.ValueSelector;
+
 public interface Wesearch {
 	
 	/*

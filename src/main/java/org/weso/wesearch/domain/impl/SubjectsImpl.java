@@ -1,4 +1,4 @@
-package org.weso.wesearch;
+package org.weso.wesearch.domain.impl;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.weso.utils.WesearchException;
+import org.weso.wesearch.domain.Matter;
+import org.weso.wesearch.domain.Matters;
 
 public class SubjectsImpl implements Matters {
 	
