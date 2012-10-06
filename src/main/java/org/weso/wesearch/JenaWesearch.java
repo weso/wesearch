@@ -21,7 +21,7 @@ public class JenaWesearch implements Wesearch {
 	}
 
 	@Override
-	public Matters getMatters() {
+	public Matters getMatters(String stem) {
 		/*
 		 * TODO: get classes from the ontology that we can search
 		 */
@@ -29,7 +29,7 @@ public class JenaWesearch implements Wesearch {
 	}
 
 	@Override
-	public Properties getProperties(Matter s) {
+	public Properties getProperties(Matter s, String stem) {
 		/*
 		 * Find class corresponding to s in the ontology
 		 * Return properties the we can search from that class
@@ -38,7 +38,7 @@ public class JenaWesearch implements Wesearch {
 	}
 
 	@Override
-	public ValueSelector getValueSelector(Matter s, Property p) {
+	public ValueSelector getValueSelector(Matter s, Property p, String stem) {
 		/*
 		 * Get value selector from a given property and subject
 		 */

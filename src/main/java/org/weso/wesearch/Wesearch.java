@@ -12,17 +12,17 @@ public interface Wesearch {
 	/*
 	 * Returns a container of subjects
 	 */
-	Matters getMatters();
+	Matters getMatters(String stem);
 	
 	/*
 	 * Returns a container of properties for a given subject
 	 */
-	Properties getProperties(Matter s);
+	Properties getProperties(Matter s, String stem);
 	
 	/*
 	 * Returns a value selector for a given subject and property
 	 */
-	ValueSelector getValueSelector(Matter s, Property p);
+	ValueSelector getValueSelector(Matter s, Property p, String stem);
 	
 	/*
 	 * Returns a query for a given subject, property and value selector

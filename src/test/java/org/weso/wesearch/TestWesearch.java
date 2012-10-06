@@ -23,7 +23,7 @@ public class TestWesearch {
 		try {
 		 Context ctx = new DefaultContext();
 		 JenaWesearch ws = new JenaWesearch(ctx);
-		 Matters ms = ws.getMatters();
+		 Matters ms = ws.getMatters("");
 		 Matter s = ms.findMatter("Ministro");
 		 assertEquals(s.label(), "Ministro");
 		} catch (WesearchException e) {
