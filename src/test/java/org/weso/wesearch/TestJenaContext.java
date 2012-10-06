@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package org.weso.wesearch;
 
 import static org.junit.Assert.assertEquals;
