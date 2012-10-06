@@ -1,4 +1,4 @@
-package org.weso.wesearch;
+package org.weso.wesearch.domain;
 
 import org.weso.utils.WesearchException;
 
