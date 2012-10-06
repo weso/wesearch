@@ -81,6 +81,83 @@
 		</dependency>
 </dependencies>
 
+<!-- The following configuration was taken from
+     http://blog.codecentric.de/en/2011/03/automated-acceptance-testing-using-jbehave/
+  -->
+<build>
+    <plugins>
+      <plugin>
+        <groupId>org.jbehave</groupId>
+        <artifactId>jbehave-maven-plugin</artifactId>
+        <version>3.1.2</version>
+        <executions>
+          <execution>
+            <id>run-stories-as-embeddables</id>
+            <phase>integration-test</phase>
+            <configuration>
+              <includes>
+                <include>**/*Scenarios.java</include>
+              </includes>
+              <ignoreFailureInStories>true</ignoreFailureInStories>
+              <ignoreFailureInView>false</ignoreFailureInView>
+           </configuration>
+           <goals>
+              <goal>run-stories-as-embeddables</goal>
+           </goals>
+         </execution>
+       </executions>
+     </plugin>
+ 
+     <plugin> 
+       <groupId>org.apache.maven.plugins</groupId> 
+       <artifactId>maven-dependency-plugin</artifactId> 
+       <executions> 
+         <execution> 
+            <id>unpack-jbehave-site-resources</id>
+            <phase>generate-resources</phase> 
+            <goals> 
+               <goal>unpack</goal> 
+            </goals> 
+            <configuration> 
+               <overwriteReleases>false</overwriteReleases> 
+               <overwriteSnapshots>true</overwriteSnapshots> 
+               <artifactItems> 
+                  <artifactItem> 
+                     <groupId>org.jbehave.site</groupId> 
+                     <artifactId>jbehave-site-resources</artifactId> 
+                     <version>3.1.1</version> 
+                     <type>zip</type>
+                     <outputDirectory> ${project.build.directory}/jbehave/view</outputDirectory> 
+                   </artifactItem> 
+                </artifactItems> 
+            </configuration> 
+         </execution> 
+         <execution> 
+            <id>unpack-jbehave-reports-resources</id>
+            <phase>generate-resources</phase> 
+            <goals> 
+               <goal>unpack</goal> 
+            </goals> 
+            <configuration> 
+              <overwriteReleases>false</overwriteReleases> 
+              <overwriteSnapshots>true</overwriteSnapshots> 
+              <artifactItems> 
+                 <artifactItem> 
+                   <groupId>org.jbehave</groupId> 
+                   <artifactId>jbehave-core</artifactId> 
+                   <version>3.1.2</version> 
+                   <outputDirectory>${project.build.directory}/jbehave/view</outputDirectory> 
+                   <includes>**\/*.css,**\/*.ftl,**\/*.js</includes> 
+                 </artifactItem> 
+               </artifactItems> 
+             </configuration> 
+           </execution> 
+         </executions> 
+       </plugin> 			
+     </plugins>
+  </build>
+</project>
+
 <!--Common repositories -->
 	<repositories>
 		<repository>
@@ -104,6 +181,7 @@
       		   <url>http://scala-tools.org/repo-releases</url>
     		</repository>
 	</repositories>
+
 <!--Plugin repositories -->
 	  <pluginRepositories>
 
@@ -142,6 +220,8 @@
 			<comments />
 		</license>
 	</licenses>
+
+
 <!--Members-->
 	<developers>
 		<developer>
@@ -158,6 +238,7 @@
 			<timezone>2</timezone>
 			<properties />
 		</developer>
+
         <developer>
             <id>ifbyol</id>
             <name>Ignacio Fuertes Bernardo</name>
@@ -173,6 +254,8 @@
             <properties />
         </developer>
 	</developers>
+
+
 	<contributors>
 		<contributor>
 			<name>Jose Emilio Labra Gayo</name>

@@ -1,11 +1,7 @@
 package org.weso.wesearch;
 
-import static org.jbehave.Ensure.ensureThat;
-import com.dosideas.business.LoginService;
-import org.jbehave.scenario.annotations.Given;
-import org.jbehave.scenario.annotations.Then;
-import org.jbehave.scenario.annotations.When;
-import org.jbehave.scenario.steps.Steps;
+import org.jbehave.core.annotations.*;
+import org.weso.wesearch.domain.*;
 
 public class FindMinistros extends Steps {
 
@@ -26,12 +22,14 @@ public class FindMinistros extends Steps {
 	 
 	    @Then("I should get matter $matter")
 	    public void getMatter(String matterName) {
-	        ensureThat(matters.findbyLabel(matterName));
+	    	Matter m = matters.findMatter(matterName);
+	        assert(m != null);
 	    }
 
 	    @Then("I should not get matter $matter")
-	    public void getMatter(String matterName) {
-	        ensureThat(matters.findbyLabel(matterName) == false);
+	    public void dontGetMatter(String matterName) {
+	    	Matter m = matters.findMatter(matterName);
+	    	assert(m == null);
 	    }
 
 }
