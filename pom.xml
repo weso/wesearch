@@ -73,8 +73,12 @@
         	<groupId>org.jbehave</groupId>
         	<artifactId>jbehave-core</artifactId>
         	<version>3.7</version>
-        	<scope>test</scope>
         </dependency>
+		<dependency>
+			<groupId>org.jbehave</groupId>
+			<artifactId>jbehave-maven-plugin</artifactId>
+			<version>3.7</version>
+		</dependency>
 </dependencies>
 
 <!--Common repositories -->
