@@ -1,10 +1,11 @@
-package org.weso.wesearch;
+package org.weso.wesearch.stories;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.steps.Steps;
 import org.weso.utils.WesearchException;
+import org.weso.wesearch.Wesearch;
 import org.weso.wesearch.domain.Matter;
 import org.weso.wesearch.domain.Matters;
 
