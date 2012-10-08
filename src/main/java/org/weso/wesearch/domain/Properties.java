@@ -5,5 +5,10 @@ package org.weso.wesearch.domain;
  * A property depends on a given subject
  */
 public interface Properties {
+	
+	/*
+	 * Obtain a property from name
+	 */
+	public Property getPropertyByName(String propertyName);
 
 }
