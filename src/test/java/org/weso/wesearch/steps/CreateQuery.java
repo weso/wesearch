@@ -1,6 +1,7 @@
-package org.weso.wesearch.stories;
+package org.weso.wesearch.steps;
 
 import org.jbehave.core.annotations.Given;
+import org.jbehave.core.annotations.Pending;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.jbehave.core.steps.Steps;
@@ -18,24 +19,24 @@ public class CreateQuery extends Steps {
 	private ValueSelector selector;
 	private Query query;
 	
-	@Given("a matter $, property $ and value selector $")
-	public void loadQueryParameters(Matter m, Property p, ValueSelector value) {
+	@Given("a matter $m, property $p and value selector $value")
+	@Pending
+	public void loadQueryParameters(String m, String p, String value) {
 		//TODO initialize Wesearch
-		this.matter = m;
-		this.property = p;
-		this.selector = value;
 		assert(matter != null);
 		assert(property != null);
 		assert(selector != null);
 	}
 	
 	@When("I ask for a query")
+	@Pending
 	public void askQuery() {
 		query = wesearch.createQuery(matter, property, selector);
 		assert(query != null);
 	}
 	
-	@Then("I get query $")
+	@Then("I get query $sparqlQuery")
+	@Pending
 	public void getQuery(String sparqlQuery) {
 		String q = query.getSparqlQuery();
 		assert(q.equals(sparqlQuery));

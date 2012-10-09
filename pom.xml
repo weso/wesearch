@@ -96,7 +96,7 @@
             <phase>integration-test</phase>
             <configuration>
               <includes>
-                <include>**/*Scenarios.java</include>
+                <include>**/stories/*.java</include>
               </includes>
               <ignoreFailureInStories>true</ignoreFailureInStories>
               <ignoreFailureInView>false</ignoreFailureInView>
