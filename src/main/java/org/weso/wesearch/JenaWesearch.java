@@ -16,7 +16,7 @@ public class JenaWesearch implements Wesearch {
 
 	private Context ctx;
 
-	JenaWesearch(Context ctx) {
+	public JenaWesearch(Context ctx) {
 		this.ctx = ctx;
 	}
 

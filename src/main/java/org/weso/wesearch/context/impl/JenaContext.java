@@ -1,33 +1,25 @@
 package org.weso.wesearch.context.impl;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import org.apache.log4j.Logger;
 import org.weso.wesearch.context.Context;
+import org.weso.wesearch.model.OntoLoader;
+import org.weso.wesearch.model.OntoModelWrapper;
+import org.weso.wesearch.model.impl.JenaOntoModelWrapper;
+import org.weso.wesearch.model.impl.URLOntologyLoader;
 
 public class JenaContext implements Context {
 	
-	private static Logger logger = Logger.getLogger(JenaContext.class);
+	private OntoLoader ontoLoader;
+	private OntoModelWrapper modelWrapper;
 	
-	private List<String> ontologies;
-	
-	public JenaContext() {
-		ontologies = new LinkedList<String>();
-	}
-	
-	@Override
-	public void addOntology(String uri) {
-		if(uri == null) {
-			logger.error("Parameter \"uri\" can not be null");
-			throw new IllegalArgumentException("Parameter \"uri\" can not be null");
-		}
-		ontologies.add(uri);
+	public JenaContext(String[] fileNames) {
+		ontoLoader = new URLOntologyLoader(fileNames);
+		modelWrapper = new JenaOntoModelWrapper(ontoLoader);
 	}
 
 	@Override
-	public List<String> ontologies() {
-		return ontologies;
+	public OntoModelWrapper getOntologiesModel() {
+		return modelWrapper;
 	}
+	
 
 }
