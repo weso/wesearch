@@ -38,6 +38,10 @@ public class FileOntologyLoader implements OntoLoader {
 
 	@Override
 	public InputStream[] getOntologiesSourceData() throws OntoModelException {
+		if(fileNames == null) {
+			logger.error("There isn't any ontology specified by his path or URL");
+			throw new OntoModelException("There isn't any ontology specified by his path or URL");
+		}
 		InputStream[] result = new InputStream[this.fileNames.length];
 		for(int i = 0; i < result.length; i++) {
 			try {
