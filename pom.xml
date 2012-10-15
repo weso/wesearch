@@ -86,7 +86,7 @@
   -->
 <build>
     <plugins>
-      <plugin>
+      <!-- <plugin>
         <groupId>org.jbehave</groupId>
         <artifactId>jbehave-maven-plugin</artifactId>
         <version>3.1.2</version>
@@ -99,14 +99,38 @@
                 <include>**/stories/*.java</include>
               </includes>
               <ignoreFailureInStories>true</ignoreFailureInStories>
-              <ignoreFailureInView>false</ignoreFailureInView>
+              <ignoreFailureInView>true</ignoreFailureInView>
            </configuration>
            <goals>
               <goal>run-stories-as-embeddables</goal>
            </goals>
          </execution>
        </executions>
-     </plugin>
+     </plugin> -->
+            <plugin>
+                <groupId>org.eclipse.m2e</groupId>
+                <artifactId>lifecycle-mapping</artifactId>
+                <version>1.0.0</version>
+                <configuration>
+                    <lifecycleMappingMetadata>
+                        <pluginExecutions>
+                            <pluginExecution>
+                                <pluginExecutionFilter>
+                                    <groupId>org.weso</groupId>
+                                    <artifactId>maven-bundle-plugin</artifactId>
+                                    <versionRange>[1.0.0,)</versionRange>
+                                    <goals>
+                                        <goal>manifest</goal>
+                                    </goals>
+                                </pluginExecutionFilter>
+                                <action>
+                                    <execute />
+                                </action>
+                            </pluginExecution>
+                        </pluginExecutions>
+                    </lifecycleMappingMetadata>
+                </configuration>
+            </plugin>
  
      <!-- <plugin> 
        <groupId>org.apache.maven.plugins</groupId> 
