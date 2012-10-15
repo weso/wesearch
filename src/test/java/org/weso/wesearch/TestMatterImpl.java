@@ -28,6 +28,12 @@ public class TestMatterImpl {
 		assertFalse(actual.equals(unexpected));
 	}
 	
+	@Test(expected=IllegalArgumentException.class)
+	public void testEqualWithNull() {
+		Matter actual = new MatterImpl("Matter 1", "http://www.weso.es/testOntology#Person");
+		assertFalse(actual.equals(null));
+	}
+	
 	@Test
 	public void testUri() {
 		String expected = "http://www.weso.es/testOntology#Matter";

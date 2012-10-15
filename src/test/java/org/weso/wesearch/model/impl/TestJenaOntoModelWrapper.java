@@ -29,87 +29,40 @@ public class TestJenaOntoModelWrapper {
 	}
 
 	@Test
-	public void testJenaOntoModelWrapperWithNull() {
+	public void testJenaOntoModelWrapperWithNull() throws SecurityException, 
+	NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 		JenaOntoModelWrapper modelWrapper = new JenaOntoModelWrapper(null);
-		try {
-			Field f = JenaOntoModelWrapper.class.getDeclaredField("loader");
-			f.setAccessible(true);
-			assertNull(f.get(modelWrapper));
-		} catch (SecurityException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		}
+		Field f = JenaOntoModelWrapper.class.getDeclaredField("loader");
+		f.setAccessible(true);
+		assertNull(f.get(modelWrapper));
 	}
 	
 	@Test
-	public void testJenaOntoModelWrapperWithoutNull() {
+	public void testJenaOntoModelWrapperWithoutNull() throws SecurityException, 
+	NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
 		JenaOntoModelWrapper modelWrapper = new JenaOntoModelWrapper(loader);
-		try {
-			Field f = JenaOntoModelWrapper.class.getDeclaredField("loader");
-			f.setAccessible(true);
-			assertNotNull(f.get(modelWrapper));
-			assertEquals(loader, f.get(modelWrapper));
-		} catch (SecurityException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		} catch (NoSuchFieldException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		}
+		Field f = JenaOntoModelWrapper.class.getDeclaredField("loader");
+		f.setAccessible(true);
+		assertNotNull(f.get(modelWrapper));
+		assertEquals(loader, f.get(modelWrapper));
 	}
 	
 	@Test
-	public void testGetModel() {
+	public void testGetModel() throws OntoModelException {
 		JenaOntoModelWrapper modelWrapper = new JenaOntoModelWrapper(loader);
-		try {
-			assertNotNull(modelWrapper.getModel());
-			assertTrue(modelWrapper.getModel() instanceof OntModel);
-		} catch (OntoModelException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		}
+		assertNotNull(modelWrapper.getModel());
+		assertTrue(modelWrapper.getModel() instanceof OntModel);
 	}
 	
 	@Test
-	public void testCreateJenaModel() {
+	public void testCreateJenaModel() throws SecurityException, 
+	NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
 		JenaOntoModelWrapper modelWrapper = new JenaOntoModelWrapper(loader);
-		try {
-			Method method = JenaOntoModelWrapper.class.getDeclaredMethod("createJenaModel");
-			method.setAccessible(true);
-			Object obj = method.invoke(modelWrapper);
-			assertNotNull(obj);
-			assertTrue(obj instanceof OntModel);
-			assertFalse(((OntModel)obj).isEmpty());
-		} catch (SecurityException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		} catch (NoSuchMethodException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			assertFalse(true);
-			e.printStackTrace();
-		}
+		Method method = JenaOntoModelWrapper.class.getDeclaredMethod("createJenaModel");
+		method.setAccessible(true);
+		Object obj = method.invoke(modelWrapper);
+		assertNotNull(obj);
+		assertTrue(obj instanceof OntModel);
+		assertFalse(((OntModel)obj).isEmpty());
 	}
 }

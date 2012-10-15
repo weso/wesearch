@@ -20,6 +20,14 @@ public class TestSubjectsImpl {
 	@Before
 	public void initialize() {
 		matters = new SubjectsImpl();
+		Matter m = new MatterImpl("Matter test 1", "http://www.weso.es/testOntology#Person");
+		matters.addMatter(m);
+		m = new MatterImpl("Matter test 2", "http://www.weso.es/testOntology#Thing");
+		matters.addMatter(m);
+		m = new MatterImpl("Matter test 3", "http://www.weso.es/testOntology#Matter");
+		matters.addMatter(m);
+		m = new MatterImpl("Matter test 4", "http://www.weso.es/testOntology#Place");
+		matters.addMatter(m);
 	}
 	
 	@Test
@@ -30,63 +38,46 @@ public class TestSubjectsImpl {
 	
 	@Test
 	public void testSize() {
-		assertEquals(0, matters.size());
+		assertEquals(4, matters.size());
 		Matter m = new MatterImpl("Label test", "http://www.weso.es/testOntology#Matter");
 		matters.addMatter(m);
-		assertEquals(1, matters.size());
+		assertEquals(5, matters.size());
 		Iterator<Matter> iterator = matters.iterator();
 		iterator.next();
 		iterator.remove();
-		assertEquals(0, matters.size());
+		assertEquals(4, matters.size());
 	}
 	
-	@Test
+	@Test(expected=IllegalArgumentException.class)
 	public void testAddMatter() {
 		Matter m = new MatterImpl("Label 1", "http://www.weso.es/testOntology#Matter");
 		matters.addMatter(m);
-		assertEquals(1, matters.size());
+		assertEquals(5, matters.size());
 		m = new MatterImpl("Label 2", "http://www.weso.es/testOntology#Matter");
 		matters.addMatter(m);
-		assertEquals(2, matters.size());
-		try {
-			matters.addMatter(null);
-			fail("This test must throw an exception");
-		} catch(IllegalArgumentException e) {
-			assertTrue(true);
-		}
+		assertEquals(6, matters.size());
+		matters.addMatter(null);
 	}
 	
 	@Test
-	public void testFindMatter() {
+	public void testFindMatterExpected() throws WesearchException {
 		Matter expected = new MatterImpl("Matter test 3", "http://www.weso.es/testOntology#Matter");
-		Matter unexpected = new MatterImpl("Matter test", "http://www.weso.es/testOntology#MatterTest");
-		Matter m = new MatterImpl("Matter test 1", "http://www.weso.es/testOntology#Person");
-		matters.addMatter(m);
-		m = new MatterImpl("Matter test 2", "http://www.weso.es/testOntology#Thing");
-		matters.addMatter(m);
-		m = new MatterImpl("Matter test 3", "http://www.weso.es/testOntology#Matter");
-		matters.addMatter(m);
-		m = new MatterImpl("Matter test 4", "http://www.weso.es/testOntology#Place");
-		matters.addMatter(m);
 		Matter actual = null;
-		try {
-			actual = matters.findMatter("Matter test 3");
-			assertTrue(actual.equals(expected));
-		} catch (WesearchException e) {
-			assertTrue(false);
-		}
-		try {
-			actual = matters.findMatter("Matter test 1");
-			assertFalse(actual.equals(unexpected));
-		} catch (WesearchException e) {
-			assertTrue(false);
-		}
-		try {
-			actual = matters.findMatter("Matter test 5");
-			fail("This test must throw an exception");
-		} catch (WesearchException e) {
-			assertTrue(true);
-		}
+		actual = matters.findMatter("Matter test 3");
+		assertTrue(actual.equals(expected));		
+	}
+	
+	@Test
+	public void testFindMatterIncorrectUnexpected() throws WesearchException {
+		Matter unexpected = new MatterImpl("Matter test", "http://www.weso.es/testOntology#MatterTest");
+		Matter actual = null;
+		actual = matters.findMatter("Matter test 1");
+		assertFalse(actual.equals(unexpected));
+	}
+	
+	@Test(expected=WesearchException.class)
+	public void testFindMatterNonExistent() throws WesearchException {
+		matters.findMatter("Matter test 5");
 	}
 
 }
