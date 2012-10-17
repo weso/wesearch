@@ -6,5 +6,7 @@ public interface Matter {
 	
 	String uri();
 	
+	String description();
+	
 	boolean equals(Matter m);
 }

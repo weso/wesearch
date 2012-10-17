@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:bcnbio="http://datos.bcn.cl/ontologies/bcn-biographies#" xmlns:bcncon="http://datos.bcn.cl/ontologies/bcn-congress#" xmlns:bcngeo="http://datos.bcn.cl/ontologies/bcn-geographics#" xmlns:bcnres="http://datos.bcn.cl/ontologies/bcn-resources#" xmlns:bio="http://purl.org/vocab/bio/0.1/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:frbr="http://purl.org/vocab/frbr/core#" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:org="http://www.w3.org/ns/org#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:time="http://www.w3.org/2006/time#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Class"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Class"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="es">Una persona que es parlamentario.</rdfs:comment>
+		<rdfs:label xml:lang="es">Parlamentario</rdfs:label>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
+	
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#ParliamentaryTest">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Class"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Class"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="es"></rdfs:comment>
+		<rdfs:label xml:lang="es"></rdfs:label>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
+	
+</rdf:RDF>	

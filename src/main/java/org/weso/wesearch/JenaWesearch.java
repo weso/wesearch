@@ -1,6 +1,9 @@
 package org.weso.wesearch;
 
+
 import org.weso.utils.NotImplementedException;
+import org.weso.utils.OntoModelException;
+import org.weso.utils.WesearchException;
 import org.weso.wesearch.context.Context;
 import org.weso.wesearch.domain.Matter;
 import org.weso.wesearch.domain.Matters;
@@ -8,6 +11,12 @@ import org.weso.wesearch.domain.Properties;
 import org.weso.wesearch.domain.Property;
 import org.weso.wesearch.domain.Query;
 import org.weso.wesearch.domain.ValueSelector;
+import org.weso.wesearch.domain.impl.SubjectsImpl;
+import org.weso.wesearch.model.OntologyHelper;
+
+import com.hp.hpl.jena.ontology.OntClass;
+import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 /*
  * Implementation based on Jena
@@ -21,11 +30,24 @@ public class JenaWesearch implements Wesearch {
 	}
 
 	@Override
-	public Matters getMatters(String stem) {
-		/*
-		 * TODO: get classes from the ontology that we can search
-		 */
-		throw new NotImplementedException("getMatters");
+	public Matters getMatters(String stem) throws WesearchException {
+		try {
+			OntModel model = (OntModel)ctx.getOntologiesModel().getModel();
+			return createMatterFromResource(model.listClasses());
+		} catch (OntoModelException e) {
+			throw new WesearchException(e.getMessage());
+		}
+	}
+	
+	private Matters createMatterFromResource(ExtendedIterator<OntClass> it) {
+		Matters matters = new SubjectsImpl();
+		while(it.hasNext()) {
+			OntClass ontClass = it.next();
+			if(ontClass.getURI() != null) {
+				matters.addMatter(OntologyHelper.createMatter(ontClass));
+			}
+		}
+		return matters;
 	}
 
 	@Override

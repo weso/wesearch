@@ -1,5 +1,6 @@
 package org.weso.wesearch;
 
+import org.weso.utils.WesearchException;
 import org.weso.wesearch.domain.Matter;
 import org.weso.wesearch.domain.Matters;
 import org.weso.wesearch.domain.Properties;
@@ -12,7 +13,7 @@ public interface Wesearch {
 	/*
 	 * Returns a container of subjects
 	 */
-	Matters getMatters(String stem);
+	Matters getMatters(String stem) throws WesearchException;
 	
 	/*
 	 * Returns a container of properties for a given subject

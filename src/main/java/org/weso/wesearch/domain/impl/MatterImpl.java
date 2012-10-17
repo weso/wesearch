@@ -9,10 +9,12 @@ public class MatterImpl implements Matter {
 	
 	private String label;
 	private String uri;
+	private String description;
 	
-	public MatterImpl(String label, String uri) {
+	public MatterImpl(String label, String uri, String description) {
 		this.label = label;
 		this.uri = uri;
+		this.description = description;
 	}
 
 	@Override
@@ -32,6 +34,11 @@ public class MatterImpl implements Matter {
 	@Override
 	public String uri() {
 		return uri;
+	}
+
+	@Override
+	public String description() {
+		return this.description;
 	}
 
 }

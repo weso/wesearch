@@ -26,7 +26,11 @@ public class FindMinistros extends Steps {
 	 
 	    @When("I ask for matters with $str")
 	    public void AskForMatters(String str) {
-	        matters = wesearch.getMatters(str);
+	        try {
+				matters = wesearch.getMatters(str);
+			} catch (WesearchException e) {
+				e.printStackTrace();
+			}
 	        assert(false);
 	    }
 	 
