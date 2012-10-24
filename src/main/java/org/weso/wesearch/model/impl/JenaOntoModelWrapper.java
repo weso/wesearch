@@ -8,8 +8,13 @@ import org.weso.utils.OntoModelException;
 import org.weso.wesearch.model.OntoLoader;
 import org.weso.wesearch.model.OntoModelWrapper;
 
+import com.hp.hpl.jena.ontology.OntDocumentManager;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.ontology.OntModelSpec;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.reasoner.Reasoner;
+import com.hp.hpl.jena.reasoner.rulesys.OWLMicroReasoner;
+import com.hp.hpl.jena.reasoner.rulesys.OWLMicroReasonerFactory;
 
 public class JenaOntoModelWrapper implements OntoModelWrapper{
 	
@@ -36,7 +41,13 @@ public class JenaOntoModelWrapper implements OntoModelWrapper{
 	 */
 	private OntModel createJenaModel() throws OntoModelException {
 		InputStream[] streams = loader.getOntologiesSourceData();
-		OntModel ontModel = ModelFactory.createOntologyModel();
+		Reasoner reasoner = new OWLMicroReasoner(OWLMicroReasonerFactory.theInstance());
+		OntDocumentManager dm = OntDocumentManager.getInstance();
+		dm.setProcessImports(false);		
+		OntModelSpec spec = new OntModelSpec( OntModelSpec.OWL_DL_MEM);
+        spec.setDocumentManager(dm);
+        spec.setReasoner(reasoner);
+		OntModel ontModel = ModelFactory.createOntologyModel(spec, null);
 		logger.debug("Loading " + streams.length + " ontologies");
 		
 		for(int i = 0; i < streams.length; i++) {
@@ -51,6 +62,11 @@ public class JenaOntoModelWrapper implements OntoModelWrapper{
 		}
 		logger.debug("Loaded all ontologies");
 		return ontModel;
+	}
+	
+	@Override
+	public OntoLoader getLoader() {
+		return loader;
 	}
 
 }

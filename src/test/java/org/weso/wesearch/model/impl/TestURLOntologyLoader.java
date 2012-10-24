@@ -5,6 +5,8 @@ import static org.junit.Assert.assertNotNull;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -14,10 +16,15 @@ public class TestURLOntologyLoader {
 	private String[] uris = {"http://xmlns.com/foaf/spec/index.rdf", "http://purl.org/dc/elements/1.1/", 
 			"http://www.weso.es/failTest"}; 
 	
+	private List<String> listUris = new LinkedList<String>();
+	
 	@Before
 	public void configure() {
 		System.setProperty("http.proxyHost", "proxy.uniovi.es");
 		System.setProperty("http.proxyPort", "8888");
+		listUris.add("http://xmlns.com/foaf/spec/index.rdf");
+		listUris.add("http://purl.org/dc/elements/1.1/");
+		listUris.add("http://www.weso.es/failTest");
 	}
 	
 	@Test
@@ -30,7 +37,7 @@ public class TestURLOntologyLoader {
 	
 	@Test(expected=FileNotFoundException.class)
 	public void testOpenInputStreamFail() throws IOException {
-		URLOntologyLoader loader = new URLOntologyLoader(uris);
+		URLOntologyLoader loader = new URLOntologyLoader(listUris);
 		loader.openInputStream(uris[2]);
 	}
 	

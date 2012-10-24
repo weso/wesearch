@@ -1,24 +1,42 @@
 package org.weso.wesearch.context.impl;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+
+import org.apache.log4j.Logger;
+import org.weso.utils.OntoModelException;
 import org.weso.wesearch.context.Context;
-import org.weso.wesearch.model.OntoLoader;
 import org.weso.wesearch.model.OntoModelWrapper;
-import org.weso.wesearch.model.impl.FileOntologyLoader;
-import org.weso.wesearch.model.impl.JenaOntoModelWrapper;
+
+import weso.mediator.config.Configuration;
+
+import com.hp.hpl.jena.ontology.OntModel;
 
 public class JenaContext implements Context {
 	
-	private OntoLoader ontoLoader;
+	private static final Logger logger = Logger.getLogger(JenaContext.class);
+	
 	private OntoModelWrapper modelWrapper;
 	
-	public JenaContext(String[] fileNames) {
-		ontoLoader = new FileOntologyLoader(fileNames);
-		modelWrapper = new JenaOntoModelWrapper(ontoLoader);
+	public JenaContext(OntoModelWrapper modelWrapper) throws OntoModelException {
+		this.modelWrapper = modelWrapper;
+		saveModel();
 	}
 
 	@Override
 	public OntoModelWrapper getOntologiesModel() {
 		return modelWrapper;
+	}
+	
+	private void saveModel() throws OntoModelException {
+		OntModel model = (OntModel)modelWrapper.getModel();
+		try {
+			model.write(new FileOutputStream(new File(Configuration.getProperty("datasource_uri"))));
+		} catch (FileNotFoundException e) {
+			logger.error("Cannot save model in a local file: " + e.getMessage());
+			throw new OntoModelException("Cannot save model in a local file");
+		}
 	}
 	
 

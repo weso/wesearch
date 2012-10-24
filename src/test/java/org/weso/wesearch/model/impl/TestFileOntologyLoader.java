@@ -46,13 +46,15 @@ public class TestFileOntologyLoader {
 	
 	@Test
 	public void testGetOntologiesAsNamesWitoutFileNames() {
-		FileOntologyLoader loader = new FileOntologyLoader(null);
+		String[] filenames = null;
+		FileOntologyLoader loader = new FileOntologyLoader(filenames);
 		assertNull(loader.getOntologiesAsName());
 	}
 	
 	@Test(expected=OntoModelException.class)
 	public void testGetOntologiesSourceDataWithoutFileNames() throws OntoModelException {
-		FileOntologyLoader loader = new FileOntologyLoader(null);
+		String[] filenames = null;
+		FileOntologyLoader loader = new FileOntologyLoader(filenames);
 		loader.getOntologiesSourceData();
 	}
 

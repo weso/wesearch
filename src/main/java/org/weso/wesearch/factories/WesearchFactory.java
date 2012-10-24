@@ -1,13 +1,13 @@
 package org.weso.wesearch.factories;
 
-import java.util.List;
-
+import org.weso.utils.OntoModelException;
+import org.weso.utils.WesearchException;
 import org.weso.wesearch.Wesearch;
+import org.weso.wesearch.model.OntoModelWrapper;
 
 public abstract class WesearchFactory {
 	
-	public abstract Wesearch createWesearch(List<String> ontologies);
-	
-	public abstract Wesearch createWesearch(String[] ontologies);
+	public abstract Wesearch createWesearch(OntoModelWrapper modelWrapper) 
+			throws WesearchException, OntoModelException;
 
 }

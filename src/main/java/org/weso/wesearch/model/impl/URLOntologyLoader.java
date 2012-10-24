@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -12,6 +13,10 @@ public class URLOntologyLoader extends FileOntologyLoader {
 	private static final Logger logger = Logger.getLogger(URLOntologyLoader.class);
 
 	public URLOntologyLoader(String[] fileNames) {
+		super(fileNames);
+	}
+	
+	public URLOntologyLoader(List<String> fileNames) {
 		super(fileNames);
 	}
 	

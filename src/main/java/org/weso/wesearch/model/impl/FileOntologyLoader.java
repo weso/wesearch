@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.weso.utils.OntoModelException;
@@ -18,6 +19,10 @@ public class FileOntologyLoader implements OntoLoader {
 	
 	public FileOntologyLoader(String [] fileNames) {
 		this.fileNames = fileNames;
+	}
+	
+	public FileOntologyLoader(List<String> fileNames) {
+		this.fileNames = fileNames.toArray(new String[fileNames.size()]);
 	}
 	
 	/*

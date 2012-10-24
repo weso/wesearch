@@ -13,6 +13,7 @@ import java.lang.reflect.Method;
 import org.junit.Before;
 import org.junit.Test;
 import org.weso.utils.OntoModelException;
+import org.weso.wesearch.model.OntoModelWrapper;
 
 import com.hp.hpl.jena.ontology.OntModel;
 
@@ -64,5 +65,18 @@ public class TestJenaOntoModelWrapper {
 		assertNotNull(obj);
 		assertTrue(obj instanceof OntModel);
 		assertFalse(((OntModel)obj).isEmpty());
+	}
+	
+	@Test
+	public void testGetLoaderNull() {
+		OntoModelWrapper wrapper = new JenaOntoModelWrapper(null);
+		assertNull(wrapper.getLoader());
+	}
+	
+	@Test
+	public void testGetLoaderNotNull() {
+		OntoModelWrapper wrapper = new JenaOntoModelWrapper(loader);
+		assertNotNull(wrapper.getLoader());
+		assertTrue(wrapper.getLoader() instanceof URLOntologyLoader);
 	}
 }

@@ -40,5 +40,10 @@ public class MatterImpl implements Matter {
 	public String description() {
 		return this.description;
 	}
+	
+	@Override
+	public String toString() {
+		return uri + " " + label + " " + description;
+	}
 
 }

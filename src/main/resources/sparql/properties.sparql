@@ -1,0 +1,12 @@
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+ 
+SELECT ?prop ?label ?comment ?range ?domain 
+WHERE { 
+ ?prop rdf:type rdfs:Property .
+ ?prop rdfs:label ?label .
+ ?prop rdfs:comment ?comment .
+ ?prop rdfs:range ?range .
+ ?prop rdfs:domain ?domain .
+}

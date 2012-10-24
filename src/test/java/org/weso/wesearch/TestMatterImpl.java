@@ -1,6 +1,9 @@
 package org.weso.wesearch;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.weso.wesearch.domain.Matter;
@@ -50,6 +53,13 @@ public class TestMatterImpl {
 		assertEquals(expected, actual.description());
 		assertNotSame(unexpected1, actual.description());
 		assertNotSame(unexpected2, actual.description());
+	}
+	
+	@Test
+	public void testToString() {
+		String expected = "uriPrueba labelTest comentario";
+		Matter m = new MatterImpl("labelTest", "uriPrueba", "comentario");
+		assertEquals(expected, m.toString());
 	}
 
 }
