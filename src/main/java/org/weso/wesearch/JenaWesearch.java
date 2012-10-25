@@ -93,8 +93,9 @@ public class JenaWesearch implements Wesearch {
 	@Override
 	public Properties getProperties(Matter s, String stem) throws WesearchException {
 		try {	
-			if(stem.equals("")) {
-				Properties allProperties = obtainAllPropertiesByMatter(s);
+			Properties allProperties = obtainAllPropertiesByMatter(s);
+			if(stem.equals("")) {				
+				return allProperties;
 			}
 		
 			List<Suggestion> properties = 
@@ -110,11 +111,8 @@ public class JenaWesearch implements Wesearch {
 	private Properties obtainAllPropertiesByMatter(Matter matter) throws OntoModelException {
 		Properties properties = new PropertiesImpl();
 		OntModel model = (OntModel)ctx.getOntologiesModel().getModel();
-		ExtendedIterator<OntClass> it = model.getOntClass(matter.uri()).listSuperClasses();
-		
-		while(it.hasNext()) {
-			OntClass ontClass = it.next();
-		}
+		properties = OntologyHelper.obtainPropertiesByMatter(model
+				.getOntClass(matter.uri()).listSuperClasses());
 		
 		return properties;
 	}
