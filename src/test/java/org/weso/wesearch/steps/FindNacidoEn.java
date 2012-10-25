@@ -30,15 +30,15 @@ public class FindNacidoEn extends Steps {
 	@Then("I should get property $propertyName")
 	@Pending
 	public void getProperty(String propertyName) {
-		Property p = properties.getPropertyByName(propertyName);
-		assert(p != null);
+		//Property p = properties.getPropertyByName(propertyName);
+		//assert(p != null);
 	}
 	
 	@Then("I should not get property $propertyName")
 	@Pending
 	public void dontGetProperty(String propertyName) {
-		Property p = properties.getPropertyByName(propertyName);
-		assert(p == null);
+		//Property p = properties.getPropertyByName(propertyName);
+		//assert(p == null);
 	}
 
 }

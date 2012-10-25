@@ -2,11 +2,12 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
  
-SELECT ?prop ?label ?comment ?range ?domain 
+SELECT ?prop ?label ?comment
 WHERE { 
- ?prop rdf:type rdfs:Property .
- ?prop rdfs:label ?label .
- ?prop rdfs:comment ?comment .
- ?prop rdfs:range ?range .
- ?prop rdfs:domain ?domain .
+ { ?prop rdf:type rdf:Property . }
+ UNION { ?prop rdf:type owl:DatatypeProperty . }
+ OPTIONAL { ?prop rdfs:label ?label . 
+ FILTER langMatches( lang(?label), "es") .}
+ OPTIONAL { ?prop rdfs:comment ?comment . 
+ FILTER langMatches( lang(?comment), "es") }
 }

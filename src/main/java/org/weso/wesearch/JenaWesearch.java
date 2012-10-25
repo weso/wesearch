@@ -17,6 +17,7 @@ import org.weso.wesearch.domain.Properties;
 import org.weso.wesearch.domain.Property;
 import org.weso.wesearch.domain.Query;
 import org.weso.wesearch.domain.ValueSelector;
+import org.weso.wesearch.domain.impl.PropertiesImpl;
 import org.weso.wesearch.domain.impl.SubjectsImpl;
 import org.weso.wesearch.model.OntologyHelper;
 
@@ -90,12 +91,32 @@ public class JenaWesearch implements Wesearch {
 	}
 
 	@Override
-	public Properties getProperties(Matter s, String stem) {
-		/*
-		 * Find class corresponding to s in the ontology
-		 * Return properties the we can search from that class
-		 */
+	public Properties getProperties(Matter s, String stem) throws WesearchException {
+		try {	
+			if(stem.equals("")) {
+				Properties allProperties = obtainAllPropertiesByMatter(s);
+			}
+		
+			List<Suggestion> properties = 
+					wesomed.getSuggestions(stem, Configuration.getProperty("index_dir_properties"));
+		} catch (SuggestionException e) {
+			throw new WesearchException(e.getMessage());
+		} catch (OntoModelException e) {
+			throw new WesearchException(e.getMessage());
+		}
 		throw new NotImplementedException("getProperties");
+	}
+	
+	private Properties obtainAllPropertiesByMatter(Matter matter) throws OntoModelException {
+		Properties properties = new PropertiesImpl();
+		OntModel model = (OntModel)ctx.getOntologiesModel().getModel();
+		ExtendedIterator<OntClass> it = model.getOntClass(matter.uri()).listSuperClasses();
+		
+		while(it.hasNext()) {
+			OntClass ontClass = it.next();
+		}
+		
+		return properties;
 	}
 
 	@Override

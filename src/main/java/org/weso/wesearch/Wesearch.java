@@ -18,7 +18,7 @@ public interface Wesearch {
 	/*
 	 * Returns a container of properties for a given subject
 	 */
-	Properties getProperties(Matter s, String stem);
+	Properties getProperties(Matter s, String stem) throws WesearchException;
 	
 	/*
 	 * Returns a value selector for a given subject and property

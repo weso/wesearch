@@ -1,10 +1,13 @@
 package org.weso.wesearch.model;
 
 import org.weso.wesearch.domain.Matter;
+import org.weso.wesearch.domain.Property;
 import org.weso.wesearch.domain.impl.MatterImpl;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.ontology.OntProperty;
+import com.hp.hpl.jena.ontology.OntResource;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.vocabulary.RDFS;
@@ -102,6 +105,12 @@ public class OntologyHelper {
 		}
 		return (res.getURI()!=null)?res.getModel().getGraph().getPrefixMapping()
 				.shortForm(res.getURI()):"Comment not avaible";
+	}
+
+	public static Property createPropertyByDomain(OntProperty property, String uri) {
+		OntResource domain = property.getDomain();
+		
+		return null;
 	}
 
 }
