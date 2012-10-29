@@ -1,8 +1,8 @@
 package org.weso.wesearch.domain.impl;
 
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.weso.utils.WesearchException;
@@ -13,10 +13,10 @@ public class PropertiesImpl implements Properties {
 	
 	private static Logger logger = Logger.getLogger(PropertiesImpl.class);
 	
-	List<Property> properties;
+	Set<Property> properties;
 	
 	public PropertiesImpl() {
-		properties = new LinkedList<Property>();
+		properties = new HashSet<Property>();
 	}
 
 	@Override
@@ -26,7 +26,8 @@ public class PropertiesImpl implements Properties {
 		while(it.hasNext()) {
 			Property prop = it.next();
 			
-			if(prop.getName().equals(propertyName) || prop.getName().contains(propertyName)) {
+			if(prop.getName().equalsIgnoreCase(propertyName) 
+					|| prop.getName().contains(propertyName)) {
 				return prop;
 			}
 		}

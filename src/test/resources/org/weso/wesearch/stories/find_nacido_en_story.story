@@ -16,6 +16,6 @@ Then I should get property nacido_en
 Then I should get property representa_a
 
 Given an ontology is loaded with Ministros, nacido_en and representa_a
-When I ask for property with "naci" and Matter Ministro
+When I ask for property with "nacido" and Matter Ministro
 Then I should get property nacido_en
 Then I should not get property representa_a

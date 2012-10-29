@@ -33,5 +33,88 @@ xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#">
     <owl:disjointWith rdf:resource="http://xmlns.com/foaf/0.1/Organization"/>
     <owl:disjointWith rdf:resource="http://xmlns.com/foaf/0.1/Project"/>
   </rdfs:Class>
+  
+  <rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#nacido_en">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="es">Indica cuando ha nacido un ministro</rdfs:comment>
+		<rdfs:label xml:lang="es">nacido_en</rdfs:label>
+		<rdfs:domain>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#Ministro"/>
+		</rdfs:domain>
+		<rdfs:subPropertyOf>
+			<rdf:Description rdf:about="http://purl.org/vocab/bio/0.1/event"/>
+		</rdfs:subPropertyOf>
+		<rdfs:range>
+			<rdf:Description rdf:about="http://purl.org/vocab/bio/0.1/Birth"/>
+		</rdfs:range>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
+	
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#representa_a">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="es">Indica a que provincia representa un ministro</rdfs:comment>
+		<rdfs:label xml:lang="es">representa_a</rdfs:label>
+		<rdfs:domain>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#Ministro"/>
+		</rdfs:domain>
+		<rdfs:range>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-geographics#Place"/>
+		</rdfs:range>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
+	
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#lugar_nacimiento">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="es">Indica donde ha nacido una persona</rdfs:comment>
+		<rdfs:label xml:lang="es">lugar_nacimiento</rdfs:label>
+		<rdfs:domain>
+			<rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Person"/>
+		</rdfs:domain>
+		<rdfs:range>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-geographics#Place"/>
+		</rdfs:range>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
+	
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#fecha_nacimiento">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="es">Indica la fecha de nacimiento de una persona</rdfs:comment>
+		<rdfs:label xml:lang="es">fecha_nacimiento</rdfs:label>
+		<rdfs:domain>
+			<rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Person"/>
+		</rdfs:domain>
+		<rdfs:range>
+			<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/date"/>
+		</rdfs:range>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
 	
 </rdf:RDF>

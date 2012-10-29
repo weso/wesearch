@@ -98,21 +98,44 @@ public class JenaWesearch implements Wesearch {
 				return allProperties;
 			}
 		
-			List<Suggestion> properties = 
+			List<Suggestion> filteredProperties = 
 					wesomed.getSuggestions(stem, Configuration.getProperty("index_dir_properties"));
+			return matchingProperties(allProperties, filteredProperties);
 		} catch (SuggestionException e) {
 			throw new WesearchException(e.getMessage());
 		} catch (OntoModelException e) {
 			throw new WesearchException(e.getMessage());
 		}
-		throw new NotImplementedException("getProperties");
 	}
 	
+	private Properties matchingProperties(Properties allProperties,
+			List<Suggestion> filteredProperties) {
+		Properties result = new PropertiesImpl();
+		Iterator<Property> it = allProperties.iterator();
+		while(it.hasNext()) {
+			Property p = it.next();
+			if(isPropertySought(filteredProperties, p)) {
+				result.addProperty(p);
+			}
+		}
+		return result;
+	}
+
+	private boolean isPropertySought(List<Suggestion> filteredProperties, Property p) {
+		for(Suggestion sug : filteredProperties) {
+			if(sug.getResourceId().equals(p.getUri())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	private Properties obtainAllPropertiesByMatter(Matter matter) throws OntoModelException {
 		Properties properties = new PropertiesImpl();
 		OntModel model = (OntModel)ctx.getOntologiesModel().getModel();
-		properties = OntologyHelper.obtainPropertiesByMatter(model
-				.getOntClass(matter.uri()).listSuperClasses());
+		OntClass ontClass = model.getOntClass(matter.uri());
+		properties = OntologyHelper.obtainPropertiesByMatter(ontClass, 
+				ontClass.listSuperClasses());
 		
 		return properties;
 	}

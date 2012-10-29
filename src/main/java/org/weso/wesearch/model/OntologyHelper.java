@@ -110,19 +110,25 @@ public class OntologyHelper {
 				.shortForm(res.getURI()):"Comment not avaible";
 	}
 
-	public static Properties obtainPropertiesByMatter(
-			ExtendedIterator<OntClass> classes) {
+	public static Properties obtainPropertiesByMatter(OntClass ontClass,
+			ExtendedIterator<OntClass> superClasses) {
 		Properties properties = new PropertiesImpl();
-		while(classes.hasNext()) {
-			OntClass ontClass = classes.next();
-			ExtendedIterator<OntProperty> ontProperties = ontClass.listDeclaredProperties();
-			while(ontProperties.hasNext()) {
-				OntProperty ontProp = ontProperties.next();
-				properties.addProperty(createProperty(ontProp));
-			}
+		extractPropertiesFromOntClass(properties, ontClass);
+		while(superClasses.hasNext()) {
+			OntClass auxOntClass = superClasses.next();
+			extractPropertiesFromOntClass(properties, auxOntClass);
 		}
 		
 		return properties;
+	}
+
+	private static void extractPropertiesFromOntClass(Properties properties,
+			OntClass ontClass) {
+		ExtendedIterator<OntProperty> ontProperties = ontClass.listDeclaredProperties();
+		while(ontProperties.hasNext()) {
+			OntProperty ontProp = ontProperties.next();
+			properties.addProperty(createProperty(ontProp));
+		}
 	}
 	
 	public static Property createProperty(Resource res) {

@@ -33,26 +33,17 @@ public class FindMinistros extends Steps {
 	    }
 	 
 	    @When("I ask for matters with $str")
-	    public void AskForMatters(String str) {
-	        try {
-	        	str = str.replace("\"", "");
-				matters = wesearch.getMatters(str);
-				assertNotNull(matters);
-			} catch (WesearchException e) {
-				assert(false);
-			}	        
+	    public void AskForMatters(String str) throws WesearchException {
+        	str = str.replace("\"", "");
+			matters = wesearch.getMatters(str);
+			assertNotNull(matters);        
 	    }
 	 
 	    @Then("I should get matter $matterName")
-	    public void getMatter(String matterName) {
-	    	Matter m;
-			try {
-				m = matters.findMatter(matterName);
-				assertTrue(m != null);
-				assertTrue(m.label().equals(matterName));
-			} catch (WesearchException e) {
-				assertTrue(false);
-			}
+	    public void getMatter(String matterName) throws WesearchException {
+	    	Matter m = matters.findMatter(matterName);
+			assertTrue(m != null);
+			assertTrue(m.label().equals(matterName));
 	        
 	    }
 

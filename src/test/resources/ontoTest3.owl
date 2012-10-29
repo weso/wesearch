@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF xmlns:bcnbio="http://datos.bcn.cl/ontologies/bcn-biographies#" xmlns:bcncon="http://datos.bcn.cl/ontologies/bcn-congress#" xmlns:bcngeo="http://datos.bcn.cl/ontologies/bcn-geographics#" xmlns:bcnres="http://datos.bcn.cl/ontologies/bcn-resources#" xmlns:bio="http://purl.org/vocab/bio/0.1/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dct="http://purl.org/dc/terms/" xmlns:foaf="http://xmlns.com/foaf/0.1/" xmlns:frbr="http://purl.org/vocab/frbr/core#" xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#" xmlns:org="http://www.w3.org/ns/org#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:time="http://www.w3.org/2006/time#" xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Class"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Class"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="es">Una persona que es parlamentario.</rdfs:comment>
+		<rdfs:label xml:lang="es">Parlamentario</rdfs:label>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+		<rdfs:subClassOf>
+			<rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Person"/>
+		</rdfs:subClassOf>
+	</rdf:Description>
+	
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#ParliamentaryTest">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Class"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Class"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="es"></rdfs:comment>
+		<rdfs:label xml:lang="es"></rdfs:label>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
+	
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#hasBorn">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="es">relaciona a una persona con los datos de su nacimiento</rdfs:comment>
+		<rdfs:label xml:lang="es">Ha nacido</rdfs:label>
+		<rdfs:domain>
+			<rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Person"/>
+		</rdfs:domain>
+		<rdfs:subPropertyOf>
+			<rdf:Description rdf:about="http://purl.org/vocab/bio/0.1/event"/>
+		</rdfs:subPropertyOf>
+		<rdfs:range>
+			<rdf:Description rdf:about="http://purl.org/vocab/bio/0.1/Birth"/>
+		</rdfs:range>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
+	
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#hasDied">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="es">Indica los datos de una persona cuando ha muerto.</rdfs:comment>
+		<rdfs:label xml:lang="es">Ha muerto</rdfs:label>
+		<rdfs:domain>
+			<rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Person"/>
+		</rdfs:domain>
+		<rdfs:subPropertyOf>
+			<rdf:Description rdf:about="http://purl.org/vocab/bio/0.1/event"/>
+		</rdfs:subPropertyOf>
+		<rdfs:range>
+			<rdf:Description rdf:about="http://purl.org/vocab/bio/0.1/Death"/>
+		</rdfs:range>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
+	
+</rdf:RDF>	

@@ -5,6 +5,14 @@ PREFIX owl: <http://www.w3.org/2002/07/owl#>
 SELECT DISTINCT ?class ?label ?comment
 WHERE { 
  ?class rdf:type owl:Class .
- OPTIONAL { ?class rdfs:label ?label . }
- OPTIONAL { ?class rdfs:comment ?comment . }
+ OPTIONAL { ?class rdfs:label ?label . 
+ FILTER langMatches( lang(?label), "es") .}
+ OPTIONAL { ?class rdfs:label ?label . 
+ FILTER langMatches( lang(?label), "") .}
+ OPTIONAL { ?class rdfs:label ?label .}
+ OPTIONAL { ?class rdfs:comment ?comment . 
+ FILTER langMatches( lang(?comment), "es") .}
+ OPTIONAL { ?class rdfs:comment ?comment . 
+ FILTER langMatches( lang(?comment), "") .}
+ OPTIONAL { ?class rdfs:comment ?comment .}
 }
