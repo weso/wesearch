@@ -33,15 +33,11 @@ import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 public class TestWesearch {
 	
-	private OntoModelWrapper modelWrapper = null;
-	private WesearchFactory factory;
-	private List<Suggestion> suggestions;
+	private String[] files = {"src/test/resources/ontoTest1.owl"};
+	private List<Suggestion> suggestions = null;
 	
 	@Before
 	public void initialize() throws OntoModelException {
-		String[] files = {"src/test/resources/ontoTest1.owl"};
-		modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
-		factory = new JenaWesearchFactory();
 		suggestions = new LinkedList<Suggestion>();
 		suggestions.add(new Suggestion("http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary", 
 				(float)0.8));
@@ -51,12 +47,16 @@ public class TestWesearch {
 
 	@Test
 	public void testVersion() throws WesearchException, OntoModelException { 
+		WesearchFactory factory = new JenaWesearchFactory();
+		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
 		Wesearch ws = factory.createWesearch(modelWrapper);
 		assertEquals(ws.version(),"0.1");
 	}
 
 	@Test
 	public void testGetMattersWithLabel() throws WesearchException, OntoModelException {
+		WesearchFactory factory = new JenaWesearchFactory();
+		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
 		String expectedLabel = "Parlamentario";
 		String expectedComment = "Una persona que es parlamentario.";
 		String expectedUri = "http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary";
@@ -74,6 +74,8 @@ public class TestWesearch {
 	
 	@Test
 	public void testGetMattersWithoutLable() throws WesearchException, OntoModelException {
+		WesearchFactory factory = new JenaWesearchFactory();
+		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
 		Wesearch ws = factory.createWesearch(modelWrapper);
 		 Matters ms = ws.getMatters("");
 		 assertTrue(ms.size() > 0);
@@ -84,6 +86,8 @@ public class TestWesearch {
 	public void testCreateMatterFromResourceId() throws SecurityException, NoSuchMethodException, 
 		OntoModelException, IllegalArgumentException, IllegalAccessException, 
 		InvocationTargetException, WesearchException {
+		WesearchFactory factory = new JenaWesearchFactory();
+		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
 		JenaWesearch wesearch = (JenaWesearch) factory.createWesearch(modelWrapper);
 		Class[] params = {Iterator.class};
 		Method method = JenaWesearch.class.getDeclaredMethod("createMatterFromResourceId", params);
@@ -98,6 +102,8 @@ public class TestWesearch {
     public void testCreateMatterFromResource() throws SecurityException, NoSuchMethodException, 
 	    OntoModelException, IllegalArgumentException, IllegalAccessException, 
 	    InvocationTargetException, WesearchException {
+		WesearchFactory factory = new JenaWesearchFactory();
+		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
 		String expectedLabel = "Parlamentario";
 		String expectedComment = "Una persona que es parlamentario.";
 		String expectedUri = "http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary";
@@ -115,6 +121,8 @@ public class TestWesearch {
 	
 	@Test
 	public void testGetPropertiesWithoutProperties() throws WesearchException, OntoModelException {
+		WesearchFactory factory = new JenaWesearchFactory();
+		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
 		Wesearch ws = factory.createWesearch(modelWrapper);
 		Matter m = new MatterImpl("Parlamentario", 
 				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary", 
@@ -125,6 +133,7 @@ public class TestWesearch {
 	
 	@Test
 	public void testGetPropertiesWithProperties() throws OntoModelException, WesearchException {
+		WesearchFactory factory = new JenaWesearchFactory();
 		String[] fileNames = {"src/test/resources/ontoTest3.owl"};
 		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
 				new FileOntologyLoader(fileNames));
