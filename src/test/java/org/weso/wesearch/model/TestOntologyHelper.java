@@ -1,6 +1,7 @@
 package org.weso.wesearch.model;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
@@ -11,7 +12,10 @@ import java.io.FileNotFoundException;
 import org.junit.Before;
 import org.junit.Test;
 import org.weso.wesearch.domain.Matter;
+import org.weso.wesearch.domain.Properties;
+import org.weso.wesearch.domain.Property;
 import org.weso.wesearch.domain.impl.MatterImpl;
+import org.weso.wesearch.domain.impl.PropertiesImpl;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
@@ -178,5 +182,42 @@ public class TestOntologyHelper {
             String expected = "Comment not available";
             String comment = OntologyHelper.getComment(anonymousClass);
             assertEquals(expected, comment);
+    }
+    
+    @Test
+    public void testExtractPropertiesFromOntClassWithoutProperties() {
+    	Properties properties = new PropertiesImpl();
+    	OntologyHelper.extractPropertiesFromOntClass(properties, 
+    			classWithoutLabel);
+    	assertFalse(properties.iterator().hasNext());
+    }
+    
+    @Test
+    public void testExtractPropertiesFromOntClassWithProperties() {
+    	Properties properties = new PropertiesImpl();
+    	OntologyHelper.extractPropertiesFromOntClass(properties, 
+    			ontClass);
+    	assertTrue(properties.iterator().hasNext());
+    }
+    
+    @Test
+    public void testObtainPropertiesByMatter() {
+    	String expected = "http://datos.bcn.cl/ontologies/bcn-biographies#hasBorn";
+    	Properties properties = OntologyHelper.obtainPropertiesByMatter(ontClass, 
+    			ontClass.listSuperClasses());
+    	assertTrue(properties.iterator().hasNext());
+    	assertEquals(expected, properties.iterator().next().getUri());
+    }
+    
+    @Test
+    public void testCreateProperty() {
+    	String uriExpected = "http://datos.bcn.cl/ontologies/bcn-biographies#hasBorn";
+    	String labelExpected = "Ha nacido";
+    	String commentExpected = "relaciona a una persona con los datos de su nacimiento";
+    	Property prop = OntologyHelper.createProperty(
+    			ont.getProperty("http://datos.bcn.cl/ontologies/bcn-biographies#hasBorn"));
+    	assertEquals(uriExpected, prop.getUri());
+    	assertEquals(labelExpected, prop.getName());
+    	assertEquals(commentExpected, prop.getDescription());
     }
 }

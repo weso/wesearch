@@ -62,7 +62,7 @@ public class TestWesearch {
 		String expectedUri = "http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary";
 		Wesearch ws = factory.createWesearch(modelWrapper);
 		Matters ms = ws.getMatters("Parlamentario");
-		assertTrue(ms.size() == 1);
+		assertEquals(1, ms.size());
 		Iterator<Matter> it = ms.iterator();
 		while(it.hasNext()) {
 			 Matter m = it.next();

@@ -122,7 +122,7 @@ public class OntologyHelper {
 		return properties;
 	}
 
-	private static void extractPropertiesFromOntClass(Properties properties,
+	public static void extractPropertiesFromOntClass(Properties properties,
 			OntClass ontClass) {
 		ExtendedIterator<OntProperty> ontProperties = ontClass.listDeclaredProperties();
 		while(ontProperties.hasNext()) {

@@ -14,6 +14,26 @@
 		</rdfs:isDefinedBy>
 	</rdf:Description>
 	
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#hasBorn">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="es">relaciona a una persona con los datos de su nacimiento</rdfs:comment>
+		<rdfs:label xml:lang="es">Ha nacido</rdfs:label>
+		<rdfs:domain>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary"/>
+		</rdfs:domain>
+		<rdfs:range>
+			<rdf:Description rdf:about="http://purl.org/vocab/bio/0.1/Birth"/>
+		</rdfs:range>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
+	
 	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#ParliamentaryTest">
 		<rdf:type>
 			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Class"/>
