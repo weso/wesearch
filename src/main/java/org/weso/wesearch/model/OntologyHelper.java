@@ -3,6 +3,7 @@ package org.weso.wesearch.model;
 import org.weso.wesearch.domain.Matter;
 import org.weso.wesearch.domain.Properties;
 import org.weso.wesearch.domain.Property;
+import org.weso.wesearch.domain.ValueSelector;
 import org.weso.wesearch.domain.impl.JenaPropertyImpl;
 import org.weso.wesearch.domain.impl.MatterImpl;
 import org.weso.wesearch.domain.impl.PropertiesImpl;
@@ -211,17 +212,34 @@ public class OntologyHelper {
 	public static String extractPropertyRange(OntProperty ontProperty) {
 		OntResource range = null;
 		if(ontProperty.isDatatypeProperty()) {
-			range = ontProperty.asDatatypeProperty().getRange();
+			range = ontProperty.asDatatypeProperty().getDomain();
 			if(range != null) {
-				return range.getURI();
+				return extractValueSelector(range);
 			}
 		} else if(ontProperty.isObjectProperty()) {
-			range = ontProperty.asObjectProperty().getRange();
-			if(range != null) {
-				return range.getURI();
-			}
+			return ValueSelector.OBJECT;
 		}
-		return "Range not avaible";
+		return ValueSelector.UNDEFINED;
+	}
+
+	private static String extractValueSelector(OntResource range) {
+		String uriRange = range.getURI();
+		if(uriRange.equals("http://www.w3.org/2001/XMLSchema#date") || 
+				uriRange.equals("http://www.w3.org/2001/XMLSchema#dateTime") || 
+				uriRange.equals("http://www.w3.org/2001/XMLSchema#time")) {
+			return ValueSelector.DATE;
+		} else if (uriRange.equals("http://www.w3.org/2001/XMLSchema#decimal") || 
+				uriRange.equals("http://www.w3.org/2001/XMLSchema#float") || 
+				uriRange.equals("http://www.w3.org/2001/XMLSchema#double") || 
+				uriRange.equals("http://www.w3.org/2001/XMLSchema#long") ||
+				uriRange.equals("http://www.w3.org/2001/XMLSchema#integer") || 
+				uriRange.equals("http://www.w3.org/2001/XMLSchema#int")) {
+			return ValueSelector.NUMERIC;
+		} else if (uriRange.equals("http://www.w3.org/2001/XMLSchema#string") || 
+				uriRange.equals("http://www.w3.org/2000/01/rdf-schema#Literal")) {
+			return ValueSelector.TEXT;
+		} 
+		return ValueSelector.UNDEFINED;
 	}
 
 }
