@@ -28,7 +28,7 @@ public class SubjectsImpl implements Matters {
 	public Matter findMatter(String label) 
 			throws WesearchException {
 		for(Matter m : matters) {
-			if(m.label().equals(label)) {
+			if(m.getLabel().equals(label)) {
 				return m;
 			}
 		}

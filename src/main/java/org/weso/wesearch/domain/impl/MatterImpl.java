@@ -18,7 +18,7 @@ public class MatterImpl implements Matter {
 	}
 
 	@Override
-	public String label() {
+	public String getLabel() {
 		return label;
 	}
 
@@ -28,16 +28,16 @@ public class MatterImpl implements Matter {
 			logger.error("The paramenter can not be null");
 			throw new IllegalArgumentException("The paramenter can not be null");
 		}
-		return this.label.equals(m.label());
+		return this.label.equals(m.getLabel());
 	}
 	
 	@Override
-	public String uri() {
+	public String getUri() {
 		return uri;
 	}
 
 	@Override
-	public String description() {
+	public String getDescription() {
 		return this.description;
 	}
 	

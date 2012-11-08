@@ -66,9 +66,9 @@ public class TestWesearch {
 		Iterator<Matter> it = ms.iterator();
 		while(it.hasNext()) {
 			 Matter m = it.next();
-			 assertEquals(expectedLabel, m.label());
-			 assertEquals(expectedComment, m.description());
-			 assertEquals(expectedUri, m.uri());
+			 assertEquals(expectedLabel, m.getLabel());
+			 assertEquals(expectedComment, m.getDescription());
+			 assertEquals(expectedUri, m.getUri());
 		}
 	}
 	
@@ -114,9 +114,9 @@ public class TestWesearch {
 	    Object[] paramsValues = {((OntModel)modelWrapper.getModel()).listClasses()};
 	    Matters matters = (Matters)method.invoke(wesearch, paramsValues);       
 	    Matter m = matters.findMatter("Parlamentario");
-	    assertEquals(expectedComment, m.description());
-	    assertEquals(expectedLabel, m.label());
-	    assertEquals(expectedUri, m.uri());
+	    assertEquals(expectedComment, m.getDescription());
+	    assertEquals(expectedLabel, m.getLabel());
+	    assertEquals(expectedUri, m.getUri());
     }
 	
 	@Test

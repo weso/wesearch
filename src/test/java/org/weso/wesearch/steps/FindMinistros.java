@@ -43,7 +43,7 @@ public class FindMinistros extends Steps {
 	    public void getMatter(String matterName) throws WesearchException {
 	    	Matter m = matters.findMatter(matterName);
 			assertTrue(m != null);
-			assertTrue(m.label().equals(matterName));
+			assertTrue(m.getLabel().equals(matterName));
 	        
 	    }
 

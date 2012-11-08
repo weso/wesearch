@@ -19,6 +19,7 @@ import org.weso.wesearch.domain.Query;
 import org.weso.wesearch.domain.ValueSelector;
 import org.weso.wesearch.domain.impl.PropertiesImpl;
 import org.weso.wesearch.domain.impl.SubjectsImpl;
+import org.weso.wesearch.domain.impl.ValueSelectorImpl;
 import org.weso.wesearch.model.OntologyHelper;
 
 import weso.mediator.config.Configuration;
@@ -30,6 +31,7 @@ import weso.mediator.factory.FacadeFactory;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 /*
@@ -133,7 +135,7 @@ public class JenaWesearch implements Wesearch {
 	private Properties obtainAllPropertiesByMatter(Matter matter) throws OntoModelException {
 		Properties properties = new PropertiesImpl();
 		OntModel model = (OntModel)ctx.getOntologiesModel().getModel();
-		OntClass ontClass = model.getOntClass(matter.uri());
+		OntClass ontClass = model.getOntClass(matter.getUri());
 		properties = OntologyHelper.obtainPropertiesByMatter(ontClass, 
 				ontClass.listSuperClasses());
 		
@@ -141,11 +143,16 @@ public class JenaWesearch implements Wesearch {
 	}
 
 	@Override
-	public ValueSelector getValueSelector(Matter s, Property p, String stem) {
-		/*
-		 * Get value selector from a given property and subject
-		 */
-		throw new NotImplementedException("getValueSelector");
+	public ValueSelector getValueSelector(Matter s, Property p, String stem) 
+			throws WesearchException {
+		try {
+			OntModel ontModel = (OntModel)ctx.getOntologiesModel().getModel();
+			OntProperty ontProperty = ontModel.getOntProperty(p.getUri());
+			String type = OntologyHelper.extractPropertyRange(ontProperty);
+			return new ValueSelectorImpl(type);
+		} catch (OntoModelException e) {
+			throw new WesearchException(e.getMessage());
+		}
 	}
 
 	@Override

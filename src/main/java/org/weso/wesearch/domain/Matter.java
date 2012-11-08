@@ -2,11 +2,11 @@ package org.weso.wesearch.domain;
 
 public interface Matter {
 
-	String label();
+	String getLabel();
 	
-	String uri();
+	String getUri();
 	
-	String description();
+	String getDescription();
 	
 	boolean equals(Matter m);
 }

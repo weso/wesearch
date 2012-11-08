@@ -15,9 +15,9 @@ public class TestMatterImpl {
 	public void testLabel() {
 		String expected = "label test";
 		Matter m = new MatterImpl("label test", "http://www.weso.es/testOntology#Matter", "Description");
-		assertEquals(m.label(), expected);
-		assertTrue(m.label().equals(expected));
-		assertFalse(m.label().equals("other label"));
+		assertEquals(m.getLabel(), expected);
+		assertTrue(m.getLabel().equals(expected));
+		assertFalse(m.getLabel().equals("other label"));
 	}
 	
 	@Test
@@ -40,8 +40,8 @@ public class TestMatterImpl {
 		String expected = "http://www.weso.es/testOntology#Matter";
 		String unexpected = "http://www.weso.es/testOntology#MatterTest";
 		Matter actual = new MatterImpl("Matter test", "http://www.weso.es/testOntology#Matter", "Description");
-		assertEquals(expected, actual.uri());
-		assertFalse(unexpected.equals(actual.uri()));
+		assertEquals(expected, actual.getUri());
+		assertFalse(unexpected.equals(actual.getUri()));
 	}
 	
 	@Test
@@ -50,9 +50,9 @@ public class TestMatterImpl {
 		String unexpected1 = "http://www.weso.es/testOntology#Matter";
 		String unexpected2 = "Matter test";
 		Matter actual = new MatterImpl("Matter test", "http://www.weso.es/testOntology#Matter", "Description for test");
-		assertEquals(expected, actual.description());
-		assertNotSame(unexpected1, actual.description());
-		assertNotSame(unexpected2, actual.description());
+		assertEquals(expected, actual.getDescription());
+		assertNotSame(unexpected1, actual.getDescription());
+		assertNotSame(unexpected2, actual.getDescription());
 	}
 	
 	@Test
