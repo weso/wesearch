@@ -19,19 +19,15 @@ public class SPARQLQueryBuilder {
 	
 	public static String getFilterClause(String name, ValueSelector selector) {
 		String filter = "FILTER(";
-		switch(selector.getType()) {
-		case ValueSelector.TEXT:
+		if(selector.getType().equals(ValueSelector.TEXT)) {
 			filter += "regex(?" + name + ", \"" + selector.getValue().getValue() + 
-				"\", \"i\")";
-			break;
-		case ValueSelector.NUMERIC:
+					"\", \"i\")";			
+		} else if (selector.getType().equals(ValueSelector.NUMERIC)) {
 			filter += "xsd:decimal(?" + name + ") = xsd:decimal('" + 
 					selector.getValue().getValue() + "')";
-			break;
-		case ValueSelector.DATE:
+		} else if (selector.getType().equals(ValueSelector.DATE)) {
 			filter += "xsd:date(?" + name + ") = xsd:date('"
 					+ selector.getValue().getValue() + "')";
-			break;
 		}
 		filter += ")";
 		return filter;
