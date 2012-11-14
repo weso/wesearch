@@ -209,20 +209,40 @@ public class OntologyHelper {
 		return new JenaPropertyImpl(uri, label, description);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static String extractPropertyRange(OntProperty ontProperty) {
-		OntResource range = null;
-		if(ontProperty.isDatatypeProperty()) {
-			range = ontProperty.asDatatypeProperty().getDomain();
-			if(range != null) {
-				return extractValueSelector(range);
+		if(ontProperty != null) {
+			ExtendedIterator ranges = null;
+			if(ontProperty.isDatatypeProperty()) {
+				ranges = ontProperty.asDatatypeProperty().listRange();
+				if(ranges != null) {
+					return extractValueSelectorFromList(ranges);
+				}
+			} else if(ontProperty.isObjectProperty()) {
+				return ValueSelector.OBJECT;
 			}
-		} else if(ontProperty.isObjectProperty()) {
-			return ValueSelector.OBJECT;
-		}
+		}		
 		return ValueSelector.UNDEFINED;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	private static String extractValueSelectorFromList(
+			ExtendedIterator it) {
+		String result = null;
+		while(it.hasNext()) {
+			OntResource ont = (OntResource)it.next();
+			result = extractValueSelector(ont);
+			if(result != null && !result.equals(ValueSelector.UNDEFINED)) {
+				return result;
+			}
+		}
+		return (result==null)?ValueSelector.UNDEFINED:result;
 	}
 
 	private static String extractValueSelector(OntResource range) {
+		if(range == null) {
+			return ValueSelector.UNDEFINED;
+		}
 		String uriRange = range.getURI();
 		if(uriRange.equals("http://www.w3.org/2001/XMLSchema#date") || 
 				uriRange.equals("http://www.w3.org/2001/XMLSchema#dateTime") || 

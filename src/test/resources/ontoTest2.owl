@@ -36,12 +36,12 @@ xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#">
   
   <rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#nacido_en">
 		<rdf:type>
-			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
 		</rdf:type>
 		<rdf:type>
 			<rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
 		</rdf:type>
-		<rdfs:comment xml:lang="es">Indica cuando ha nacido un ministro</rdfs:comment>
+		<rdfs:comment xml:lang="es">Indica donde ha nacido un ministro</rdfs:comment>
 		<rdfs:label xml:lang="es">nacido_en</rdfs:label>
 		<rdfs:domain>
 			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#Ministro"/>
@@ -50,7 +50,7 @@ xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#">
 			<rdf:Description rdf:about="http://purl.org/vocab/bio/0.1/event"/>
 		</rdfs:subPropertyOf>
 		<rdfs:range>
-			<rdf:Description rdf:about="http://purl.org/vocab/bio/0.1/Birth"/>
+			<rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#string"/>
 		</rdfs:range>
 		<rdfs:isDefinedBy>
 			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>

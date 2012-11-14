@@ -38,7 +38,7 @@ public class CreateQuery extends Steps {
 	@Then("I get query $sparqlQuery")
 	@Pending
 	public void getQuery(String sparqlQuery) {
-		String q = query.getSparqlQuery();
+		String q = query.getQuery();
 		assert(q.equals(sparqlQuery));
 	}
 

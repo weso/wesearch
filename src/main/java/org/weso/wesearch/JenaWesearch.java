@@ -16,8 +16,10 @@ import org.weso.wesearch.domain.Matters;
 import org.weso.wesearch.domain.Properties;
 import org.weso.wesearch.domain.Property;
 import org.weso.wesearch.domain.Query;
+import org.weso.wesearch.domain.SPARQLQueryBuilder;
 import org.weso.wesearch.domain.ValueSelector;
 import org.weso.wesearch.domain.impl.PropertiesImpl;
+import org.weso.wesearch.domain.impl.SPARQLQuery;
 import org.weso.wesearch.domain.impl.SubjectsImpl;
 import org.weso.wesearch.domain.impl.ValueSelectorImpl;
 import org.weso.wesearch.model.OntologyHelper;
@@ -32,6 +34,7 @@ import weso.mediator.factory.FacadeFactory;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntProperty;
+import com.hp.hpl.jena.query.QueryBuildException;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 /*
@@ -157,10 +160,13 @@ public class JenaWesearch implements Wesearch {
 
 	@Override
 	public Query createQuery(Matter s, Property p, ValueSelector v) {
-		/*
-		 * Create a query from a given set of values
-		 */
-		throw new NotImplementedException("createQuery");
+		Query query = new SPARQLQuery();
+		query.addClause(SPARQLQueryBuilder.getTypeClause("res", s));
+		query.addClause(SPARQLQueryBuilder.getPropertyClause("res", p,
+				"x"));
+		query.addFilter(SPARQLQueryBuilder.getFilterClause("x", v));
+
+		return query;
 	}
 
 	@Override

@@ -6,8 +6,18 @@ package org.weso.wesearch.domain;
 public interface Query {
 	
 	/*
-	 * Return SPARQL query
+	 * Return a query in a string
 	 */
-	String getSparqlQuery();
+	String getQuery();
+	
+	/*
+	 * Add new clause to query
+	 */
+	void addClause(String clause);
+	
+	/*
+	 * Add new filter to query
+	 */
+	void addFilter(String filter);
 
 }

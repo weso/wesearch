@@ -8,18 +8,24 @@ import static org.junit.Assert.assertTrue;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.weso.wesearch.domain.Matter;
 import org.weso.wesearch.domain.Properties;
 import org.weso.wesearch.domain.Property;
+import org.weso.wesearch.domain.ValueSelector;
 import org.weso.wesearch.domain.impl.MatterImpl;
 import org.weso.wesearch.domain.impl.PropertiesImpl;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.ontology.OntProperty;
+import com.hp.hpl.jena.ontology.OntResource;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 public class TestOntologyHelper {
 	
@@ -219,5 +225,85 @@ public class TestOntologyHelper {
     	assertEquals(uriExpected, prop.getUri());
     	assertEquals(labelExpected, prop.getName());
     	assertEquals(commentExpected, prop.getDescription());
+    }
+    
+    @Test
+    public void testExtractPropertyRangeObjectType() {
+    	String expected = ValueSelector.OBJECT;
+    	OntProperty p = ont.getOntProperty("http://datos.bcn.cl/ontologies/bcn-biographies#hasBorn");
+    	String result = OntologyHelper.extractPropertyRange(p);
+    	assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testExtractPropertyRangeStringType() {
+    	String expected = ValueSelector.TEXT;
+    	OntProperty p = ont.getOntProperty("http://datos.bcn.cl/ontologies/bcn-biographies#name");
+    	String result = OntologyHelper.extractPropertyRange(p);
+    	assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testExtractPropertyRangeNumericType() {
+    	String expected = ValueSelector.NUMERIC;
+    	OntProperty p = ont.getOntProperty("http://datos.bcn.cl/ontologies/bcn-biographies#identifier");
+    	String result = OntologyHelper.extractPropertyRange(p);
+    	assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testExtractPropertyRangeDateType() {
+    	String expected = ValueSelector.DATE;
+    	OntProperty p = ont.getOntProperty("http://datos.bcn.cl/ontologies/bcn-biographies#hasDead");
+    	String result = OntologyHelper.extractPropertyRange(p);
+    	assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testExtractPropertyNull() {
+    	String expected = ValueSelector.UNDEFINED;
+    	String result = OntologyHelper.extractPropertyRange(null);
+    	assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testExtractValueSelectorFromListEmpty() 
+    		throws NoSuchMethodException, SecurityException, 
+    		IllegalAccessException, IllegalArgumentException, 
+    		InvocationTargetException {
+    	Method method = OntologyHelper.class.getDeclaredMethod("extractValueSelectorFromList",
+    			ExtendedIterator.class);
+    	method.setAccessible(true);
+    	String expected = ValueSelector.UNDEFINED;
+    	OntProperty p = ont.getOntProperty("http://datos.bcn.cl/ontologies/bcn-biographies#propertyTest");
+    	String result = (String)method.invoke(OntologyHelper.class, p.listRange());
+    	assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testExtractValueSelectorNull() 
+    		throws NoSuchMethodException, SecurityException, 
+    		IllegalAccessException, IllegalArgumentException, 
+    		InvocationTargetException {
+    	Method method = OntologyHelper.class.getDeclaredMethod("extractValueSelector", 
+    			OntResource.class);
+    	method.setAccessible(true);
+    	String expected = ValueSelector.UNDEFINED;
+    	OntResource res = null;
+    	String result = (String)method.invoke(OntologyHelper.class, res);
+    	assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testExtractValueSelectorWithoutUri() 
+    		throws NoSuchMethodException, SecurityException, 
+    		IllegalAccessException, IllegalArgumentException, 
+    		InvocationTargetException {
+    	Method method = OntologyHelper.class.getDeclaredMethod("extractValueSelector", 
+    			OntResource.class);
+    	method.setAccessible(true);
+    	String expected = ValueSelector.UNDEFINED;
+    	String result = (String)method.invoke(OntologyHelper.class, ontClass);
+    	assertEquals(expected, result);
     }
 }

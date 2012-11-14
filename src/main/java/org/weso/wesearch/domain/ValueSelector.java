@@ -14,5 +14,15 @@ public interface ValueSelector {
 	 * Return type of the value selector
 	 */
 	public String getType();
+	
+	/*
+	 * Return the value specifies by the user
+	 */
+	public Value<?> getValue();
+	
+	/*
+	 * Set the value
+	 */
+	public void setValue(Value<?> value);
 
 }
