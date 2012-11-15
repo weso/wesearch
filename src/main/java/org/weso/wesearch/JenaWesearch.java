@@ -23,6 +23,7 @@ import org.weso.wesearch.domain.impl.PropertiesImpl;
 import org.weso.wesearch.domain.impl.SPARQLQuery;
 import org.weso.wesearch.domain.impl.SubjectsImpl;
 import org.weso.wesearch.domain.impl.ValueSelectorImpl;
+import org.weso.wesearch.domain.impl.values.ObjectValue;
 import org.weso.wesearch.model.OntologyHelper;
 
 import weso.mediator.config.Configuration;
@@ -146,12 +147,23 @@ public class JenaWesearch implements Wesearch {
 	}
 
 	@Override
-	public ValueSelector getValueSelector(Matter s, Property p, String stem) 
+	public ValueSelector getValueSelector(Matter s, Property p) 
 			throws WesearchException {
+		if(p == null) {
+			logger.error("Property cannot be null");
+			throw new WesearchException("Property cannot be null");
+		}
 		try {
 			OntModel ontModel = (OntModel)ctx.getOntologiesModel().getModel();
 			OntProperty ontProperty = ontModel.getOntProperty(p.getUri());
 			String type = OntologyHelper.extractPropertyRange(ontProperty);
+			if(type.equals(ValueSelector.OBJECT)) {
+				ValueSelector selector = new ValueSelectorImpl(type);
+				Matters matters = 
+						OntologyHelper.createRangeMatters(ontProperty.listRange());
+				selector.setValue(new ObjectValue(matters));
+				return selector;
+			}
 			return new ValueSelectorImpl(type);
 		} catch (OntoModelException e) {
 			throw new WesearchException(e.getMessage());

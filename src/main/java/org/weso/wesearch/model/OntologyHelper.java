@@ -1,12 +1,16 @@
 package org.weso.wesearch.model;
 
+import org.apache.log4j.Logger;
+import org.weso.utils.OntoModelException;
 import org.weso.wesearch.domain.Matter;
+import org.weso.wesearch.domain.Matters;
 import org.weso.wesearch.domain.Properties;
 import org.weso.wesearch.domain.Property;
 import org.weso.wesearch.domain.ValueSelector;
 import org.weso.wesearch.domain.impl.JenaPropertyImpl;
 import org.weso.wesearch.domain.impl.MatterImpl;
 import org.weso.wesearch.domain.impl.PropertiesImpl;
+import org.weso.wesearch.domain.impl.SubjectsImpl;
 
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
@@ -18,6 +22,8 @@ import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 import com.hp.hpl.jena.vocabulary.RDFS;
 
 public class OntologyHelper {
+	
+	private static Logger logger = Logger.getLogger(OntologyHelper.class);
 	
 	/**
 	 * This method create a matter from a uri and a jena model
@@ -260,6 +266,23 @@ public class OntologyHelper {
 			return ValueSelector.TEXT;
 		} 
 		return ValueSelector.UNDEFINED;
+	}
+
+	public static Matters createRangeMatters(
+			ExtendedIterator<? extends OntResource> listRange) 
+					throws OntoModelException {
+		if(listRange == null) {
+			logger.error("The list of ranges cannot be null");
+			throw new OntoModelException("The list of ranges cannot be null");
+		}
+		Matters matters = new SubjectsImpl();
+		while(listRange.hasNext()) {
+			OntResource res = listRange.next();
+			Matter m = new MatterImpl(getLabel(res), res.getURI(), 
+					getComment(res));
+			matters.addMatter(m);
+		}
+		return matters;
 	}
 
 }

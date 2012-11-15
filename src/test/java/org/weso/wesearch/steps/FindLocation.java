@@ -43,7 +43,7 @@ public class FindLocation extends Steps {
 		Matter matter = new MatterImpl("Ministro", matterUri, 
 				"Persona que dirige cada uno de los departamentos " +
 				"ministeriales en que se divide la gobernación del Estado");
-		valueSelector = wesearch.getValueSelector(matter, prop, str);
+		valueSelector = wesearch.getValueSelector(matter, prop);
 		assertNotNull(valueSelector);
 	}
 	

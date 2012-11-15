@@ -23,7 +23,7 @@ public interface Wesearch {
 	/*
 	 * Returns a value selector for a given subject and property
 	 */
-	ValueSelector getValueSelector(Matter s, Property p, String stem) throws WesearchException;
+	ValueSelector getValueSelector(Matter s, Property p) throws WesearchException;
 	
 	/*
 	 * Returns a query for a given subject, property and value selector
