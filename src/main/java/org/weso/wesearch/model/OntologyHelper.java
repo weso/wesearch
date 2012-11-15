@@ -150,7 +150,7 @@ public class OntologyHelper {
 	public static String getLabel(String resource, OntModel model) {
 		OntClass res = model.getOntClass(resource);
 		if(res == null) {
-			return "Label not avaible";
+			return "Label not available";
 		}
 		/*Statement labelProp = res.getProperty(RDFS.label);
 		if(labelProp != null && labelProp.getString().length() > 0) {

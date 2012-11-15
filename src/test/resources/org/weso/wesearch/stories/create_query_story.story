@@ -4,11 +4,12 @@ Narrative:
 In order to find "Ministros" that were born in "Chile" 
 As a User of BCN
 I want to incrementally find and select the necessary Matters (Ministros) and 
- properties ("nacido_en") and Value_selectors ("Location").
+ properties ("nacido_en") and Value_selectors ("textfield", "numeric", "date", 
+ "object" and "undefined").
  
 Scenario:
 A user has selected Matter "Ministro", Property "nacido_en" and "Value selector" Chile
 
-Given a matter Ministro, property nacido_en and value selector Chile
+Given a matter Ministro, property nacido_en and value selector textfield with value Chile
 When I ask for a query
-Then I get query SELECT ?uri WHERE {?uri rdf:type ont:Ministro . ?uri ont:nacido_en "Chile" .}
+Then I get query SELECT ?res WHERE { ?res <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://datos.bcn.cl/ontologies/bcn-biographies#Ministro> . ?res <http://datos.bcn.cl/ontologies/bcn-biographies#nacido_en> ?x . FILTER(regex(?x, "Chile", "i")) . }

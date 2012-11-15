@@ -9,6 +9,7 @@ import org.apache.log4j.Logger;
 import org.weso.utils.IndexerCreator;
 import org.weso.utils.NotImplementedException;
 import org.weso.utils.OntoModelException;
+import org.weso.utils.SPARQLQueryBuilderException;
 import org.weso.utils.WesearchException;
 import org.weso.wesearch.context.Context;
 import org.weso.wesearch.domain.Matter;
@@ -34,7 +35,6 @@ import weso.mediator.factory.FacadeFactory;
 import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntProperty;
-import com.hp.hpl.jena.query.QueryBuildException;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 /*
@@ -159,13 +159,17 @@ public class JenaWesearch implements Wesearch {
 	}
 
 	@Override
-	public Query createQuery(Matter s, Property p, ValueSelector v) {
+	public Query createQuery(Matter s, Property p, ValueSelector v) 
+			throws WesearchException {
 		Query query = new SPARQLQuery();
-		query.addClause(SPARQLQueryBuilder.getTypeClause("res", s));
-		query.addClause(SPARQLQueryBuilder.getPropertyClause("res", p,
-				"x"));
-		query.addFilter(SPARQLQueryBuilder.getFilterClause("x", v));
-
+		try {
+			query.addClause(SPARQLQueryBuilder.getTypeClause("res", s));
+			query.addClause(SPARQLQueryBuilder.getPropertyClause("res", p,
+					"x"));
+			query.addFilter(SPARQLQueryBuilder.getFilterClause("x", v));
+		} catch(SPARQLQueryBuilderException e) {
+			throw new WesearchException(e.getMessage());
+		}
 		return query;
 	}
 

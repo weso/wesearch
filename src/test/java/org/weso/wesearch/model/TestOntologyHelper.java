@@ -25,6 +25,7 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.ontology.OntResource;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 public class TestOntologyHelper {
@@ -36,6 +37,8 @@ public class TestOntologyHelper {
 	private OntClass ontClass = null;
 	private OntClass classWithoutLabel = null;
 	private OntClass anonymousClass = null;
+	private OntClass ontClassEnglish = null;
+	private OntClass ontClassWithoutTag = null;
 	
 	@Before
 	public void configure() throws FileNotFoundException {
@@ -44,6 +47,8 @@ public class TestOntologyHelper {
 		ontClass = ont.getOntClass("http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary");
         classWithoutLabel = ont.getOntClass("http://datos.bcn.cl/ontologies/bcn-biographies#ParliamentaryTest");
         anonymousClass = ont.createClass();
+        ontClassEnglish = ont.getOntClass("http://datos.bcn.cl/ontologies/bcn-biographies#Deputy");
+        ontClassWithoutTag = ont.getOntClass("http://datos.bcn.cl/ontologies/bcn-biographies#Embassy");
 	}
 	
 	@Test
@@ -84,10 +89,62 @@ public class TestOntologyHelper {
 	}
 	
 	@Test
-	public void testGetLabelFromResourceIdAnonymousClass() {
-		String expected = "Label not avaible";
+	public void testGetLabelIdAnonymousClass() {
+		String expected = "Label not available";
 		String label = OntologyHelper.getLabel(anonymousClassName, ont);
 		assertEquals(expected, label);
+	}
+	
+	@Test
+	public void testGetLabelFromResourceAnonymousClass() 
+			throws NoSuchMethodException, SecurityException, 
+			IllegalAccessException, IllegalArgumentException, 
+			InvocationTargetException {
+		String expected = "Label not available";
+		Method method = OntologyHelper.class.getDeclaredMethod("getLabelFromResource",
+				Resource.class);
+		method.setAccessible(true);
+		String result = (String)method.invoke(OntologyHelper.class, anonymousClass);
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testGetLabelFromOntResourceEnglishTag() 
+			throws NoSuchMethodException, SecurityException, 
+			IllegalAccessException, IllegalArgumentException, 
+			InvocationTargetException {
+		String expected = "Deputy";
+		Method method = OntologyHelper.class.getDeclaredMethod("getLabelFromOntResource",
+				Resource.class);
+		method.setAccessible(true);
+		String result = (String)method.invoke(OntologyHelper.class, ontClassEnglish);
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testGetLabelFromOntResourceWithoutLanguageTag() 
+			throws NoSuchMethodException, SecurityException, 
+			IllegalAccessException, IllegalArgumentException, 
+			InvocationTargetException {
+		String expected = "Embassy";
+		Method method = OntologyHelper.class.getDeclaredMethod("getLabelFromOntResource",
+				Resource.class);
+		method.setAccessible(true);
+		String result = (String)method.invoke(OntologyHelper.class, ontClassWithoutTag);
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testGetCommentFromResourceAnonymousClass() 
+			throws NoSuchMethodException, SecurityException, 
+			IllegalAccessException, IllegalArgumentException, 
+			InvocationTargetException {
+		String expected = "Comment not available";
+		Method method = OntologyHelper.class.getDeclaredMethod(
+				"getCommentFromResource", Resource.class);
+		method.setAccessible(true);
+		String result = (String)method.invoke(OntologyHelper.class, anonymousClass);
+		assertEquals(expected, result);
 	}
 	
 	@Test
@@ -109,6 +166,32 @@ public class TestOntologyHelper {
 		String unexpected = "";
 		String comment = OntologyHelper.getComment(classNameWithoutLabel, ont);
 		assertNotSame(unexpected, comment);
+	}
+	
+	@Test
+	public void testGetCommentFromOntResourceEnglishTag() 
+			throws NoSuchMethodException, SecurityException, 
+			IllegalAccessException, IllegalArgumentException, 
+			InvocationTargetException {
+		String expected = "A person who is deputy";
+		Method method = OntologyHelper.class.getDeclaredMethod(
+				"getCommentFromOntResource", Resource.class);
+		method.setAccessible(true);
+		String result = (String)method.invoke(OntologyHelper.class, ontClassEnglish);
+		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testGetCommentFromOntResourceWithoutLanguageTag() 
+			throws NoSuchMethodException, SecurityException, 
+			IllegalAccessException, IllegalArgumentException, 
+			InvocationTargetException {
+		String expected = "the official residence or offices of an ambassador.";
+		Method method = OntologyHelper.class.getDeclaredMethod(
+				"getCommentFromOntResource", Resource.class);
+		method.setAccessible(true);
+		String result = (String)method.invoke(OntologyHelper.class, ontClassWithoutTag);
+		assertEquals(expected, result);
 	}
 	
 	@Test

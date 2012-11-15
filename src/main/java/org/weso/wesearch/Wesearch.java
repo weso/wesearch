@@ -28,7 +28,7 @@ public interface Wesearch {
 	/*
 	 * Returns a query for a given subject, property and value selector
 	 */
-	Query createQuery(Matter s, Property p, ValueSelector v);
+	Query createQuery(Matter s, Property p, ValueSelector v) throws WesearchException;
 	
 	/*
 	 * Given a query, returns a new query for a given subject, property and value 

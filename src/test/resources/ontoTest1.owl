@@ -139,4 +139,32 @@
 		</rdfs:isDefinedBy>
 	</rdf:Description>
 	
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#Deputy">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Class"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Class"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="en">A person who is deputy</rdfs:comment>
+		<rdfs:label xml:lang="en">Deputy</rdfs:label>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
+	
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#Embassy">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Class"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Class"/>
+		</rdf:type>
+		<rdfs:comment>the official residence or offices of an ambassador.</rdfs:comment>
+		<rdfs:label>Embassy</rdfs:label>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
+	
 </rdf:RDF>	
