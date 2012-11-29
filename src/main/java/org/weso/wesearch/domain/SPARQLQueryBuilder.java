@@ -18,17 +18,6 @@ import com.hp.hpl.jena.vocabulary.RDF;
 public class SPARQLQueryBuilder {
 	
 	private static Logger logger = Logger.getLogger(SPARQLQueryBuilder.class);
-		
-	/*public static String getTypeClause(String name, Matter matter) 
-			throws SPARQLQueryBuilderException {
-		if(name == null || matter == null) {
-			logger.error("Some part of the query are null");
-			throw new SPARQLQueryBuilderException("Some part of the query are null");
-		}
-		String clause = "?" + name + " <" + RDF.type.toString() + "> " + 
-				"<" + matter.getUri() + ">";
-		return clause;
-	}*/
 	
 	public static String getTypeClause(String name, String objName) 
 			throws QueryBuilderException {
@@ -50,29 +39,6 @@ public class SPARQLQueryBuilder {
 		String query = "?" + name + " <" + property.getUri() + "> " 
 				+ "?" + objName;
 		return query;
-	}
-	
-	public static String getFilterClause(String name, ValueSelector selector) 
-			throws QueryBuilderException {
-		if(name == null || selector == null || selector.getValue() == null || 
-				selector.getValue().getValue() == null) {
-			logger.error("Some part of the query are null");
-			throw new QueryBuilderException("Some part of the query are null");
-		}
-		String filter = "FILTER(";
-		if(selector.getType().equals(ValueSelector.TEXT) ||
-				selector.getType().equals(ValueSelector.UNDEFINED)) {
-			filter += "regex(?" + name + ", \"" + selector.getValue().getValue() + 
-					"\", \"i\")";			
-		} else if (selector.getType().equals(ValueSelector.NUMERIC)) {
-			filter += "xsd:decimal(?" + name + ") = xsd:decimal('" + 
-					selector.getValue().getValue() + "')";
-		} else if (selector.getType().equals(ValueSelector.DATE)) {
-			filter += "xsd:date(?" + name + ") = xsd:date('"
-					+ selector.getValue().getValue() + "')";
-		}
-		filter += ")";
-		return filter;
 	}
 	
 	public static Filter getFilter(String name, ValueSelector selector) 
@@ -102,7 +68,11 @@ public class SPARQLQueryBuilder {
 	}
 	
 	public static SPARQLFilters getClassFilter(String varName, Matter matter, 
-			OntoModelWrapper model) throws OntoModelException {
+			OntoModelWrapper model) throws OntoModelException, QueryBuilderException {
+		if(varName == null || matter == null || model == null) {
+			logger.error("Some part of the query are null");
+			throw new QueryBuilderException("Some part of the query are null");
+		}
 		List<String> classes = OntologyHelper.extractSubclasses(matter, 
 				(OntModel)model.getModel());
 		String clause = "?" + varName + " = <" + matter.getUri() + "> ";

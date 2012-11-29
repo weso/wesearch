@@ -249,9 +249,9 @@ public class TestJenaWesearch {
 			throws WesearchException, OntoModelException {
 		String expected = "SELECT ?res WHERE { ?res " +
 				"<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " +
-				"<http://purl.weso.org/test#Class> . " +
-				"?res <http://purl.weso.org/test#Property> ?a . " +
-				"FILTER(regex(?a, \"Chile\", \"i\")) . }";
+				"?a . " +
+				"?res <http://purl.weso.org/test#Property> ?b . " +
+				"FILTER( regex(?b, \"Chile\", \"i\") ) .FILTER( ?a = <http://purl.weso.org/test#Class>  ) .}";
 		WesearchFactory factory = new JenaWesearchFactory();
 		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
 				new FileOntologyLoader(files));
