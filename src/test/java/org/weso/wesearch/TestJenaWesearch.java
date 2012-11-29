@@ -250,8 +250,8 @@ public class TestJenaWesearch {
 		String expected = "SELECT ?res WHERE { ?res " +
 				"<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " +
 				"<http://purl.weso.org/test#Class> . " +
-				"?res <http://purl.weso.org/test#Property> ?x . " +
-				"FILTER(regex(?x, \"Chile\", \"i\")) . }";
+				"?res <http://purl.weso.org/test#Property> ?a . " +
+				"FILTER(regex(?a, \"Chile\", \"i\")) . }";
 		WesearchFactory factory = new JenaWesearchFactory();
 		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
 				new FileOntologyLoader(files));

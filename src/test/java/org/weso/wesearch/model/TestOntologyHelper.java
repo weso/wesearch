@@ -2,6 +2,7 @@ package org.weso.wesearch.model;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
@@ -13,7 +14,9 @@ import java.lang.reflect.Method;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.weso.utils.OntoModelException;
 import org.weso.wesearch.domain.Matter;
+import org.weso.wesearch.domain.Matters;
 import org.weso.wesearch.domain.Properties;
 import org.weso.wesearch.domain.Property;
 import org.weso.wesearch.domain.ValueSelector;
@@ -388,5 +391,21 @@ public class TestOntologyHelper {
     	String expected = ValueSelector.UNDEFINED;
     	String result = (String)method.invoke(OntologyHelper.class, ontClass);
     	assertEquals(expected, result);
+    }
+    
+    @Test(expected=OntoModelException.class)
+    public void testCreateRangeMattersWithParamNull() throws OntoModelException {
+    	ExtendedIterator<? extends OntResource> it = null;
+    	OntologyHelper.createRangeMatters(it);
+    }
+    
+    @Test
+    public void testCreateRangeMatters() throws OntoModelException {
+    	ExtendedIterator<? extends OntResource> it = 
+    			ont.getOntProperty(
+					"http://datos.bcn.cl/ontologies/bcn-biographies#hasBorn").listRange();
+    	Matters result = OntologyHelper.createRangeMatters(it);
+    	assertNotNull(result);
+    	assertTrue(result.size() > 0);
     }
 }

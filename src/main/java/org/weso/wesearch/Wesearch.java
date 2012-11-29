@@ -33,7 +33,8 @@ public interface Wesearch {
 	/*
 	 * Given a query, returns a new query for a given subject, property and value 
 	 */
-	Query combineQuery(Query q, Matter s, Property p, ValueSelector v);
+	Query combineQuery(Query q, Matter s, Property p, ValueSelector v) 
+			throws WesearchException;
 
 	/*
 	 * Returns the version

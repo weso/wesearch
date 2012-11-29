@@ -1,5 +1,8 @@
 package org.weso.wesearch.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.weso.utils.OntoModelException;
 import org.weso.wesearch.domain.Matter;
@@ -283,6 +286,19 @@ public class OntologyHelper {
 			matters.addMatter(m);
 		}
 		return matters;
+	}
+	
+	public static List<String> extractSubclasses(Matter matter, OntModel model) {
+		List<String> result = new LinkedList<String>();
+		OntClass ontClass = model.getOntClass(matter.getUri());
+		if(ontClass != null) {
+			ExtendedIterator<OntClass> it = ontClass.listSubClasses();
+			while(it.hasNext()) {
+				OntClass aux = it.next();
+				result.add(aux.getURI());
+			}
+		}
+		return result;
 	}
 
 }

@@ -7,9 +7,8 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.weso.utils.IndexerCreator;
-import org.weso.utils.NotImplementedException;
 import org.weso.utils.OntoModelException;
-import org.weso.utils.SPARQLQueryBuilderException;
+import org.weso.utils.QueryBuilderException;
 import org.weso.utils.WesearchException;
 import org.weso.wesearch.context.Context;
 import org.weso.wesearch.domain.Matter;
@@ -23,6 +22,7 @@ import org.weso.wesearch.domain.impl.PropertiesImpl;
 import org.weso.wesearch.domain.impl.SPARQLQuery;
 import org.weso.wesearch.domain.impl.SubjectsImpl;
 import org.weso.wesearch.domain.impl.ValueSelectorImpl;
+import org.weso.wesearch.domain.impl.filters.SPARQLFilters;
 import org.weso.wesearch.domain.impl.values.ObjectValue;
 import org.weso.wesearch.model.OntologyHelper;
 
@@ -170,24 +170,94 @@ public class JenaWesearch implements Wesearch {
 		}
 	}
 
+	/*@Override
+	public Query createQuery(Matter s, Property p, ValueSelector v) 
+			throws WesearchException {
+		try {
+			Query query = new SPARQLQuery();
+			query.addClause(SPARQLQueryBuilder.getTypeClause("res", s));
+			query.addClause(SPARQLQueryBuilder.getPropertyClause("res", p,
+					query.getNextVarName()));
+			if(!v.getType().equals(ValueSelector.OBJECT)) {
+				query.addFilter(SPARQLQueryBuilder.getFilterClause(
+						query.getNextVarName(), v));
+			}
+			return query;
+		}catch(IOException e) {
+			logger.error("Cannot read sparql queries variables");
+			throw new WesearchException("Cannot read sparql queries variables");
+		}catch(SPARQLQueryBuilderException e) {
+			throw new WesearchException(e.getMessage());
+		}
+	}*/
+	
 	@Override
 	public Query createQuery(Matter s, Property p, ValueSelector v) 
 			throws WesearchException {
-		Query query = new SPARQLQuery();
 		try {
-			query.addClause(SPARQLQueryBuilder.getTypeClause("res", s));
+			Query query = new SPARQLQuery();
+			String object = query.getNextVarName();
+			query.addClause(SPARQLQueryBuilder.getTypeClause("res", 
+					object));
+			addTypeFilter(s, query, object);
+			object = query.getNextVarName();
 			query.addClause(SPARQLQueryBuilder.getPropertyClause("res", p,
-					"x"));
-			query.addFilter(SPARQLQueryBuilder.getFilterClause("x", v));
-		} catch(SPARQLQueryBuilderException e) {
+					object));
+			if(!v.getType().equals(ValueSelector.OBJECT)) {
+				query.addFilter(object, SPARQLQueryBuilder.getFilter(
+						object, v));
+			} else {
+				query.addFilter(object, null);
+			}
+			return query;
+		}catch(IOException e) {
+			logger.error("Cannot read sparql queries variables");
+			throw new WesearchException("Cannot read sparql queries variables");
+		}catch(QueryBuilderException e) {
+			throw new WesearchException(e.getMessage());
+		} catch (OntoModelException e) {
 			throw new WesearchException(e.getMessage());
 		}
-		return query;
+	}
+
+	private void addTypeFilter(Matter s, Query query, String varName)
+			throws OntoModelException, QueryBuilderException {
+		SPARQLFilters filters = SPARQLQueryBuilder.getClassFilter(varName, 
+				s, ctx.getOntologiesModel());
+		query.addFilters(varName, filters);
 	}
 
 	@Override
-	public Query combineQuery(Query q, Matter s, Property p, ValueSelector v) {
-		throw new NotImplementedException("combineQuery");
+	public Query combineQuery(Query q, Matter s, Property p, ValueSelector v) 
+			throws WesearchException {
+		try {
+			String subject = "";
+			String object = q.getNextVarName();
+			if(q.isPropertyForResult()) {
+				subject = "res";
+			} else {
+				//Add type clausules to query
+				subject = q.getAuxiliarVarName();
+				q.addClause(SPARQLQueryBuilder.getTypeClause(subject, object));
+				addTypeFilter(s, q, object);
+				object = q.getNextVarName();
+			}
+			
+			//Add property clause to query
+			q.addClause(SPARQLQueryBuilder.getPropertyClause(subject, 
+					p, object));
+			if(!v.getType().equals(ValueSelector.OBJECT)) {
+				q.addFilter(object, SPARQLQueryBuilder.getFilter(
+						object, v));
+			} else {
+				q.addFilter(object, null);
+			}
+		} catch (QueryBuilderException e) {
+			throw new WesearchException(e.getMessage());
+		} catch (OntoModelException e) {
+			throw new WesearchException(e.getMessage());
+		}
+		return q;
 	}
 
 	@Override
