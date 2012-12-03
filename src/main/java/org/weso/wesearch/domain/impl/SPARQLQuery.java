@@ -30,13 +30,11 @@ public class SPARQLQuery implements Query {
 	
 	private Map<String, Filters> filters;
 	private List<String> clauses;
-	/*private List<String> filters;*/
 	private int nextVar;
 	
 	public SPARQLQuery() throws IOException {
 		filters = new HashMap<String, Filters>();
 		clauses = new LinkedList<String>();
-		/*filters = new LinkedList<String>();*/
 		nextVar = -1;
 		if(variables == null) {
 			InputStream input = Configuration.getLocalStream(

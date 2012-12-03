@@ -1,5 +1,6 @@
 package org.weso.wesearch.domain.filter;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -39,10 +40,60 @@ public class TestSPARQLFilters {
 	}
 	
 	@Test
-	public void testContructorThreeParameters() {
+	public void testContructorThreeParameters() 
+			throws IllegalArgumentException, IllegalAccessException, 
+			NoSuchFieldException, SecurityException {
 		SPARQLFilters aux = new SPARQLFilters(new SPARQLFilter("aaaaaa"));
 		SPARQLFilters filters = new SPARQLFilters(
 				new SPARQLFilter("This is a test filter"), Operator.AND, aux);
+		assertNotNull(field.get(filters));
+		field = SPARQLFilters.class.getDeclaredField("op");
+		field.setAccessible(true);
+		assertNotNull(field.get(filters));
+		assertEquals(Operator.AND, field.get(filters));
+		field = SPARQLFilters.class.getDeclaredField("filters");
+		field.setAccessible(true);
+		assertNotNull(field.get(filters));
+	}
+	
+	@Test
+	public void testAddFilter() 
+			throws NoSuchFieldException, SecurityException, 
+			IllegalArgumentException, IllegalAccessException {
+		SPARQLFilters filters = new SPARQLFilters(new SPARQLFilter("This is a test filter"));
+		field = SPARQLFilters.class.getDeclaredField("op");
+		field.setAccessible(true);
+		assertNull(field.get(filters));
+		field = SPARQLFilters.class.getDeclaredField("filters");
+		field.setAccessible(true);
+		assertNull(field.get(filters));
+		filters.addFilter(new SPARQLFilter("aaaaaa"), Operator.AND);		
+		assertNotNull(field.get(filters));
+		field = SPARQLFilters.class.getDeclaredField("op");
+		field.setAccessible(true);
+		assertNotNull(field.get(filters));
+		assertEquals(Operator.AND, field.get(filters));
+	}
+	
+	@Test
+	public void testAddFilterNutNull() 
+			throws NoSuchFieldException, SecurityException, 
+			IllegalArgumentException, IllegalAccessException {
+		SPARQLFilters aux = new SPARQLFilters(new SPARQLFilter("aaaaaa"));
+		SPARQLFilters filters = new SPARQLFilters(
+				new SPARQLFilter("This is a test filter"), Operator.AND, aux);
+		field = SPARQLFilters.class.getDeclaredField("op");
+		field.setAccessible(true);
+		assertNull(field.get(aux));
+		field = SPARQLFilters.class.getDeclaredField("filters");
+		field.setAccessible(true);
+		assertNull(field.get(aux));
+		filters.addFilter(new SPARQLFilter("bbbbbb"), Operator.OR);
+		assertNotNull(field.get(aux));
+		field = SPARQLFilters.class.getDeclaredField("op");
+		field.setAccessible(true);
+		assertNotNull(field.get(aux));
+		assertEquals(Operator.OR, field.get(aux));
 	}
 
 }
