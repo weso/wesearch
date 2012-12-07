@@ -16,6 +16,24 @@ public class MatterImpl implements Matter {
 		this.uri = uri;
 		this.description = description;
 	}
+	
+	public MatterImpl() {
+		this.label = "";
+		this.uri = "";
+		this.description = "";
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
 	@Override
 	public String getLabel() {
