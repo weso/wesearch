@@ -13,7 +13,7 @@ public interface Query {
 	/*
 	 * Return a query in a string
 	 */
-	String getQuery();
+	String obtainQuery();
 	
 	/*
 	 * Add new clause to query
@@ -44,6 +44,6 @@ public interface Query {
 	/*
 	 * Return the name of the auxiliar var that it isn´t typed
 	 */
-	String getAuxiliarVarName();
+	String obtainAuxiliarVarName();
 
 }

@@ -1,7 +1,10 @@
 package org.weso.wesearch.domain.impl;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.weso.wesearch.domain.Property;
 
+@XmlRootElement
 public class JenaPropertyImpl implements Property{
 	
 	private String uri;
@@ -12,6 +15,12 @@ public class JenaPropertyImpl implements Property{
 		this.uri = uri;
 		this.name = name;
 		this.description = description;
+	}
+	
+	public JenaPropertyImpl(){
+		this.uri = "";
+		this.name = "";
+		this.description = "";
 	}
 
 	public String getUri() {

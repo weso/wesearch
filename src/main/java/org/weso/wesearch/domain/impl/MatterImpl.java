@@ -1,8 +1,11 @@
 package org.weso.wesearch.domain.impl;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import org.apache.log4j.Logger;
 import org.weso.wesearch.domain.Matter;
 
+@XmlRootElement
 public class MatterImpl implements Matter {
 	
 	private static Logger logger = Logger.getLogger(MatterImpl.class);

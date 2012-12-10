@@ -46,7 +46,7 @@ public class SPARQLQuery implements Query {
 	}
 
 	@Override
-	public String getQuery() {
+	public String obtainQuery() {
 		String query = "SELECT ?res WHERE { ";
 		for(String clause : clauses) {
 			query += clause + " . ";
@@ -115,7 +115,7 @@ public class SPARQLQuery implements Query {
 	}
 	
 	@Override
-	public String getAuxiliarVarName() {
+	public String obtainAuxiliarVarName() {
 		Set<String> keys = filters.keySet();
 		for(String key : keys) {
 			if(filters.get(key) == null) {

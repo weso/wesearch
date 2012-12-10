@@ -62,7 +62,7 @@ public class CreateQuery extends Steps {
 	
 	@Then("I get query $sparqlQuery")
 	public void getQuery(String sparqlQuery) {
-		String q = query.getQuery();
+		String q = query.obtainQuery();
 		System.out.println(q);
 		assertTrue(q.equals(sparqlQuery));
 	}

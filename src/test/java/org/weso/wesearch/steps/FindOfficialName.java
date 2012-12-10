@@ -51,7 +51,7 @@ public class FindOfficialName extends Steps {
 	
 	@Then("I should get property $propertyUri")
 	public void getProperty(String propertyUri) throws WesearchException {
-		Property property = properties.getPropertyByName("gn:officialName");
+		Property property = properties.getPropertyByName("nombre");
 		assertNotNull(property);
 		assertEquals(propertyUri, property.getUri());
 	}

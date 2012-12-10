@@ -152,7 +152,7 @@ public class TestSPARQLQuery {
 	@Test(expected=RuntimeException.class)
 	public void testGetAuxiliarVarNameException() throws IOException {
 		SPARQLQuery query = new SPARQLQuery();
-		query.getAuxiliarVarName();
+		query.obtainAuxiliarVarName();
 	}
 	
 	@Test
@@ -160,7 +160,7 @@ public class TestSPARQLQuery {
 		SPARQLQuery query = new SPARQLQuery();
 		String expected = "var";
 		query.addFilter("var", null);
-		String result = query.getAuxiliarVarName();
+		String result = query.obtainAuxiliarVarName();
 		assertEquals(expected, result);
 	}
 	

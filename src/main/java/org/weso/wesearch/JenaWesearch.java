@@ -169,27 +169,6 @@ public class JenaWesearch implements Wesearch {
 			throw new WesearchException(e.getMessage());
 		}
 	}
-
-	/*@Override
-	public Query createQuery(Matter s, Property p, ValueSelector v) 
-			throws WesearchException {
-		try {
-			Query query = new SPARQLQuery();
-			query.addClause(SPARQLQueryBuilder.getTypeClause("res", s));
-			query.addClause(SPARQLQueryBuilder.getPropertyClause("res", p,
-					query.getNextVarName()));
-			if(!v.getType().equals(ValueSelector.OBJECT)) {
-				query.addFilter(SPARQLQueryBuilder.getFilterClause(
-						query.getNextVarName(), v));
-			}
-			return query;
-		}catch(IOException e) {
-			logger.error("Cannot read sparql queries variables");
-			throw new WesearchException("Cannot read sparql queries variables");
-		}catch(SPARQLQueryBuilderException e) {
-			throw new WesearchException(e.getMessage());
-		}
-	}*/
 	
 	@Override
 	public Query createQuery(Matter s, Property p, ValueSelector v) 
@@ -237,7 +216,7 @@ public class JenaWesearch implements Wesearch {
 				subject = "res";
 			} else {
 				//Add type clausules to query
-				subject = q.getAuxiliarVarName();
+				subject = q.obtainAuxiliarVarName();
 				q.addClause(SPARQLQueryBuilder.getTypeClause(subject, object));
 				addTypeFilter(s, q, object);
 				object = q.getNextVarName();

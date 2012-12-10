@@ -78,7 +78,7 @@ public class CombineQuery extends Steps {
 	
 	@Then("I get combined query $query")
 	public void getCombinedQuery(String query) {
-		assertEquals(query, resultQuery.getQuery());
+		assertEquals(query, resultQuery.obtainQuery());
 	}
 	
 	

@@ -264,7 +264,7 @@ public class TestJenaWesearch {
 		selector.setValue(new StringValue("Chile"));
 		Query q = ws.createQuery(m, p, selector);
 		assertNotNull(q);
-		assertEquals(expected, q.getQuery());
+		assertEquals(expected, q.obtainQuery());
 	}
 	
 	@Test(expected=WesearchException.class)

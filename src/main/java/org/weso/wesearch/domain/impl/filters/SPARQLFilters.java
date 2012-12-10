@@ -44,7 +44,7 @@ public class SPARQLFilters implements Filters{
 		String result = "";
 		result += filter.getClause();
 		if(op != null && filters != null) {
-			result += op + " " + filters.toString();
+			result += op.value() + " " + filters.toString();
 		}
 		return result;
 	}

@@ -166,7 +166,7 @@ public class TestSPARQLQueryBuilder {
 	@Test
 	public void testGetClassFilter() 
 			throws OntoModelException, QueryBuilderException {
-		String expected = "?class = <http://xmlns.com/foaf/0.1/Person> OR ?class = <http://www.w3.org/2002/07/owl#Nothing> ";
+		String expected = "?class = <http://xmlns.com/foaf/0.1/Person> || ?class = <http://www.w3.org/2002/07/owl#Nothing> ";
 		Filters filters = SPARQLQueryBuilder.getClassFilter("class", matter, model);
 		String result = filters.toString();
 		assertEquals(expected, result);
