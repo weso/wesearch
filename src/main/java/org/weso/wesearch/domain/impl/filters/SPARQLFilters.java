@@ -2,24 +2,43 @@ package org.weso.wesearch.domain.impl.filters;
 
 public class SPARQLFilters implements Filters{
 	
-	private Filter filter;
+	private SPARQLFilter filter;
 	private Operator op;
 	private Filters filters;
 	
-	public SPARQLFilters(Filter filter) {
+	public SPARQLFilters(SPARQLFilter filter) {
 		this.filter = filter;
 		op = null;
 		filters = null;
 	}
 	
-	public SPARQLFilters(Filter filter, Operator op, 
+	public SPARQLFilters() {
+		this.filter = null;
+		this.op = null;
+		this.filters = null;
+	}
+	
+	
+	public Filter getFilter() {
+		return filter;
+	}
+
+	public void setFilter(SPARQLFilter filter) {
+		this.filter = filter;
+	}
+
+	public Operator getOp() {
+		return op;
+	}
+
+	public SPARQLFilters(SPARQLFilter filter, Operator op, 
 			Filters filters) {
 		this.filter = filter;
 		this.op = op;
 		this.filters = filters;
 	}
 	
-	public void setOperator(Operator op) {
+	public void setOp(Operator op) {
 		this.op = op;
 	}
 	
@@ -34,7 +53,7 @@ public class SPARQLFilters implements Filters{
 	public void addFilter(Filter filter, Operator op) {
 		if(filters == null) {
 			this.op = op;
-			this.filters = new SPARQLFilters(filter);
+			this.filters = new SPARQLFilters((SPARQLFilter)filter);
 		} else {
 			filters.addFilter(filter, op);
 		}

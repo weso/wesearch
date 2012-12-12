@@ -80,7 +80,7 @@ public class SPARQLQueryBuilder {
 		SPARQLFilters aux = result;
 		for(int i = 0; i < classes.size(); i++) {
 			String clazz = classes.get(i);
-			aux.setOperator(Operator.OR);
+			aux.setOp(Operator.OR);
 			String auxClause = "?" + varName + " = <" + clazz + "> ";
 			aux.setFilters(new SPARQLFilters(new SPARQLFilter(auxClause)));
 			aux = (SPARQLFilters)aux.getFilters();			

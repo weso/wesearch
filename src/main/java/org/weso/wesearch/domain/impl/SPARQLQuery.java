@@ -18,6 +18,7 @@ import org.weso.wesearch.domain.Query;
 import org.weso.wesearch.domain.impl.filters.Filter;
 import org.weso.wesearch.domain.impl.filters.Filters;
 import org.weso.wesearch.domain.impl.filters.Operator;
+import org.weso.wesearch.domain.impl.filters.SPARQLFilter;
 import org.weso.wesearch.domain.impl.filters.SPARQLFilters;
 
 import weso.mediator.config.Configuration;
@@ -31,6 +32,7 @@ public class SPARQLQuery implements Query {
 	private Map<String, Filters> filters;
 	private List<String> clauses;
 	private int nextVar;
+	private String query;
 	
 	public SPARQLQuery() throws IOException {
 		filters = new HashMap<String, Filters>();
@@ -43,6 +45,7 @@ public class SPARQLQuery implements Query {
 			variables = new LinkedList<String>(var.keySet());
 			Collections.sort(variables);
 		}
+		query = "";
 	}
 
 	@Override
@@ -85,7 +88,7 @@ public class SPARQLQuery implements Query {
 		} else {
 			Filters fil;
 			if((fil = filters.get(varName)) == null ) {
-				SPARQLFilters sparqlFilters = new SPARQLFilters(filter);
+				SPARQLFilters sparqlFilters = new SPARQLFilters((SPARQLFilter)filter);
 				filters.put(varName, sparqlFilters);
 			} else {
 				fil.addFilter(filter, Operator.AND);
@@ -123,6 +126,47 @@ public class SPARQLQuery implements Query {
 			}
 		}
 		throw new RuntimeException("There isn't any auxiliar variable that it isn't typed");
+	}
+
+	public static List<String> getVariables() {
+		return variables;
+	}
+
+	public static void setVariables(List<String> variables) {
+		SPARQLQuery.variables = variables;
+	}
+
+	public Map<String, Filters> getFilters() {
+		return filters;
+	}
+
+	public void setFilters(Map<String, Filters> filters) {
+		this.filters = filters;
+	}
+
+	public List<String> getClauses() {
+		return clauses;
+	}
+
+	public void setClauses(List<String> clauses) {
+		this.clauses = clauses;
+	}
+
+	public int getNextVar() {
+		return nextVar;
+	}
+
+	public void setNextVar(int nextVar) {
+		this.nextVar = nextVar;
+	}
+
+	public String getQuery() {
+		query = obtainQuery();
+		return query;
+	}
+
+	public void setQuery(String query) {
+		this.query = query;
 	}
 
 }

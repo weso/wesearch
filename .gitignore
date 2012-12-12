@@ -24,3 +24,4 @@ out/
 
 # Mac
 .DS_Store
+/logs

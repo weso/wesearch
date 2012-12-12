@@ -8,6 +8,14 @@ public class SPARQLFilter implements Filter{
 		this.clause = clause;
 	}
 	
+	public SPARQLFilter() {
+		this.clause = "";
+	}
+	
+	public void setString(String clause) {
+		this.clause = clause;
+	}
+	
 	@Override
 	public String getClause() {
 		return this.clause;
