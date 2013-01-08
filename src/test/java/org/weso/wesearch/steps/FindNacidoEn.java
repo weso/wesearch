@@ -1,6 +1,9 @@
 package org.weso.wesearch.steps;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
@@ -19,7 +22,10 @@ import org.weso.wesearch.model.OntoModelWrapper;
 import org.weso.wesearch.model.impl.FileOntologyLoader;
 import org.weso.wesearch.model.impl.JenaOntoModelWrapper;
 
+import weso.mediator.core.persistence.jena.JenaModelFileWrapper;
+
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.rdf.model.Model;
 
 public class FindNacidoEn extends Steps {
 	
@@ -33,6 +39,8 @@ public class FindNacidoEn extends Steps {
 				new FileOntologyLoader(ontologies));
 		WesearchFactory factory = new JenaWesearchFactory();
 		wesearch = factory.createWesearch(modelWrapper);
+		JenaModelFileWrapper.getInstance().loadModelFromModel(
+				(Model)modelWrapper.getModel());
 		assertTrue(modelWrapper.getModel() instanceof OntModel);
 		assertFalse(((OntModel)modelWrapper.getModel()).isEmpty());
 	}
@@ -43,7 +51,7 @@ public class FindNacidoEn extends Steps {
 		Matter m = new MatterImpl(matter, 
 				"http://datos.bcn.cl/ontologies/bcn-biographies#Ministro", 
 				"Persona que dirige cada uno de los departamentos " +
-				"ministeriales en que se divide la gobernación del Estado");
+				"ministeriales en que se divide la gobernaciï¿½n del Estado");
 		properties = wesearch.getProperties(m, str);
 		assertNotNull(properties);
 		assertTrue(properties.iterator().hasNext());

@@ -50,7 +50,7 @@ public class SPARQLQuery implements Query {
 
 	@Override
 	public String obtainQuery() {
-		String query = "SELECT ?res WHERE { ";
+		String query = "SELECT DISTINCT ?res WHERE { ";
 		for(String clause : clauses) {
 			query += clause + " . ";
 		}

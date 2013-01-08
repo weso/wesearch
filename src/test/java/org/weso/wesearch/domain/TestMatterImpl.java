@@ -6,7 +6,6 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
-import org.weso.wesearch.domain.Matter;
 import org.weso.wesearch.domain.impl.MatterImpl;
 
 public class TestMatterImpl {
@@ -60,6 +59,38 @@ public class TestMatterImpl {
 		String expected = "uriPrueba labelTest comentario";
 		Matter m = new MatterImpl("labelTest", "uriPrueba", "comentario");
 		assertEquals(expected, m.toString());
+	}
+	
+	@Test
+	public void testConstructorWithoutParameters() {
+		MatterImpl matter = new MatterImpl();
+		assertEquals("", matter.getDescription());
+		assertEquals("", matter.getLabel());
+		assertEquals("", matter.getUri());
+	}
+	
+	@Test
+	public void testSetLabel() {
+		MatterImpl matter = new MatterImpl();
+		assertEquals("", matter.getLabel());
+		matter.setLabel("test label");
+		assertEquals("test label", matter.getLabel());
+	}
+	
+	@Test
+	public void testSetDescription() {
+		MatterImpl matter = new MatterImpl();
+		assertEquals("", matter.getDescription());
+		matter.setDescription("test description");
+		assertEquals("test description", matter.getDescription());
+	}
+	
+	@Test
+	public void testSetUri() {
+		MatterImpl matter = new MatterImpl();
+		assertEquals("", matter.getUri());
+		matter.setUri("test uri");
+		assertEquals("test uri", matter.getUri());
 	}
 
 }

@@ -95,5 +95,21 @@ public class TestSPARQLFilters {
 		assertNotNull(field.get(aux));
 		assertEquals(Operator.OR, field.get(aux));
 	}
+	
+	@Test
+	public void testConstructorWithoutParameters() {
+		SPARQLFilters filters = new SPARQLFilters();
+		assertNull(filters.getFilters());
+		assertNull(filters.getOp());
+		assertNull(filters.getFilter());
+	}
+	
+	@Test
+	public void testSetFilter() {
+		SPARQLFilters filters = new SPARQLFilters();
+		assertNull(filters.getFilter());
+		filters.setFilter(new SPARQLFilter("test clause"));
+		assertNotNull(filters.getFilter());
+	}
 
 }

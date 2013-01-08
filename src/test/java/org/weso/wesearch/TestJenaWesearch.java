@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Iterator;
@@ -32,8 +33,10 @@ import org.weso.wesearch.model.impl.FileOntologyLoader;
 import org.weso.wesearch.model.impl.JenaOntoModelWrapper;
 
 import weso.mediator.core.domain.Suggestion;
+import weso.mediator.core.persistence.jena.JenaModelFileWrapper;
 
 import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
 
@@ -43,7 +46,7 @@ public class TestJenaWesearch {
 	private List<Suggestion> suggestions = null;
 	
 	@Before
-	public void initialize() throws OntoModelException {
+	public void initialize() throws OntoModelException, FileNotFoundException {
 		suggestions = new LinkedList<Suggestion>();
 		suggestions.add(new Suggestion("http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary", 
 				(float)0.8));
@@ -63,6 +66,7 @@ public class TestJenaWesearch {
 	public void testGetMattersWithLabel() throws WesearchException, OntoModelException {
 		WesearchFactory factory = new JenaWesearchFactory();
 		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
+		JenaModelFileWrapper.getInstance().loadModelFromModel((Model)modelWrapper.getModel());
 		String expectedLabel = "Parlamentario";
 		String expectedComment = "Una persona que es parlamentario.";
 		String expectedUri = "http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary";
@@ -143,6 +147,7 @@ public class TestJenaWesearch {
 		String[] fileNames = {"src/test/resources/ontoTest3.owl"};
 		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
 				new FileOntologyLoader(fileNames));
+		JenaModelFileWrapper.getInstance().loadModelFromModel((Model)modelWrapper.getModel());
 		Wesearch ws = factory.createWesearch(modelWrapper);
 		Matter m = new MatterImpl("Parlamentario", 
 				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary", 
@@ -247,7 +252,7 @@ public class TestJenaWesearch {
 	@Test
 	public void testCreateQuery() 
 			throws WesearchException, OntoModelException {
-		String expected = "SELECT ?res WHERE { ?res " +
+		String expected = "SELECT DISTINCT ?res WHERE { ?res " +
 				"<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " +
 				"?a . " +
 				"?res <http://purl.weso.org/test#Property> ?b . " +

@@ -18,5 +18,19 @@ public class TestSPARQLFilter {
 		result = filter.getClause();
 		assertNull(result);
 	}
+	
+	@Test
+	public void testConstructorWithoutParameters() {
+		SPARQLFilter filter = new SPARQLFilter();
+		assertEquals("", filter.getClause());
+	}
+	
+	@Test
+	public void testSetString() {
+		SPARQLFilter filter = new SPARQLFilter();
+		assertEquals("", filter.getClause());
+		filter.setString("test clause");
+		assertEquals("test clause", filter.getClause());
+	}
 
 }

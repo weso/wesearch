@@ -8,6 +8,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +18,7 @@ import org.weso.utils.QueryBuilderException;
 import org.weso.utils.WesearchException;
 import org.weso.wesearch.domain.impl.SPARQLQuery;
 import org.weso.wesearch.domain.impl.filters.Filter;
+import org.weso.wesearch.domain.impl.filters.Filters;
 import org.weso.wesearch.domain.impl.filters.Operator;
 import org.weso.wesearch.domain.impl.filters.SPARQLFilter;
 import org.weso.wesearch.domain.impl.filters.SPARQLFilters;
@@ -174,6 +177,72 @@ public class TestSPARQLQuery {
 		expected = false;
 		result = query.isPropertyForResult();
 		assertEquals(expected, result);
+	}
+	
+	@Test
+	public void testGetVariables() throws IOException {
+		assertNotNull(SPARQLQuery.getVariables());
+		assertEquals(26, SPARQLQuery.getVariables().size());
+	}
+	
+	@Test
+	public void testSetVariables() {
+		List<String> variables = SPARQLQuery.getVariables();
+		SPARQLQuery.setVariables(null);
+		assertNull(SPARQLQuery.getVariables());
+		List<String> list = new LinkedList<String>();
+		SPARQLQuery.setVariables(list);
+		assertNotNull(SPARQLQuery.getVariables());
+		list.add("aaa");
+		assertEquals(1, SPARQLQuery.getVariables().size());
+		SPARQLQuery.setVariables(variables);
+	}
+	
+	@Test
+	public void testGetAndSetFilters() throws IOException {
+		SPARQLQuery query = new SPARQLQuery();
+		assertNotNull(query.getFilters());
+		assertTrue(query.getFilters().isEmpty());
+		query.setFilters(null);
+		assertNull(query.getFilters());
+		Map<String, Filters> filters = new HashMap<String, Filters>();
+		query.setFilters(filters);
+		assertNotNull(query.getFilters());
+		assertTrue(query.getFilters().isEmpty());
+		filters.put("test", null);
+		assertFalse(query.getFilters().isEmpty());
+	}
+	
+	@Test
+	public void testGetAndSetClauses() throws IOException {
+		SPARQLQuery query = new SPARQLQuery();
+		assertTrue(query.getClauses().isEmpty());
+		query.setClauses(null);
+		assertNull(query.getClauses());
+		List<String> clauses = new LinkedList<String>();
+		query.setClauses(clauses);
+		assertTrue(query.getClauses().isEmpty());
+		clauses.add("test");
+		assertFalse(query.getClauses().isEmpty());
+	}
+	
+	@Test
+	public void testGetAndSetNextVar() throws IOException {
+		SPARQLQuery query = new SPARQLQuery();
+		assertEquals(-1, query.getNextVar());
+		query.setNextVar(20);
+		assertEquals(20, query.getNextVar());
+	}
+	
+	@Test
+	public void testGetAndSetQuery() throws IOException {
+		SPARQLQuery query = new SPARQLQuery();
+		assertNotNull(query.getQuery());
+		assertEquals("SELECT DISTINCT ?res WHERE { }", query.getQuery());
+		query.setQuery("is a test query");
+		assertEquals("SELECT DISTINCT ?res WHERE { }", query.getQuery());
+		query.setQuery(null);
+		assertNotNull(query.getQuery());
 	}
 
 }

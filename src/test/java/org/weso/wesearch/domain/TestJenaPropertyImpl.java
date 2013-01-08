@@ -101,5 +101,13 @@ public class TestJenaPropertyImpl {
 		JenaPropertyImpl prop = new JenaPropertyImpl("uriTest", "name test", "other test description");
 		assertEquals(property.hashCode(), prop.hashCode());
 	}
+	
+	@Test
+	public void testContructorWithoutParameters() {
+		JenaPropertyImpl prop = new JenaPropertyImpl();
+		assertEquals("", prop.getDescription());
+		assertEquals("", prop.getName());
+		assertEquals("", prop.getUri());
+	}
 
 }
