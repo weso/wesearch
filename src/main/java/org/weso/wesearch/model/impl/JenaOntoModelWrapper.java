@@ -15,6 +15,7 @@ import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.reasoner.Reasoner;
 import com.hp.hpl.jena.reasoner.rulesys.OWLMicroReasoner;
 import com.hp.hpl.jena.reasoner.rulesys.OWLMicroReasonerFactory;
+import com.hp.hpl.jena.shared.JenaException;
 
 public class JenaOntoModelWrapper implements OntoModelWrapper{
 	
@@ -51,12 +52,15 @@ public class JenaOntoModelWrapper implements OntoModelWrapper{
 		logger.debug("Loading " + streams.length + " ontologies");
 		
 		for(int i = 0; i < streams.length; i++) {
-			InputStream in = streams[i];
-			ontModel.read(in, "");			
 			try {
+				InputStream in = streams[i];
+				ontModel.read(in, "");			
 				in.close();
 			} catch (IOException e) {
 				logger.error("Error closing an ontology model stream");
+				throw new OntoModelException(e.getMessage());
+			} catch (JenaException e) {
+				logger.error("Error reading an ontology");
 				throw new OntoModelException(e.getMessage());
 			}
 		}

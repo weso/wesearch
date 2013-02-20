@@ -38,14 +38,23 @@ import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
 
-/*
- * Implementation based on Jena
+/**
+ * This class is an implementation of Wesearch based on Jena
+ * @author Ignacio Fuertes Bernardo
+ *
  */
 public class JenaWesearch implements Wesearch {
 	
 	private static Logger logger = Logger.getLogger(JenaWesearch.class);
-
+	
+	/**
+	 * The object that save the context of the wesarch
+	 */
 	private Context ctx;
+	
+	/**
+	 * An instance of wesomed that allow text search over the ontologies
+	 */
 	private WESOMed<IndexLucene> wesomed;
 
 	@SuppressWarnings("unchecked")
@@ -72,6 +81,12 @@ public class JenaWesearch implements Wesearch {
 		}
 	}
 	
+	/**
+	 * This method has to create a collection of subjects from an iterator of
+	 * OntClass objects
+	 * @param it The iterator that contains the source objects to convert
+	 * @return A collection of subjects
+	 */
 	private Matters createMatterFromResources(ExtendedIterator<OntClass> it) {
 		Matters matters = new SubjectsImpl();
 		while(it.hasNext()) {
@@ -83,6 +98,14 @@ public class JenaWesearch implements Wesearch {
 		return matters;
 	}
 	
+	/**
+	 * This method has to create a collection of subjects from a list of
+	 * suggestions obtained by wesomed
+	 * @param it An iterator over the list of suggestions
+	 * @return A collection of subjects
+	 * @throws OntoModelException This exception is thrown if there are 
+	 * some problem creating the subjects 
+	 */
 	private Matters createMatterFromResourceId(Iterator<Suggestion> it) throws OntoModelException {
 		Matters matters = new SubjectsImpl();
 		while(it.hasNext()) {
@@ -114,6 +137,12 @@ public class JenaWesearch implements Wesearch {
 		}
 	}
 	
+	/**
+	 * This method has to find the properties that are in both lists
+	 * @param allProperties All properties of one class of the ontology
+	 * @param filteredProperties All properties that are result of text search
+	 * @return All properties that are in both lists
+	 */
 	private Properties matchingProperties(Properties allProperties,
 			List<Suggestion> filteredProperties) {
 		Properties result = new PropertiesImpl();
@@ -127,6 +156,13 @@ public class JenaWesearch implements Wesearch {
 		return result;
 	}
 
+	/**
+	 * This method return if one property is in a list of properties
+	 * @param filteredProperties List of properties which are looking for a 
+	 * particular property
+	 * @param p Property that method has to find in the list
+	 * @return boolean 
+	 */ 
 	private boolean isPropertySought(List<Suggestion> filteredProperties, Property p) {
 		for(Suggestion sug : filteredProperties) {
 			if(sug.getResourceId().equals(p.getUri())) {
@@ -173,6 +209,10 @@ public class JenaWesearch implements Wesearch {
 	@Override
 	public Query createQuery(Matter s, Property p, ValueSelector v) 
 			throws WesearchException {
+		if(s == null || p == null || v == null) {
+			logger.error("Parameters to create a query are null");
+			throw new WesearchException("Parameters to create a query are null");
+		}
 		try {
 			Query query = new SPARQLQuery();
 			String object = query.getNextVarName();
@@ -209,6 +249,10 @@ public class JenaWesearch implements Wesearch {
 	@Override
 	public Query combineQuery(Query q, Matter s, Property p, ValueSelector v) 
 			throws WesearchException {
+		if(q == null || s == null || p == null || v == null) {
+			logger.error("Some of parameters o combine query are null");
+			throw new WesearchException("Some of parameters o combine query are null");
+		}
 		try {
 			String subject = "";
 			String object = q.getNextVarName();

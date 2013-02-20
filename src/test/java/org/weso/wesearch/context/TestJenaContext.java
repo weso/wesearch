@@ -24,5 +24,13 @@ public class TestJenaContext {
 			assert(false);
 		}
 	}
+	
+	@Test(expected=OntoModelException.class)
+	public void testGetOntologiesModelFail() throws OntoModelException {
+		String[] files = {"src/test/resources/test.txt"};
+		OntoModelWrapper wrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
+		JenaContext context = new JenaContext(wrapper);
+		context.getOntologiesModel().getModel();
+	}
 
 }
