@@ -25,3 +25,6 @@ out/
 # Mac
 .DS_Store
 /logs
+
+#Clover
+.clover/
