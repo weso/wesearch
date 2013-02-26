@@ -69,10 +69,12 @@ public class JenaWesearch implements Wesearch {
 		try {
 			if(stem.equals("")) {
 				return createMatterFromResources(
-						((OntModel)ctx.getOntologiesModel().getModel()).listClasses());
+						((OntModel)ctx.getOntologiesModel().getModel())
+						.listClasses());
 			}
 			List<Suggestion> classes =
-					wesomed.getSuggestions(stem, Configuration.getProperty("index_dir_classes"));
+					wesomed.getSuggestions(stem, 
+							Configuration.getProperty("index_dir_classes"));
 			return createMatterFromResourceId(classes.iterator());
 		} catch (SuggestionException e) {
 			throw new WesearchException(e.getMessage());
@@ -106,7 +108,8 @@ public class JenaWesearch implements Wesearch {
 	 * @throws OntoModelException This exception is thrown if there are 
 	 * some problem creating the subjects 
 	 */
-	private Matters createMatterFromResourceId(Iterator<Suggestion> it) throws OntoModelException {
+	private Matters createMatterFromResourceId(Iterator<Suggestion> it) 
+			throws OntoModelException {
 		Matters matters = new SubjectsImpl();
 		while(it.hasNext()) {
 			Suggestion clazz = it.next();
@@ -120,7 +123,8 @@ public class JenaWesearch implements Wesearch {
 	}
 
 	@Override
-	public Properties getProperties(Matter s, String stem) throws WesearchException {
+	public Properties getProperties(Matter s, String stem) 
+			throws WesearchException {
 		try {	
 			Properties allProperties = obtainAllPropertiesByMatter(s);
 			if(stem.equals("")) {				
@@ -128,7 +132,8 @@ public class JenaWesearch implements Wesearch {
 			}
 		
 			List<Suggestion> filteredProperties = 
-					wesomed.getSuggestions(stem, Configuration.getProperty("index_dir_properties"));
+					wesomed.getSuggestions(stem, 
+							Configuration.getProperty("index_dir_properties"));
 			return matchingProperties(allProperties, filteredProperties);
 		} catch (SuggestionException e) {
 			throw new WesearchException(e.getMessage());
@@ -157,13 +162,14 @@ public class JenaWesearch implements Wesearch {
 	}
 
 	/**
-	 * This method return if one property is in a list of properties
+	 * This method returns if one property is in a list of properties
 	 * @param filteredProperties List of properties which are looking for a 
 	 * particular property
 	 * @param p Property that method has to find in the list
-	 * @return boolean 
+	 * @return boolean that indicates if the property is in the list
 	 */ 
-	private boolean isPropertySought(List<Suggestion> filteredProperties, Property p) {
+	private boolean isPropertySought(List<Suggestion> filteredProperties, 
+			Property p) {
 		for(Suggestion sug : filteredProperties) {
 			if(sug.getResourceId().equals(p.getUri())) {
 				return true;
@@ -172,7 +178,16 @@ public class JenaWesearch implements Wesearch {
 		return false;
 	}
 
-	private Properties obtainAllPropertiesByMatter(Matter matter) throws OntoModelException {
+	/**
+	 * This method has to obtain all properties of one determinate class from 
+	 * the ontologies
+	 * @param matter A class of an ontology to obtain all it's properties
+	 * @return A collection of properties
+	 * @throws OntoModelException This exception is thrown if there are any 
+	 * problem obtaining the properties
+	 */
+	private Properties obtainAllPropertiesByMatter(Matter matter) 
+			throws OntoModelException {
 		Properties properties = new PropertiesImpl();
 		OntModel model = (OntModel)ctx.getOntologiesModel().getModel();
 		OntClass ontClass = model.getOntClass(matter.getUri());
@@ -196,7 +211,8 @@ public class JenaWesearch implements Wesearch {
 			if(type.equals(ValueSelector.OBJECT)) {
 				ValueSelector selector = new ValueSelectorImpl(type);
 				Matters matters = 
-						OntologyHelper.createRangeMatters(ontProperty.listRange());
+						OntologyHelper.createRangeMatters(
+								ontProperty.listRange());
 				selector.setValue(new ObjectValue(matters));
 				return selector;
 			}
@@ -211,7 +227,8 @@ public class JenaWesearch implements Wesearch {
 			throws WesearchException {
 		if(s == null || p == null || v == null) {
 			logger.error("Parameters to create a query are null");
-			throw new WesearchException("Parameters to create a query are null");
+			throw new WesearchException("Parameters to create a query " +
+					"are null");
 		}
 		try {
 			Query query = new SPARQLQuery();
@@ -239,6 +256,16 @@ public class JenaWesearch implements Wesearch {
 		}
 	}
 
+	/**
+	 * This method adds a type filter to a given query.
+	 * @param s The type that must have the variable to filter
+	 * @param query Query to add the type filter
+	 * @param varName Name of the variable to filter
+	 * @throws OntoModelException This exception is thrown if there are some 
+	 * problem during extraction of information over the ontology
+	 * @throws QueryBuilderException This exception is thrown if there are some
+	 * problem generating the query
+	 */
 	private void addTypeFilter(Matter s, Query query, String varName)
 			throws OntoModelException, QueryBuilderException {
 		SPARQLFilters filters = SPARQLQueryBuilder.getClassFilter(varName, 
@@ -251,7 +278,8 @@ public class JenaWesearch implements Wesearch {
 			throws WesearchException {
 		if(q == null || s == null || p == null || v == null) {
 			logger.error("Some of parameters o combine query are null");
-			throw new WesearchException("Some of parameters o combine query are null");
+			throw new WesearchException("Some of parameters o combine query" +
+					" are null");
 		}
 		try {
 			String subject = "";
@@ -288,34 +316,61 @@ public class JenaWesearch implements Wesearch {
 		return "0.1";
 	}
 	
+	/**
+	 * This method has to initialized wesomed
+	 * @throws WesearchException This exception is thrown if there are 
+	 * some problem reading the file that contains queries to extract 
+	 * information to index
+	 */
 	private void initializeWesomed() throws WesearchException {
 		try {
 			indexClasses();
 			indexProperties();
 		} catch (IOException e) {
-			logger.error("Cannot read files that contains queries: " + e.getMessage());
+			logger.error("Cannot read files that contains queries: " + 
+					e.getMessage());
 			throw new WesearchException(e.getMessage());
 		} catch (SuggestionException e) {
 			throw new WesearchException(e.getMessage());
 		}
 	}
 
+	/**
+	 * This method has to index all properties of the ontologies in wesomed 
+	 * to allow text search over them.
+	 * @throws IOException This exception is thrown if there are some problems 
+	 * reading the file that contains the query to extract properties.
+	 * @throws SuggestionException This exception is thrown if there are some 
+	 * problems indexing properties in wesomed
+	 */
 	private void indexProperties() throws IOException, SuggestionException {
-		List<IndexLucene> indexers = IndexerCreator.createIndexerForProperties();
+		List<IndexLucene> indexers = 
+				IndexerCreator.createIndexerForProperties();
 		
-		String query = Configuration.getContentsFromProperty("query_properties");
+		String query = 
+				Configuration.getContentsFromProperty("query_properties");
 		
 		wesomed.indexEntities(
-				Configuration.getProperty("index_dir_properties"), query, indexers);
+				Configuration.getProperty("index_dir_properties"), query, 
+					indexers);
 	}
 	
+	/**
+	 * This method has to index all classes of the ontologies in wesomed to 
+	 * allow text search over them.
+	 * @throws IOException This exception is thrown if there are some problems 
+	 * reading the file that contains the query to extract classes.
+	 * @throws SuggestionException This exception is throw if there are some 
+	 * problems indexing classes in wesomed.
+	 */
 	private void indexClasses() throws IOException, SuggestionException {
 		List<IndexLucene> indexers = IndexerCreator.createIndexerForClasses();
 		
 		String query = Configuration.getContentsFromProperty("query_classes");
 		
 		wesomed.indexEntities(
-				Configuration.getProperty("index_dir_classes"), query, indexers);
+				Configuration.getProperty("index_dir_classes"), query, 
+				indexers);
 	}
 
 }

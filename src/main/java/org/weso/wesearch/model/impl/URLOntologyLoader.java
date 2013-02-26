@@ -8,14 +8,32 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
+/**
+ * This class extends the class FileOntologyHelper and allows to load ontologies
+ * from URLs
+ * @author Ignacio Fuertes Bernardo
+ *
+ */
 public class URLOntologyLoader extends FileOntologyLoader {
 	
 	private static final Logger logger = Logger.getLogger(URLOntologyLoader.class);
 
+	/**
+	 * The constructor that receives an array that contains all full names of
+	 * the ontologies to load.
+	 * @param fileNames An array of string that contains the URLs of the 
+	 * ontologies
+	 */
 	public URLOntologyLoader(String[] fileNames) {
 		super(fileNames);
 	}
 	
+	/**
+	 * The constructor that receives a list that contains all full names of the
+	 * ontologies to load.
+	 * @param fileNames A list of string that contains the URLs of the 
+	 * ontologies
+	 */
 	public URLOntologyLoader(List<String> fileNames) {
 		super(fileNames);
 	}

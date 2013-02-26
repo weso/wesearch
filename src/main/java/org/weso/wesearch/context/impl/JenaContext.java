@@ -13,13 +13,28 @@ import weso.mediator.core.persistence.jena.JenaModelFileWrapper;
 
 import com.hp.hpl.jena.ontology.OntModel;
 
+/**
+ * It's an implementation of Context based onf Apache Jena
+ * @author Ignacio Fuertes Bernardo
+ *
+ */
 public class JenaContext implements Context {
 	
 	private static final Logger logger = Logger.getLogger(JenaContext.class);
 	
+	/**
+	 * An instance of the wrapper that contains the model wiht ontologies
+	 */
 	private OntoModelWrapper modelWrapper;
 	
-	public JenaContext(OntoModelWrapper modelWrapper) throws OntoModelException {
+	/**
+	 * It's the contructos of the class
+	 * @param modelWrapper The object that contains the model with ontologies
+	 * @throws OntoModelException This exception is thrown if there is a problem
+	 * saving the model.
+	 */
+	public JenaContext(OntoModelWrapper modelWrapper) 
+			throws OntoModelException {
 		this.modelWrapper = modelWrapper;
 		saveModel();
 	}
@@ -29,7 +44,13 @@ public class JenaContext implements Context {
 		return modelWrapper;
 	}
 	
-	
+	/**
+	 * This method has to pass the model to wesomed through a "logical" file
+	 * using JenaModelFileWrapper (class of wesomed that allows it to load 
+	 * entities from a Jena model) or a physical file in the file system.
+	 * @throws OntoModelException This exception is thrown if ther is a problem
+	 * saving the model in a file.
+	 */
 	private void saveModel() throws OntoModelException {		
 		OntModel model = (OntModel)modelWrapper.getModel();	
 		String datasource = Configuration.getProperty("datasource_uri");
@@ -38,9 +59,11 @@ public class JenaContext implements Context {
 			logger.info("Pass an instance of the model");
 		} else {
 			try {		
-				JenaModelFileWrapper.getInstance().loadModelFromFile(new File(datasource));		
+				JenaModelFileWrapper.getInstance().loadModelFromFile(
+						new File(datasource));		
 			} catch (FileNotFoundException e) {		
-				logger.error("Cannot save model in a local file: " + e.getMessage());
+				logger.error("Cannot save model in a local file: " + 
+			e.getMessage());
 				logger.info("Pass an instance of the model");
 				JenaModelFileWrapper.getInstance().loadModelFromModel(model);
 			}

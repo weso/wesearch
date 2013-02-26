@@ -36,7 +36,7 @@
 		<version>1.2.14</version>
 	</dependency>
 
-<!--Jena-->
+	<!--Jena-->
 	<dependency>
 		<groupId>com.hp.hpl.jena</groupId>
 		<artifactId>jena</artifactId>
