@@ -9,18 +9,30 @@ import org.weso.utils.WesearchException;
 import org.weso.wesearch.domain.Properties;
 import org.weso.wesearch.domain.Property;
 
+/**
+ * It's an implementation of the interface Properties
+ * @author Ignacio Fuertes Bernardo
+ *
+ */
 public class PropertiesImpl implements Properties {
 	
 	private static Logger logger = Logger.getLogger(PropertiesImpl.class);
 	
+	/**
+	 * A set of properties that contains all the properties stored by the object
+	 */
 	Set<Property> properties;
 	
+	/**
+	 * It's the constructor of the class
+	 */
 	public PropertiesImpl() {
 		properties = new HashSet<Property>();
 	}
 
 	@Override
-	public Property getPropertyByName(String propertyName) throws WesearchException {
+	public Property getPropertyByName(String propertyName) 
+			throws WesearchException {
 		Iterator<Property> it = iterator();
 		
 		while(it.hasNext()) {
@@ -32,7 +44,8 @@ public class PropertiesImpl implements Properties {
 			}
 		}
 		logger.error("There isn't any property with name " + propertyName);
-		throw new WesearchException("There isn't any property with name " + propertyName);
+		throw new WesearchException("There isn't any property with name " 
+				+ propertyName);
 		
 	}
 

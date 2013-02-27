@@ -23,17 +23,41 @@ import org.weso.wesearch.domain.impl.filters.SPARQLFilters;
 
 import weso.mediator.config.Configuration;
 
+/**
+ * It's an implementation of the interface Query that represents SPARQL queries
+ */
 public class SPARQLQuery implements Query {
 	
 	private static Logger logger = Logger.getLogger(SPARQLQuery.class);
 	
+	/**
+	 * A list of variable to use in the queries
+	 */
 	private static List<String> variables = null;
-	
+	/**
+	 * A map that a contains a relantion between a variable and a filter that
+	 * are applied over the variable
+	 */
 	private Map<String, Filters> filters;
+	/**
+	 * A list of clauses that form the query
+	 */
 	private List<String> clauses;
+	/**
+	 * Is the position in the list of the next variable to use in the query
+	 */
 	private int nextVar;
+	/**
+	 * The string form of the query
+	 */
 	private String query;
 	
+	/**
+	 * It's the constructor of the class
+	 * @throws IOException This exception is thrown if there is a problem 
+	 * reading the file that contains the name of the variables to use in the 
+	 * queries
+	 */
 	public SPARQLQuery() throws IOException {
 		filters = new HashMap<String, Filters>();
 		clauses = new LinkedList<String>();
@@ -64,13 +88,16 @@ public class SPARQLQuery implements Query {
 		return query;
 	}
 	
+	@Override
 	public void addClause(String clause) {
 		if(clause != null) {
 			clauses.add(clause);
 		}
 	}
 	
-	public void addFilters(String varName, Filters filter) throws QueryBuilderException {
+	@Override
+	public void addFilters(String varName, Filters filter) 
+			throws QueryBuilderException {
 		if(varName == null || filter == null) {
 			logger.error("Some part of the query are null");
 			throw new QueryBuilderException("Some part of the query are null");
@@ -78,7 +105,9 @@ public class SPARQLQuery implements Query {
 		filters.put(varName, filter);
 	}
 	
-	public void addFilter(String varName, Filter filter) throws QueryBuilderException {
+	@Override
+	public void addFilter(String varName, Filter filter) 
+			throws QueryBuilderException {
 		if(varName == null) {
 			logger.error("Some part of the query are null");
 			throw new QueryBuilderException("Some part of the query are null");
@@ -88,7 +117,8 @@ public class SPARQLQuery implements Query {
 		} else {
 			Filters fil;
 			if((fil = filters.get(varName)) == null ) {
-				SPARQLFilters sparqlFilters = new SPARQLFilters((SPARQLFilter)filter);
+				SPARQLFilters sparqlFilters = new SPARQLFilters(
+						(SPARQLFilter)filter);
 				filters.put(varName, sparqlFilters);
 			} else {
 				fil.addFilter(filter, Operator.AND);
@@ -125,46 +155,89 @@ public class SPARQLQuery implements Query {
 				return key;
 			}
 		}
-		throw new RuntimeException("There isn't any auxiliar variable that it isn't typed");
+		throw new RuntimeException("There isn't any auxiliar variable that " +
+				"it isn't typed");
 	}
 
+	/**
+	 * This method returns the list of variables
+	 * @return The list of variables to use in the query
+	 */
 	public static List<String> getVariables() {
 		return variables;
 	}
 
+	/**
+	 * This method sets a new list of variables
+	 * @param variables The new list of variables
+	 */
 	public static void setVariables(List<String> variables) {
 		SPARQLQuery.variables = variables;
 	}
 
+	/**
+	 * This method returns the map that contains the relations between variables
+	 * and filters
+	 * @return A map with the relations between variables and filters
+	 */
 	public Map<String, Filters> getFilters() {
 		return filters;
 	}
 
+	/**
+	 * This method sets a new map with the relation between variables and them
+	 * filters
+	 * @param filters The new map
+	 */
 	public void setFilters(Map<String, Filters> filters) {
 		this.filters = filters;
 	}
 
+	/**
+	 * This method return the list of clauses of the query
+	 * @return The list of clauses
+	 */
 	public List<String> getClauses() {
 		return clauses;
 	}
 
+	/**
+	 * This method sets a new list of clauses
+	 * @param clauses The new list of clauses of the query
+	 */
 	public void setClauses(List<String> clauses) {
 		this.clauses = clauses;
 	}
 
+	/**
+	 * This method returns the position of the next variable to use in the query
+	 * @return The position in the list of the next variable to use in the query
+	 */
 	public int getNextVar() {
 		return nextVar;
 	}
 
+	/**
+	 * This method sets a new position in the list for the next variable to use
+	 * @param nextVar The position in the list of the next var
+	 */
 	public void setNextVar(int nextVar) {
 		this.nextVar = nextVar;
 	}
 
+	/**
+	 * This method returns the string of the SPARQL query
+	 * @return The string of the SPARQL query
+	 */
 	public String getQuery() {
 		query = obtainQuery();
 		return query;
 	}
 
+	/**
+	 * This method sets a new string to the query
+	 * @param query The new string to the query
+	 */
 	public void setQuery(String query) {
 		this.query = query;
 	}

@@ -9,12 +9,24 @@ import org.weso.utils.WesearchException;
 import org.weso.wesearch.domain.Matter;
 import org.weso.wesearch.domain.Matters;
 
+/**
+ * It's an implementation of interface Matters. Represents a container of Matter
+ * objects
+ * @author Ignacio Fuertes Bernardo
+ *
+ */
 public class SubjectsImpl implements Matters {
 	
 	private static Logger logger = Logger.getLogger(SubjectsImpl.class);
 	
+	/**
+	 * A list of matters that contains all matters stored by the object
+	 */
 	private List<Matter> matters;
 	
+	/**
+	 * It's a constructor of the class
+	 */
 	public SubjectsImpl() {
 		matters = new LinkedList<Matter>();
 	}
