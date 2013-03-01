@@ -55,8 +55,7 @@ public class JenaContext implements Context {
 		OntModel model = (OntModel)modelWrapper.getModel();	
 		String datasource = Configuration.getProperty("datasource_uri");
 		if(datasource.equals("virtual")) {
-			JenaModelFileWrapper.getInstance().loadModelFromModel(model);
-			logger.info("Pass an instance of the model");
+			passModelToWesomed(model);
 		} else {
 			try {		
 				JenaModelFileWrapper.getInstance().loadModelFromFile(
@@ -64,10 +63,19 @@ public class JenaContext implements Context {
 			} catch (FileNotFoundException e) {		
 				logger.error("Cannot save model in a local file: " + 
 			e.getMessage());
-				logger.info("Pass an instance of the model");
-				JenaModelFileWrapper.getInstance().loadModelFromModel(model);
+				passModelToWesomed(model);
 			}
-		}				
+		}
+	}
+
+	/**
+	 * This method has to pass the model that contains the ontologies to wesomed
+	 * using the class JenaModelFileWrapper supplied by wesomed
+	 * @param model The model that the method has to send to wesomed
+	 */
+	private void passModelToWesomed(OntModel model) {
+		JenaModelFileWrapper.getInstance().loadModelFromModel(model);
+		logger.info("Pass an instance of the model");
 	}
 	
 

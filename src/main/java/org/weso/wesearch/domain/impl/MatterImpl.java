@@ -89,7 +89,8 @@ public class MatterImpl implements Matter {
 	public boolean equals(Matter m) {
 		if(m == null) {
 			logger.error("The paramenter can not be null");
-			throw new IllegalArgumentException("The paramenter can not be null");
+			throw new IllegalArgumentException("The paramenter can not " +
+					"be null");
 		}
 		return this.label.equals(m.getLabel());
 	}

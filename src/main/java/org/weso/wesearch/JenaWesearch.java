@@ -66,8 +66,9 @@ public class JenaWesearch implements Wesearch {
 
 	@Override
 	public Matters getMatters(String stem) throws WesearchException {
+		validateParams(stem);
 		try {
-			if(stem.equals("")) {
+			if(isValidStem(stem)) {
 				return createMatterFromResources(
 						((OntModel)ctx.getOntologiesModel().getModel())
 						.listClasses());
@@ -81,6 +82,31 @@ public class JenaWesearch implements Wesearch {
 		} catch (OntoModelException e) {
 			throw new WesearchException(e.getMessage());
 		}
+	}
+	
+	/**
+	 * This method has to check if there is any object in the array that is null
+	 * @param params An array of objects that have to check
+	 * @throws WesearchException This exception is thrown if there is a null
+	 * object in the array
+	 */
+	private void validateParams(Object... params) throws WesearchException {
+		for(int i = 0; i < params.length; i++) {
+			if(params[i] == null) {
+				logger.error("There is a param in the request null");
+				throw new WesearchException("There is a param in the request " +
+						"null");
+			}
+		}
+	}
+
+	/**
+	 * This method has to valid if the string is valid to obtain a suggestion
+	 * @param stem The string to valid
+	 * @return A boolean indicates if the string is valid
+	 */
+	private boolean isValidStem(String stem) {
+		return stem.equals("");
 	}
 	
 	/**
@@ -125,9 +151,10 @@ public class JenaWesearch implements Wesearch {
 	@Override
 	public Properties getProperties(Matter s, String stem) 
 			throws WesearchException {
+		validateParams(s, stem);
 		try {	
 			Properties allProperties = obtainAllPropertiesByMatter(s);
-			if(stem.equals("")) {				
+			if(isValidStem(stem)) {				
 				return allProperties;
 			}
 		
@@ -200,10 +227,7 @@ public class JenaWesearch implements Wesearch {
 	@Override
 	public ValueSelector getValueSelector(Matter s, Property p) 
 			throws WesearchException {
-		if(p == null) {
-			logger.error("Property cannot be null");
-			throw new WesearchException("Property cannot be null");
-		}
+		validateParams(s, p);
 		try {
 			OntModel ontModel = (OntModel)ctx.getOntologiesModel().getModel();
 			OntProperty ontProperty = ontModel.getOntProperty(p.getUri());
@@ -225,26 +249,14 @@ public class JenaWesearch implements Wesearch {
 	@Override
 	public Query createQuery(Matter s, Property p, ValueSelector v) 
 			throws WesearchException {
-		if(s == null || p == null || v == null) {
-			logger.error("Parameters to create a query are null");
-			throw new WesearchException("Parameters to create a query " +
-					"are null");
-		}
+		validateParams(s, p, v);
 		try {
 			Query query = new SPARQLQuery();
+			addTypeClauseToQuery("res", query.getNextVarName(), query, s);
 			String object = query.getNextVarName();
-			query.addClause(SPARQLQueryBuilder.getTypeClause("res", 
-					object));
-			addTypeFilter(s, query, object);
-			object = query.getNextVarName();
 			query.addClause(SPARQLQueryBuilder.getPropertyClause("res", p,
 					object));
-			if(!v.getType().equals(ValueSelector.OBJECT)) {
-				query.addFilter(object, SPARQLQueryBuilder.getFilter(
-						object, v));
-			} else {
-				query.addFilter(object, null);
-			}
+			addFilterToQuery(v, query, object);
 			return query;
 		}catch(IOException e) {
 			logger.error("Cannot read sparql queries variables");
@@ -253,6 +265,25 @@ public class JenaWesearch implements Wesearch {
 			throw new WesearchException(e.getMessage());
 		} catch (OntoModelException e) {
 			throw new WesearchException(e.getMessage());
+		}
+	}
+
+	/**
+	 * This method has to add a filter clause to the query that receives as a
+	 * parameter
+	 * @param v The value selector to filter in the query
+	 * @param query The query to adds the filter
+	 * @param object The name of the variable that has to filter in the query
+	 * @throws QueryBuilderException This exception is thrown if there is a 
+	 * problem generating the filter clause
+	 */
+	private void addFilterToQuery(ValueSelector v, Query query, String object)
+			throws QueryBuilderException {
+		if(!v.getType().equals(ValueSelector.OBJECT)) {
+			query.addFilter(object, SPARQLQueryBuilder.getFilter(
+					object, v));
+		} else {
+			query.addFilter(object, null);
 		}
 	}
 
@@ -272,15 +303,32 @@ public class JenaWesearch implements Wesearch {
 				s, ctx.getOntologiesModel());
 		query.addFilters(varName, filters);
 	}
+	
+	/**
+	 * This method has to add a type clause to the query that receives as a 
+	 * parameter
+	 * @param subject The name of the variable that has to be an instance
+	 * of a determinate class
+	 * @param object The name of the variable that has to be filtered
+	 * @param query The query to add the filter
+	 * @param matter The matter to filter
+	 * @throws OntoModelException This exception is thrown if there is a problem
+	 * generating the filter clause
+	 * @throws QueryBuilderException This exception is thrown if there is a 
+	 * problem generating the filter clause
+	 */
+	private void addTypeClauseToQuery(String subject, String object, 
+			Query query, Matter matter) throws OntoModelException, 
+			QueryBuilderException {
+		query.addClause(SPARQLQueryBuilder.getTypeClause(subject, object));
+		
+		addTypeFilter(matter, query, object);
+	}
 
 	@Override
 	public Query combineQuery(Query q, Matter s, Property p, ValueSelector v) 
 			throws WesearchException {
-		if(q == null || s == null || p == null || v == null) {
-			logger.error("Some of parameters o combine query are null");
-			throw new WesearchException("Some of parameters o combine query" +
-					" are null");
-		}
+		validateParams(q, s, p, v);
 		try {
 			String subject = "";
 			String object = q.getNextVarName();
@@ -289,20 +337,15 @@ public class JenaWesearch implements Wesearch {
 			} else {
 				//Add type clausules to query
 				subject = q.obtainAuxiliarVarName();
-				q.addClause(SPARQLQueryBuilder.getTypeClause(subject, object));
-				addTypeFilter(s, q, object);
+				addTypeClauseToQuery(subject, object, q, 
+						s);
 				object = q.getNextVarName();
 			}
 			
 			//Add property clause to query
 			q.addClause(SPARQLQueryBuilder.getPropertyClause(subject, 
 					p, object));
-			if(!v.getType().equals(ValueSelector.OBJECT)) {
-				q.addFilter(object, SPARQLQueryBuilder.getFilter(
-						object, v));
-			} else {
-				q.addFilter(object, null);
-			}
+			addFilterToQuery(v, q, object);
 		} catch (QueryBuilderException e) {
 			throw new WesearchException(e.getMessage());
 		} catch (OntoModelException e) {

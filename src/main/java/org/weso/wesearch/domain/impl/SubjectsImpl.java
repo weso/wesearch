@@ -45,7 +45,8 @@ public class SubjectsImpl implements Matters {
 			}
 		}
 		logger.error("There isn't any matter with label " + label);
-		throw new WesearchException("There isn't any matter with label " + label);
+		throw new WesearchException("There isn't any matter with label " + 
+				label);
 	}
 
 	@Override

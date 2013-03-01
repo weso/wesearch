@@ -85,11 +85,29 @@ public class SPARQLQueryBuilder {
 			logger.error("Some part of the query are null");
 			throw new QueryBuilderException("Some part of the query are null");
 		}
+		String clause = generateFilterClause(name, selector);
+		if(clause.equals("")) {
+			logger.error("Invalid value selector for filter clause");
+			throw new QueryBuilderException("Invalid value selector for " +
+					"filter clause");
+		}
+		return new SPARQLFilter(clause);
+	}
+
+	/**
+	 * This method has to generate a filter clause corresponding with the type
+	 * of the value selector
+	 * @param name The name of the variable that has to be filtered
+	 * @param selector The selector to use in the filter
+	 * @return The filter clause generated
+	 */
+	private static String generateFilterClause(String name,
+			ValueSelector selector) {
 		String clause = "";
 		if(selector.getType().equals(ValueSelector.TEXT) ||
 				selector.getType().equals(ValueSelector.UNDEFINED)) {
-			clause += "regex(?" + name + ", \"" + selector.getValue().getValue() + 
-					"\", \"i\")";			
+			clause += "regex(?" + name + ", \"" + 
+				selector.getValue().getValue() + "\", \"i\")";			
 		} else if (selector.getType().equals(ValueSelector.NUMERIC)) {
 			clause += "xsd:decimal(?" + name + ") = xsd:decimal('" + 
 					selector.getValue().getValue() + "')";
@@ -97,11 +115,7 @@ public class SPARQLQueryBuilder {
 			clause += "xsd:date(?" + name + ") = xsd:date('"
 					+ selector.getValue().getValue() + "')";
 		}
-		if(clause.equals("")) {
-			logger.error("Invalid value selector for filter clause");
-			throw new QueryBuilderException("Invalid value selector for filter clause");
-		}
-		return new SPARQLFilter(clause);
+		return clause;
 	}
 	
 	/**
@@ -117,7 +131,8 @@ public class SPARQLQueryBuilder {
 	 * problem building the filter
 	 */
 	public static SPARQLFilters getClassFilter(String varName, Matter matter, 
-			OntoModelWrapper model) throws OntoModelException, QueryBuilderException {
+			OntoModelWrapper model) throws OntoModelException, 
+			QueryBuilderException {
 		if(varName == null || matter == null || model == null) {
 			logger.error("Some part of the query are null");
 			throw new QueryBuilderException("Some part of the query are null");
@@ -127,6 +142,18 @@ public class SPARQLQueryBuilder {
 		String clause = "?" + varName + " = <" + matter.getUri() + "> ";
 		SPARQLFilters result = new SPARQLFilters(new SPARQLFilter(clause));
 		SPARQLFilters aux = result;
+		concatAllClassFilter(varName, classes, aux);
+		return result;
+	}
+
+	/**
+	 * This method has to concatenate all calls filter over one variable
+	 * @param varName The name of the variable that has to be filtered
+	 * @param classes The list of all classes to filter the variable
+	 * @param aux The first class filter
+	 */
+	private static void concatAllClassFilter(String varName,
+			List<String> classes, SPARQLFilters aux) {
 		for(int i = 0; i < classes.size(); i++) {
 			String clazz = classes.get(i);
 			aux.setOp(Operator.OR);
@@ -134,7 +161,6 @@ public class SPARQLQueryBuilder {
 			aux.setFilters(new SPARQLFilters(new SPARQLFilter(auxClause)));
 			aux = (SPARQLFilters)aux.getFilters();			
 		}
-		return result;
 	}
 	
 }

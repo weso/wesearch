@@ -292,23 +292,50 @@ public class OntologyHelper {
 			return ValueSelector.UNDEFINED;
 		}
 		String uriRange = range.getURI();
-		if(uriRange.equals("http://www.w3.org/2001/XMLSchema#date") || 
-				uriRange.equals("http://www.w3.org/2001/XMLSchema#dateTime") || 
-				uriRange.equals("http://www.w3.org/2001/XMLSchema#time")) {
+		if(isDateRange(uriRange)) {
 			return ValueSelector.DATE;
-		} else if (uriRange.equals("http://www.w3.org/2001/XMLSchema#decimal") 
+		} else if (isNumericRange(uriRange)) {
+			return ValueSelector.NUMERIC;
+		} else if (isTextRange(uriRange)) {
+			return ValueSelector.TEXT;
+		} 
+		return ValueSelector.UNDEFINED;
+	}
+
+	/**
+	 * This method has to return if the range of a property is a text or no
+	 * @param uriRange The range of a property
+	 * @return A boolean indicates if the range must be a string or no
+	 */
+	private static boolean isTextRange(String uriRange) {
+		return uriRange.equals("http://www.w3.org/2001/XMLSchema#string") || 
+				uriRange.equals(
+						"http://www.w3.org/2000/01/rdf-schema#Literal");
+	}
+
+	/**
+	 * This method has to return if the range of a property is numeric or no
+	 * @param uriRange The range of a property
+	 * @return A boolean indicates if the range must be a number or no
+	 */
+	private static boolean isNumericRange(String uriRange) {
+		return uriRange.equals("http://www.w3.org/2001/XMLSchema#decimal") 
 				|| uriRange.equals("http://www.w3.org/2001/XMLSchema#float") || 
 				uriRange.equals("http://www.w3.org/2001/XMLSchema#double") || 
 				uriRange.equals("http://www.w3.org/2001/XMLSchema#long") ||
 				uriRange.equals("http://www.w3.org/2001/XMLSchema#integer") || 
-				uriRange.equals("http://www.w3.org/2001/XMLSchema#int")) {
-			return ValueSelector.NUMERIC;
-		} else if (uriRange.equals("http://www.w3.org/2001/XMLSchema#string") || 
-				uriRange.equals(
-						"http://www.w3.org/2000/01/rdf-schema#Literal")) {
-			return ValueSelector.TEXT;
-		} 
-		return ValueSelector.UNDEFINED;
+				uriRange.equals("http://www.w3.org/2001/XMLSchema#int");
+	}
+
+	/**
+	 * This method has to return if the range is of date type
+	 * @param uriRange The range of a property
+	 * @return A boolean indicates if the range must be a date or no
+	 */
+	private static boolean isDateRange(String uriRange) {
+		return uriRange.equals("http://www.w3.org/2001/XMLSchema#date") || 
+				uriRange.equals("http://www.w3.org/2001/XMLSchema#dateTime") || 
+				uriRange.equals("http://www.w3.org/2001/XMLSchema#time");
 	}
 
 	/**

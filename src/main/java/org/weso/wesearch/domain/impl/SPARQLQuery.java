@@ -63,28 +63,58 @@ public class SPARQLQuery implements Query {
 		clauses = new LinkedList<String>();
 		nextVar = -1;
 		if(variables == null) {
-			InputStream input = Configuration.getLocalStream(
-					Configuration.getProperty("sparql_variables"));
-			ResourceBundle var = new PropertyResourceBundle(input);
-			variables = new LinkedList<String>(var.keySet());
-			Collections.sort(variables);
+			readVariableFromProperties();
 		}
 		query = "";
+	}
+
+	/**
+	 * This method has to load variables to use in the queries form the file
+	 * which path is in properties file
+	 * @throws IOException This exception is thrown if there is a problem 
+	 * reading the variables from file
+	 */
+	private void readVariableFromProperties() throws IOException {
+		InputStream input = Configuration.getLocalStream(
+				Configuration.getProperty("sparql_variables"));
+		ResourceBundle var = new PropertyResourceBundle(input);
+		variables = new LinkedList<String>(var.keySet());
+		Collections.sort(variables);
 	}
 
 	@Override
 	public String obtainQuery() {
 		String query = "SELECT DISTINCT ?res WHERE { ";
-		for(String clause : clauses) {
-			query += clause + " . ";
-		}
+		query += generateClausesString();
+		query += generateFilterClausesString();
+		query += "}";
+		return query;
+	}
+
+	/**
+	 * This method concatenates all filter clauses of the query
+	 * @return A string that concatenates the filter clauses
+	 */
+	private String generateFilterClausesString() {
+		String query = "";
 		for(String key : filters.keySet()) {
 			Filters filters = this.filters.get(key);
 			if(filters != null) {
 				query += "FILTER( " + filters.toString() + " ) .";
 			}
 		}
-		query += "}";
+		return query;
+	}
+
+	/**
+	 * This method concatenates all clauses (except filter clauses) of the query
+	 * @return A string that concatenates the clauses
+	 */
+	private String generateClausesString() {
+		String query = "";
+		for(String clause : clauses) {
+			query += clause + " . ";
+		}
 		return query;
 	}
 	
@@ -115,14 +145,24 @@ public class SPARQLQuery implements Query {
 		if(filter == null) {
 			filters.put(varName, null);
 		} else {
-			Filters fil;
-			if((fil = filters.get(varName)) == null ) {
-				SPARQLFilters sparqlFilters = new SPARQLFilters(
-						(SPARQLFilter)filter);
-				filters.put(varName, sparqlFilters);
-			} else {
-				fil.addFilter(filter, Operator.AND);
-			}
+			concatFilterVariable(varName, filter);
+		}
+	}
+
+	/**
+	 * This method concatenates a new filter to others that already filter a 
+	 * variable in the query
+	 * @param varName The name of the variable that has to be filtered
+	 * @param filter The new filter to add
+	 */
+	private void concatFilterVariable(String varName, Filter filter) {
+		Filters fil;
+		if((fil = filters.get(varName)) == null ) {
+			SPARQLFilters sparqlFilters = new SPARQLFilters(
+					(SPARQLFilter)filter);
+			filters.put(varName, sparqlFilters);
+		} else {
+			fil.addFilter(filter, Operator.AND);
 		}
 	}
 

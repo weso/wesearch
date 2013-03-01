@@ -23,8 +23,8 @@ public enum Operator {
 	}
 	
 	/**
-	 * This method returns  the string valur of the operator
-	 * @return The string valur
+	 * This method returns  the string value of the operator
+	 * @return The string value
 	 */
 	public String value() {
 		return value;
