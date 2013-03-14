@@ -12,7 +12,8 @@ import org.weso.utils.OntoModelException;
 
 public class TestFileOntologyLoader {
 	
-	private String[] fileNames = {"src/test/resources/test.txt", "src/test/resources/test2.txt"};
+	private String[] fileNames = {"src/test/resources/test.txt", 
+			"src/test/resources/test2.txt"};
 	
 	@Test(expected=FileNotFoundException.class)
 	public void testOpenInputStream() throws FileNotFoundException {
@@ -28,7 +29,8 @@ public class TestFileOntologyLoader {
 	}
 	
 	@Test
-	public void testGetOntologiesSourceData() throws OntoModelException, IOException {
+	public void testGetOntologiesSourceData() throws OntoModelException, 
+		IOException {
 		FileOntologyLoader loader = new FileOntologyLoader(fileNames);
 		InputStream [] streams = loader.getOntologiesSourceData();
 		assertTrue(streams.length == 2);
@@ -36,7 +38,8 @@ public class TestFileOntologyLoader {
 	
 	@Test
 	public void testGetOntologiesAsNames() {
-		String []expected = {"src/test/resources/test.txt", "src/test/resources/test2.txt"};
+		String []expected = {"src/test/resources/test.txt", 
+				"src/test/resources/test2.txt"};
 		FileOntologyLoader loader = new FileOntologyLoader(fileNames);
 		String[] result = loader.getOntologiesAsName();
 		for(int i = 0; i < result.length; i++) {
@@ -52,7 +55,8 @@ public class TestFileOntologyLoader {
 	}
 	
 	@Test(expected=OntoModelException.class)
-	public void testGetOntologiesSourceDataWithoutFileNames() throws OntoModelException {
+	public void testGetOntologiesSourceDataWithoutFileNames() 
+			throws OntoModelException {
 		String[] filenames = null;
 		FileOntologyLoader loader = new FileOntologyLoader(filenames);
 		loader.getOntologiesSourceData();

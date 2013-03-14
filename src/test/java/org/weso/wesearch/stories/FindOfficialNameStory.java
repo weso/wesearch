@@ -18,7 +18,8 @@ public class FindOfficialNameStory extends JUnitStory {
 	public Configuration configuration() {
 		return new MostUsefulConfiguration().useStoryLoader(
 				new LoadFromClasspath(this.getClass())).useStoryReporterBuilder(
-						new StoryReporterBuilder().withFormats(Format.HTML, Format.CONSOLE));
+						new StoryReporterBuilder().withFormats(Format.HTML, 
+								Format.CONSOLE));
 	}
 	
 	@Override

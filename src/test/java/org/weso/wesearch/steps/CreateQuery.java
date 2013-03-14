@@ -32,20 +32,20 @@ public class CreateQuery extends Steps {
 	private ValueSelector valueSelector;
 	private Query query;
 	
-	@Given("a matter $m, property $p and value selector $selector with value $value")
-	public void loadQueryParameters(String m, String p, String selector, String value) 
-			throws WesearchException, OntoModelException {
+	@Given("a matter $m, property $p and value selector $selector with " +
+			"value $value")
+	public void loadQueryParameters(String m, String p, String selector, 
+			String value) throws WesearchException, OntoModelException {
 		String[] ontologies = {"src/test/resources/ontoTest2.owl"};
     	WesearchFactory factory = new JenaWesearchFactory();
-    	OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(ontologies));
+    	OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
+    			new FileOntologyLoader(ontologies));
     	wesearch = factory.createWesearch(modelWrapper);
-		String uri = "http://datos.bcn.cl/ontologies/bcn-biographies#" + p;
-		property = new JenaPropertyImpl(uri, "nacido_en", 
-				"Indica donde ha nacido un ministro");
-		String matterUri = "http://datos.bcn.cl/ontologies/bcn-biographies#" + m;
-		matter = new MatterImpl("Ministro", matterUri, 
-				"Persona que dirige cada uno de los departamentos " +
-				"ministeriales en que se divide la gobernación del Estado");
+		property = new JenaPropertyImpl(p, "nacido_en", 
+				"");
+		matter = new MatterImpl("Ministro", m, 
+				"" +
+				"");
 		valueSelector = new ValueSelectorImpl(selector);
 		valueSelector.setValue(new StringValue(value));
 		assertNotNull(wesearch);

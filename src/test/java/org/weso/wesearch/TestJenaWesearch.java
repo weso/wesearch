@@ -48,28 +48,36 @@ public class TestJenaWesearch {
 	@Before
 	public void initialize() throws OntoModelException, FileNotFoundException {
 		suggestions = new LinkedList<Suggestion>();
-		suggestions.add(new Suggestion("http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary", 
+		suggestions.add(new Suggestion(
+				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary", 
 				(float)0.8));
-		suggestions.add(new Suggestion("http://datos.bcn.cl/ontologies/bcn-biographies#ParliamentaryTest" ,
+		suggestions.add(new Suggestion(
+				"http://datos.bcn.cl/ontologies/bcn-biographies#" +
+				"ParliamentaryTest" ,
 				(float)0.7));
 	}
 
 	@Test
 	public void testVersion() throws WesearchException, OntoModelException { 
 		WesearchFactory factory = new JenaWesearchFactory();
-		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
+		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
+				new FileOntologyLoader(files));
 		Wesearch ws = factory.createWesearch(modelWrapper);
 		assertEquals(ws.version(),"0.1");
 	}
 
 	@Test
-	public void testGetMattersWithLabel() throws WesearchException, OntoModelException {
+	public void testGetMattersWithLabel() throws WesearchException, 
+	OntoModelException {
 		WesearchFactory factory = new JenaWesearchFactory();
-		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
-		JenaModelFileWrapper.getInstance().loadModelFromModel((Model)modelWrapper.getModel());
+		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
+				new FileOntologyLoader(files));
+		JenaModelFileWrapper.getInstance().loadModelFromModel(
+				(Model)modelWrapper.getModel());
 		String expectedLabel = "Parlamentario";
 		String expectedComment = "Una persona que es parlamentario.";
-		String expectedUri = "http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary";
+		String expectedUri = 
+				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary";
 		Wesearch ws = factory.createWesearch(modelWrapper);
 		Matters ms = ws.getMatters("Parlamentario");
 		assertEquals(1, ms.size());
@@ -83,9 +91,11 @@ public class TestJenaWesearch {
 	}
 	
 	@Test
-	public void testGetMattersWithoutLable() throws WesearchException, OntoModelException {
+	public void testGetMattersWithoutLable() throws WesearchException, 
+	OntoModelException {
 		WesearchFactory factory = new JenaWesearchFactory();
-		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
+		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
+				new FileOntologyLoader(files));
 		Wesearch ws = factory.createWesearch(modelWrapper);
 		 Matters ms = ws.getMatters("");
 		 assertTrue(ms.size() > 0);
@@ -93,14 +103,17 @@ public class TestJenaWesearch {
 	
 	@SuppressWarnings("rawtypes")
 	@Test
-	public void testCreateMatterFromResourceId() throws SecurityException, NoSuchMethodException, 
-		OntoModelException, IllegalArgumentException, IllegalAccessException, 
-		InvocationTargetException, WesearchException {
+	public void testCreateMatterFromResourceId() throws SecurityException, 
+		NoSuchMethodException, OntoModelException, IllegalArgumentException, 
+		IllegalAccessException, InvocationTargetException, WesearchException {
 		WesearchFactory factory = new JenaWesearchFactory();
-		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
-		JenaWesearch wesearch = (JenaWesearch) factory.createWesearch(modelWrapper);
+		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
+				new FileOntologyLoader(files));
+		JenaWesearch wesearch = (JenaWesearch) factory.createWesearch(
+				modelWrapper);
 		Class[] params = {Iterator.class};
-		Method method = JenaWesearch.class.getDeclaredMethod("createMatterFromResourceId", params);
+		Method method = JenaWesearch.class.getDeclaredMethod(
+				"createMatterFromResourceId", params);
 		method.setAccessible(true);
 		Object[] paramsValues = {suggestions.iterator()};
 		Matters matters = (Matters)method.invoke(wesearch, paramsValues);	
@@ -109,19 +122,24 @@ public class TestJenaWesearch {
 	
 	@SuppressWarnings("rawtypes")
 	@Test
-    public void testCreateMatterFromResource() throws SecurityException, NoSuchMethodException, 
-	    OntoModelException, IllegalArgumentException, IllegalAccessException, 
-	    InvocationTargetException, WesearchException {
+    public void testCreateMatterFromResource() throws SecurityException, 
+    	NoSuchMethodException, OntoModelException, IllegalArgumentException, 
+    	IllegalAccessException, InvocationTargetException, WesearchException {
 		WesearchFactory factory = new JenaWesearchFactory();
-		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
+		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
+				new FileOntologyLoader(files));
 		String expectedLabel = "Parlamentario";
 		String expectedComment = "Una persona que es parlamentario.";
-		String expectedUri = "http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary";
-	    JenaWesearch wesearch = (JenaWesearch) factory.createWesearch(modelWrapper);
+		String expectedUri = 
+				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary";
+	    JenaWesearch wesearch = (JenaWesearch) factory.createWesearch(
+	    		modelWrapper);
 	    Class[] params = {ExtendedIterator.class};
-	    Method method = JenaWesearch.class.getDeclaredMethod("createMatterFromResources", params);
+	    Method method = JenaWesearch.class.getDeclaredMethod(
+	    		"createMatterFromResources", params);
 	    method.setAccessible(true);
-	    Object[] paramsValues = {((OntModel)modelWrapper.getModel()).listClasses()};
+	    Object[] paramsValues = {
+	    		((OntModel)modelWrapper.getModel()).listClasses()};
 	    Matters matters = (Matters)method.invoke(wesearch, paramsValues);       
 	    Matter m = matters.findMatter("Parlamentario");
 	    assertEquals(expectedComment, m.getDescription());
@@ -130,9 +148,11 @@ public class TestJenaWesearch {
     }
 	
 	@Test
-	public void testGetPropertiesWithoutProperties() throws WesearchException, OntoModelException {
+	public void testGetPropertiesWithoutProperties() throws WesearchException, 
+		OntoModelException {
 		WesearchFactory factory = new JenaWesearchFactory();
-		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
+		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
+				new FileOntologyLoader(files));
 		Wesearch ws = factory.createWesearch(modelWrapper);
 		Matter m = new MatterImpl("Parlamentario", 
 				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary", 
@@ -142,12 +162,14 @@ public class TestJenaWesearch {
 	}
 	
 	@Test
-	public void testGetPropertiesWithProperties() throws OntoModelException, WesearchException {
+	public void testGetPropertiesWithProperties() throws OntoModelException, 
+		WesearchException {
 		WesearchFactory factory = new JenaWesearchFactory();
 		String[] fileNames = {"src/test/resources/ontoTest3.owl"};
 		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
 				new FileOntologyLoader(fileNames));
-		JenaModelFileWrapper.getInstance().loadModelFromModel((Model)modelWrapper.getModel());
+		JenaModelFileWrapper.getInstance().loadModelFromModel(
+				(Model)modelWrapper.getModel());
 		Wesearch ws = factory.createWesearch(modelWrapper);
 		Matter m = new MatterImpl("Parlamentario", 
 				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary", 
@@ -166,7 +188,8 @@ public class TestJenaWesearch {
 		Matter matter = new MatterImpl("Parlamentario", 
 				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary", 
 				"Una persona que es parlamentario.");
-		Property p = new JenaPropertyImpl("http://datos.bcn.cl/ontologies/bcn-biographies#hasBorn",
+		Property p = new JenaPropertyImpl(
+				"http://datos.bcn.cl/ontologies/bcn-biographies#hasBorn",
 				"Ha nacido", 
 				"relaciona a una persona con los datos de su nacimiento");
 		ValueSelector selector = ws.getValueSelector(matter, p);
@@ -194,7 +217,8 @@ public class TestJenaWesearch {
 		Matter matter = new MatterImpl("Parlamentario", 
 				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary", 
 				"Una persona que es parlamentario.");
-		Property p = new JenaPropertyImpl("http://datos.bcn.cl/ontologies/bcn-biographies#name",
+		Property p = new JenaPropertyImpl(
+				"http://datos.bcn.cl/ontologies/bcn-biographies#name",
 				"Nombre", 
 				"Indica el nombre de un parlamentario");
 		ValueSelector selector = ws.getValueSelector(matter, p);
@@ -211,7 +235,8 @@ public class TestJenaWesearch {
 		Matter matter = new MatterImpl("Parlamentario", 
 				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary", 
 				"Una persona que es parlamentario.");
-		Property p = new JenaPropertyImpl("http://datos.bcn.cl/ontologies/bcn-biographies#identifier",
+		Property p = new JenaPropertyImpl(
+				"http://datos.bcn.cl/ontologies/bcn-biographies#identifier",
 				"Identificador", 
 				"Indica el identificador de un parlamentario");
 		ValueSelector selector = ws.getValueSelector(matter, p);
@@ -228,7 +253,8 @@ public class TestJenaWesearch {
 		Matter matter = new MatterImpl("Parlamentario", 
 				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary", 
 				"Una persona que es parlamentario.");
-		Property p = new JenaPropertyImpl("http://datos.bcn.cl/ontologies/bcn-biographies#hasDead",
+		Property p = new JenaPropertyImpl(
+				"http://datos.bcn.cl/ontologies/bcn-biographies#hasDead",
 				"Fecha de defunción", 
 				"Indica la fecha de defunción de un parlamentario");
 		ValueSelector selector = ws.getValueSelector(matter, p);
@@ -256,12 +282,14 @@ public class TestJenaWesearch {
 				"<http://www.w3.org/1999/02/22-rdf-syntax-ns#type> " +
 				"?a . " +
 				"?res <http://purl.weso.org/test#Property> ?b . " +
-				"FILTER( regex(?b, \"Chile\", \"i\") ) .FILTER( ?a = <http://purl.weso.org/test#Class>  ) .}";
+				"FILTER( regex(?b, \"Chile\", \"i\") ) .FILTER( " +
+				"?a = <http://purl.weso.org/test#Class>  ) .}";
 		WesearchFactory factory = new JenaWesearchFactory();
 		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
 				new FileOntologyLoader(files));
 		Wesearch ws = factory.createWesearch(modelWrapper);
-		Matter m = new MatterImpl("label test", "http://purl.weso.org/test#Class", 
+		Matter m = new MatterImpl("label test", 
+				"http://purl.weso.org/test#Class", 
 				"This is a test class");
 		Property p = new JenaPropertyImpl("http://purl.weso.org/test#Property", 
 				"Test property", "This is a test property");

@@ -26,23 +26,23 @@ public class FindLocation extends Steps {
 	private Wesearch wesearch;
 	private ValueSelector valueSelector;
 	
-	@Given("an ontology is loaded with Minitros and nacido_en")
-	public void loadMinistrosOntology() throws WesearchException, OntoModelException {
-		String[] ontologies = {"src/test/resources/ontoTest2.owl"};
+	@Given("the ontology $onto")
+	public void loadMinistrosOntology(String onto) throws WesearchException, 
+		OntoModelException {
+		String[] ontologies = {onto};
     	WesearchFactory factory = new JenaWesearchFactory();
-    	OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(ontologies));
+    	OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
+    			new FileOntologyLoader(ontologies));
     	wesearch = factory.createWesearch(modelWrapper);
 	}
 	
-	@When("I ask for value selector of $p, $m and $str")
-	public void askForValueSelector(String p, String m, String str) throws WesearchException {
-		String uri = "http://datos.bcn.cl/ontologies/bcn-biographies#" + p;
-		Property prop = new JenaPropertyImpl(uri, "nacido_en", 
-				"Indica donde ha nacido un ministro");
-		String matterUri = "http://datos.bcn.cl/ontologies/bcn-biographies#" + m;
-		Matter matter = new MatterImpl("Ministro", matterUri, 
-				"Persona que dirige cada uno de los departamentos " +
-				"ministeriales en que se divide la gobernación del Estado");
+	@When("I ask for value selector of $p and $m")
+	public void askForValueSelector(String p, String m, String str) 
+			throws WesearchException {
+		Property prop = new JenaPropertyImpl(p, "", 
+				"");
+		Matter matter = new MatterImpl("", m, 
+				"");
 		valueSelector = wesearch.getValueSelector(matter, prop);
 		assertNotNull(valueSelector);
 	}

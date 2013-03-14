@@ -13,15 +13,14 @@ import org.junit.Test;
 
 public class TestURLOntologyLoader {
 	
-	private String[] uris = {"http://xmlns.com/foaf/spec/index.rdf", "http://purl.org/dc/elements/1.1/", 
+	private String[] uris = {"http://xmlns.com/foaf/spec/index.rdf", 
+			"http://purl.org/dc/elements/1.1/", 
 			"http://www.weso.es/failTest"}; 
 	
 	private List<String> listUris = new LinkedList<String>();
 	
 	@Before
 	public void configure() {
-		System.setProperty("http.proxyHost", "proxy.uniovi.es");
-		System.setProperty("http.proxyPort", "8888");
 		listUris.add("http://xmlns.com/foaf/spec/index.rdf");
 		listUris.add("http://purl.org/dc/elements/1.1/");
 		listUris.add("http://www.weso.es/failTest");

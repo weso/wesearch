@@ -57,7 +57,8 @@ public class TestSPARQLQuery {
 	@Test
 	public void testAddFilters() throws IOException, 
 		NoSuchFieldException, SecurityException, 
-		IllegalArgumentException, IllegalAccessException, QueryBuilderException {
+		IllegalArgumentException, IllegalAccessException, 
+		QueryBuilderException {
 		SPARQLQuery query = new SPARQLQuery();
 		Field field = SPARQLQuery.class.getDeclaredField("filters");
 		field.setAccessible(true);
@@ -69,7 +70,8 @@ public class TestSPARQLQuery {
 	}
 	
 	@Test(expected=QueryBuilderException.class)
-	public void testtAddFiltersVarNameNull() throws IOException, QueryBuilderException {
+	public void testtAddFiltersVarNameNull() throws IOException, 
+		QueryBuilderException {
 		SPARQLQuery query = new SPARQLQuery();
 		query.addFilters(null, new SPARQLFilters(
 				new SPARQLFilter("This is a test filter")));
@@ -83,7 +85,8 @@ public class TestSPARQLQuery {
 	}
 	
 	@Test(expected=QueryBuilderException.class)
-	public void testAddFilterVarNameNull() throws IOException, QueryBuilderException {
+	public void testAddFilterVarNameNull() throws IOException, 
+		QueryBuilderException {
 		SPARQLQuery query = new SPARQLQuery();
 		query.addFilter(null, new SPARQLFilter("This is a test filter"));
 	}
@@ -107,7 +110,8 @@ public class TestSPARQLQuery {
 	@Test
 	public void testAddFilter() throws IOException, 
 		NoSuchFieldException, SecurityException, 
-		IllegalArgumentException, IllegalAccessException, QueryBuilderException {
+		IllegalArgumentException, IllegalAccessException, 
+		QueryBuilderException {
 		SPARQLQuery query = new SPARQLQuery();
 		Field field = SPARQLQuery.class.getDeclaredField("filters");
 		field.setAccessible(true);
@@ -144,7 +148,8 @@ public class TestSPARQLQuery {
 	@Test(expected=WesearchException.class)
 	public void testGetNextVarNameException() 
 			throws NoSuchFieldException, SecurityException, IOException, 
-			IllegalArgumentException, IllegalAccessException, WesearchException {
+			IllegalArgumentException, IllegalAccessException, 
+			WesearchException {
 		SPARQLQuery query = new SPARQLQuery();
 		Field nextVar = SPARQLQuery.class.getDeclaredField("nextVar");
 		nextVar.setAccessible(true);
@@ -159,7 +164,8 @@ public class TestSPARQLQuery {
 	}
 	
 	@Test
-	public void testGetAuxiliarVarName() throws IOException, QueryBuilderException {
+	public void testGetAuxiliarVarName() throws IOException, 
+		QueryBuilderException {
 		SPARQLQuery query = new SPARQLQuery();
 		String expected = "var";
 		query.addFilter("var", null);
@@ -168,7 +174,8 @@ public class TestSPARQLQuery {
 	}
 	
 	@Test
-	public void testIsPropertyForResult() throws IOException, QueryBuilderException {
+	public void testIsPropertyForResult() throws IOException, 
+		QueryBuilderException {
 		SPARQLQuery query = new SPARQLQuery();
 		boolean expected = true;
 		boolean result = query.isPropertyForResult();

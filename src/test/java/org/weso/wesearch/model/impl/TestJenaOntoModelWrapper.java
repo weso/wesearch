@@ -57,9 +57,11 @@ public class TestJenaOntoModelWrapper {
 	
 	@Test
 	public void testCreateJenaModel() throws SecurityException, 
-	NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException {
+	NoSuchMethodException, IllegalArgumentException, IllegalAccessException, 
+		InvocationTargetException {
 		JenaOntoModelWrapper modelWrapper = new JenaOntoModelWrapper(loader);
-		Method method = JenaOntoModelWrapper.class.getDeclaredMethod("createJenaModel");
+		Method method = JenaOntoModelWrapper.class.getDeclaredMethod(
+				"createJenaModel");
 		method.setAccessible(true);
 		Object obj = method.invoke(modelWrapper);
 		assertNotNull(obj);

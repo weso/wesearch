@@ -20,13 +20,21 @@ public class TestSubjectsImpl {
 	@Before
 	public void initialize() {
 		matters = new SubjectsImpl();
-		Matter m = new MatterImpl("Matter test 1", "http://www.weso.es/testOntology#Person", "Descripcion for test");
+		Matter m = new MatterImpl("Matter test 1", 
+				"http://www.weso.es/testOntology#Person", 
+				"Descripcion for test");
 		matters.addMatter(m);
-		m = new MatterImpl("Matter test 2", "http://www.weso.es/testOntology#Thing", "Descripcion for test");
+		m = new MatterImpl("Matter test 2", 
+				"http://www.weso.es/testOntology#Thing", 
+				"Descripcion for test");
 		matters.addMatter(m);
-		m = new MatterImpl("Matter test 3", "http://www.weso.es/testOntology#Matter", "Descripcion for test");
+		m = new MatterImpl("Matter test 3", 
+				"http://www.weso.es/testOntology#Matter", 
+				"Descripcion for test");
 		matters.addMatter(m);
-		m = new MatterImpl("Matter test 4", "http://www.weso.es/testOntology#Place", "Descripcion for test");
+		m = new MatterImpl("Matter test 4", 
+				"http://www.weso.es/testOntology#Place", 
+				"Descripcion for test");
 		matters.addMatter(m);
 	}
 	
@@ -39,7 +47,9 @@ public class TestSubjectsImpl {
 	@Test
 	public void testSize() {
 		assertEquals(4, matters.size());
-		Matter m = new MatterImpl("Label test", "http://www.weso.es/testOntology#Matter", "Descripcion for test");
+		Matter m = new MatterImpl("Label test", 
+				"http://www.weso.es/testOntology#Matter", 
+				"Descripcion for test");
 		matters.addMatter(m);
 		assertEquals(5, matters.size());
 		Iterator<Matter> iterator = matters.iterator();
@@ -50,10 +60,14 @@ public class TestSubjectsImpl {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testAddMatter() {
-		Matter m = new MatterImpl("Label 1", "http://www.weso.es/testOntology#Matter", "Descripcion for test");
+		Matter m = new MatterImpl("Label 1", 
+				"http://www.weso.es/testOntology#Matter", 
+				"Descripcion for test");
 		matters.addMatter(m);
 		assertEquals(5, matters.size());
-		m = new MatterImpl("Label 2", "http://www.weso.es/testOntology#Matter", "Descripcion for test");
+		m = new MatterImpl("Label 2", 
+				"http://www.weso.es/testOntology#Matter", 
+				"Descripcion for test");
 		matters.addMatter(m);
 		assertEquals(6, matters.size());
 		matters.addMatter(null);
@@ -61,7 +75,9 @@ public class TestSubjectsImpl {
 	
 	@Test
 	public void testFindMatterExpected() throws WesearchException {
-		Matter expected = new MatterImpl("Matter test 3", "http://www.weso.es/testOntology#Matter", "Descripcion for test");
+		Matter expected = new MatterImpl("Matter test 3", 
+				"http://www.weso.es/testOntology#Matter", 
+				"Descripcion for test");
 		Matter actual = null;
 		actual = matters.findMatter("Matter test 3");
 		assertTrue(actual.equals(expected));		
@@ -69,7 +85,9 @@ public class TestSubjectsImpl {
 	
 	@Test
 	public void testFindMatterIncorrectUnexpected() throws WesearchException {
-		Matter unexpected = new MatterImpl("Matter test", "http://www.weso.es/testOntology#MatterTest", "Descripcion for test");
+		Matter unexpected = new MatterImpl("Matter test", 
+				"http://www.weso.es/testOntology#MatterTest", 
+				"Descripcion for test");
 		Matter actual = null;
 		actual = matters.findMatter("Matter test 1");
 		assertFalse(actual.equals(unexpected));

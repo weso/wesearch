@@ -10,6 +10,6 @@ I want to incrementally find and select the necessary Matters (Ministros) and
 Scenario:
 A user has selected Matter "Ministro", Property "nacido_en" and "Value selector" Chile
 
-Given a matter Ministro, property nacido_en and value selector textfield with value Chile
+Given a matter http://datos.bcn.cl/ontologies/bcn-biographies#Ministro, property http://datos.bcn.cl/ontologies/bcn-biographies#nacido_en and value selector textfield with value Chile
 When I ask for a query
 Then I get query SELECT DISTINCT ?res WHERE { ?res <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> ?a . ?res <http://datos.bcn.cl/ontologies/bcn-biographies#nacido_en> ?b . FILTER( regex(?b, "Chile", "i") ) .FILTER( ?a = <http://datos.bcn.cl/ontologies/bcn-biographies#Ministro> || ?a = <http://www.w3.org/2002/07/owl#Nothing>  ) .}

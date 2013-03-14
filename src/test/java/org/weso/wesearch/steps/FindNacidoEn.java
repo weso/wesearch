@@ -32,9 +32,10 @@ public class FindNacidoEn extends Steps {
 	private Wesearch wesearch;
 	private Properties properties;
 	
-	@Given("an ontology is loaded with Ministros, nacido_en and representa_a")
-	public void loadMinistrosOntology() throws WesearchException, OntoModelException{
-		String[] ontologies = {"src/test/resources/ontoTest2.owl"};
+	@Given("the ontology $onto")
+	public void loadMinistrosOntology(String onto) throws WesearchException, 
+		OntoModelException{
+		String[] ontologies = {onto};
 		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
 				new FileOntologyLoader(ontologies));
 		WesearchFactory factory = new JenaWesearchFactory();
@@ -46,12 +47,12 @@ public class FindNacidoEn extends Steps {
 	}
 	
 	@When("I ask for property with $str and Matter $matter")
-	public void AskForProperties(String str, String matter) throws WesearchException {
+	public void AskForProperties(String str, String matter) 
+			throws WesearchException {
 		str = str.replace("\"", "");
-		Matter m = new MatterImpl(matter, 
-				"http://datos.bcn.cl/ontologies/bcn-biographies#Ministro", 
-				"Persona que dirige cada uno de los departamentos " +
-				"ministeriales en que se divide la gobernaci�n del Estado");
+		Matter m = new MatterImpl("", 
+				matter, 
+				"");
 		properties = wesearch.getProperties(m, str);
 		assertNotNull(properties);
 		assertTrue(properties.iterator().hasNext());

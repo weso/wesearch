@@ -10,7 +10,7 @@ package org.weso.wesearch.domain;
 public abstract class Value<T> {
 	
 	/**
-	 * This method returns the valur that represents the object
+	 * This method returns the value that represents the object
 	 * @return The value that contains the object
 	 */
 	public abstract T getValue();

@@ -76,19 +76,22 @@ public class TestSPARQLQueryBuilder {
 	}
 	
 	@Test(expected=QueryBuilderException.class)
-	public void testGetPropertyClausePropertyNull() throws QueryBuilderException {
+	public void testGetPropertyClausePropertyNull() 
+			throws QueryBuilderException {
 		SPARQLQueryBuilder.getPropertyClause("p", null, "t");
 	}
 	
 	@Test(expected=QueryBuilderException.class)
-	public void testGetPropertyClauseObjNameNull() throws QueryBuilderException {
+	public void testGetPropertyClauseObjNameNull() 
+			throws QueryBuilderException {
 		Property p = new JenaPropertyImpl("http://purl.weso.org/test#Property",
 				"Property test", "This is a test property");
 		SPARQLQueryBuilder.getPropertyClause("p", p, null);
 	}
 	
 	@Test(expected=QueryBuilderException.class)
-	public void testGetPropertyClauseAllParamsNull() throws QueryBuilderException {
+	public void testGetPropertyClauseAllParamsNull() 
+			throws QueryBuilderException {
 		SPARQLQueryBuilder.getPropertyClause(null, null, null);
 	}
 	
@@ -166,14 +169,17 @@ public class TestSPARQLQueryBuilder {
 	@Test
 	public void testGetClassFilter() 
 			throws OntoModelException, QueryBuilderException {
-		String expected = "?class = <http://xmlns.com/foaf/0.1/Person> || ?class = <http://www.w3.org/2002/07/owl#Nothing> ";
-		Filters filters = SPARQLQueryBuilder.getClassFilter("class", matter, model);
+		String expected = "?class = <http://xmlns.com/foaf/0.1/Person> || " +
+				"?class = <http://www.w3.org/2002/07/owl#Nothing> ";
+		Filters filters = SPARQLQueryBuilder.getClassFilter("class", matter, 
+				model);
 		String result = filters.toString();
 		assertEquals(expected, result);
 	}
 	
 	@Test(expected=QueryBuilderException.class)
-	public void testGetClassFilterVarNameNull() throws QueryBuilderException, OntoModelException {
+	public void testGetClassFilterVarNameNull() throws QueryBuilderException, 
+		OntoModelException {
 		SPARQLQueryBuilder.getClassFilter(null, matter, model);
 	}
 	

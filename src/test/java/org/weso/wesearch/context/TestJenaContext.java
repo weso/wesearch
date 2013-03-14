@@ -16,10 +16,12 @@ public class TestJenaContext {
 	@Test
 	public void testGetOntologiesModel() throws OntoModelException {
 		String[] files = {"src/test/resources/index.rdf"};
-		OntoModelWrapper wrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
+		OntoModelWrapper wrapper = new JenaOntoModelWrapper(
+				new FileOntologyLoader(files));
 		JenaContext context = new JenaContext(wrapper);
 		try {
-			assertTrue(context.getOntologiesModel().getModel() instanceof OntModel);
+			assertTrue(context.getOntologiesModel().getModel() 
+					instanceof OntModel);
 		} catch (OntoModelException e) {
 			assert(false);
 		}
@@ -28,7 +30,8 @@ public class TestJenaContext {
 	@Test(expected=OntoModelException.class)
 	public void testGetOntologiesModelFail() throws OntoModelException {
 		String[] files = {"src/test/resources/test.txt"};
-		OntoModelWrapper wrapper = new JenaOntoModelWrapper(new FileOntologyLoader(files));
+		OntoModelWrapper wrapper = new JenaOntoModelWrapper(
+				new FileOntologyLoader(files));
 		JenaContext context = new JenaContext(wrapper);
 		context.getOntologiesModel().getModel();
 	}

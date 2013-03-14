@@ -12,7 +12,8 @@ public class TestJenaPropertyImpl {
 	
 	@Before
 	public void setUp() {
-		property = new JenaPropertyImpl("uriTest", "nameTest", "test description");
+		property = new JenaPropertyImpl("uriTest", "nameTest", 
+				"test description");
 	}
 	
 	@Test
@@ -75,14 +76,16 @@ public class TestJenaPropertyImpl {
 	
 	@Test
 	public void testEquals() {
-		JenaPropertyImpl prop = new JenaPropertyImpl("uriTest", "name test", "other test description");
+		JenaPropertyImpl prop = new JenaPropertyImpl("uriTest", "name test", 
+				"other test description");
 		assertTrue(property.equals(prop));
 	}
 	
 	@Test
 	public void testEqualsWithUriNull () {
 		property.setUri(null);
-		JenaPropertyImpl prop = new JenaPropertyImpl("uriTest", "name test", "other test description");
+		JenaPropertyImpl prop = new JenaPropertyImpl("uriTest", "name test", 
+				"other test description");
 		assertFalse(property.equals(prop));
 		property.setUri("uriTest");
 		prop.setUri(null);
@@ -92,13 +95,15 @@ public class TestJenaPropertyImpl {
 	@Test
 	public void testHashCodeWithUriNull() {
 		int expected = 31;
-		JenaPropertyImpl prop = new JenaPropertyImpl(null, "name test", "other test description");
+		JenaPropertyImpl prop = new JenaPropertyImpl(null, "name test", 
+				"other test description");
 		assertEquals(expected, prop.hashCode());
 	}
 	
 	@Test
 	public void testHashCode() {
-		JenaPropertyImpl prop = new JenaPropertyImpl("uriTest", "name test", "other test description");
+		JenaPropertyImpl prop = new JenaPropertyImpl("uriTest", "name test", 
+				"other test description");
 		assertEquals(property.hashCode(), prop.hashCode());
 	}
 	

@@ -9,12 +9,11 @@ I want to incrementally find and select the necessary Matters (Ministros) and
 Scenario: 
 An ontology is loaded with "Ministros" and "Personas"
 
-Given an Ontology is loaded with Ministros
+Given the ontology src/test/resources/ontoTest2.owl
 When I ask for matters with ""
 Then I should get matter Ministro 
 And I should get matter Person
 
-Given an Ontology is loaded with Ministros
 When I ask for matters with Minist
 Then I should get matter Ministro
 And I should not get matter Person

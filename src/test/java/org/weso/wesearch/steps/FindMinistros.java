@@ -28,11 +28,13 @@ public class FindMinistros extends Steps {
 	private Wesearch wesearch;
 	private Matters matters;
 	
-	    @Given("an Ontology is loaded with Ministros")
-	    public void loadMinistrosOntology() throws WesearchException, OntoModelException {
-	    	String[] ontologies = {"src/test/resources/ontoTest2.owl"};
+	    @Given("the ontology $onto")
+	    public void loadMinistrosOntology(String onto) throws WesearchException,
+	    	OntoModelException {
+	    	String[] ontologies = {onto};
 	    	WesearchFactory factory = new JenaWesearchFactory();
-	    	OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(new FileOntologyLoader(ontologies));
+	    	OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
+	    			new FileOntologyLoader(ontologies));
 	    	JenaModelFileWrapper.getInstance().loadModelFromModel(
 	    			(Model)modelWrapper.getModel());
 	    	wesearch = factory.createWesearch(modelWrapper);

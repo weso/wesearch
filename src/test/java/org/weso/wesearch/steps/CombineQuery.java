@@ -39,8 +39,10 @@ public class CombineQuery extends Steps {
 	private Wesearch wesearch;
 	private Query resultQuery;
 	
-	@Given("a matter $m, property $p, value selector $selector, value $value and clauses query $clause1 and $clause2")
-	public void loadQueryAndParameters(String m, String p, String selector, String value, 
+	@Given("a matter $m, property $p, value selector $selector, value $value " +
+			"and clauses query $clause1 and $clause2")
+	public void loadQueryAndParameters(String m, String p, String selector, 
+			String value, 
 			String clause1, String clause2) throws 
 			IOException, WesearchException, OntoModelException, 
 			QueryBuilderException, 
@@ -48,10 +50,9 @@ public class CombineQuery extends Steps {
 			IllegalArgumentException, IllegalAccessException {
 		Field nextVar = SPARQLQuery.class.getDeclaredField("nextVar");
 		nextVar.setAccessible(true);
-		Matter aux = new MatterImpl("Ministro", 
+		Matter aux = new MatterImpl("", 
 				"http://datos.bcn.cl/ontologies/bcn-biographies#Ministro", 
-				"Persona que dirige cada uno de los departamentos ministeriales " +
-				"en que se divide la gobernación del Estado");
+				"");
 		String[] ontologies = {"src/test/resources/ontoTest2.owl"};
 		WesearchFactory factory = new JenaWesearchFactory();
     	OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
@@ -65,7 +66,8 @@ public class CombineQuery extends Steps {
 		query = new SPARQLQuery();
 		query.addClause(clause1);
 		query.addClause(clause2);
-		query.addFilters("a", SPARQLQueryBuilder.getClassFilter("a", aux, modelWrapper));
+		query.addFilters("a", SPARQLQueryBuilder.getClassFilter("a", aux, 
+				modelWrapper));
 		query.addFilter("b", null);
 		nextVar.setInt(query, 1);
 	}

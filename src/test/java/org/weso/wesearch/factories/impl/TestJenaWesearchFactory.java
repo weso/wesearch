@@ -18,7 +18,8 @@ import org.weso.wesearch.model.impl.JenaOntoModelWrapper;
 
 public class TestJenaWesearchFactory {
 	
-	private String[] ontologies = {"src/test/resources/ontoTest1.owl", "src/test/resources/index.rdf"};
+	private String[] ontologies = {"src/test/resources/ontoTest1.owl", 
+			"src/test/resources/index.rdf"};
 	private List<String> listOnto = new LinkedList<String>();
 	private OntoModelWrapper wrapper;
 	
@@ -29,7 +30,8 @@ public class TestJenaWesearchFactory {
 	}
 	
 	@Test
-	public void testCreateWesearchList() throws WesearchException, OntoModelException {
+	public void testCreateWesearchList() throws WesearchException, 
+		OntoModelException {
 		wrapper = new JenaOntoModelWrapper(new FileOntologyLoader(listOnto));
 		JenaWesearchFactory factory = new JenaWesearchFactory();
 		Wesearch wesearch = factory.createWesearch(wrapper); 
@@ -38,7 +40,8 @@ public class TestJenaWesearchFactory {
 	}
 	
 	@Test
-	public void testCreateWesearchArray() throws WesearchException, OntoModelException {
+	public void testCreateWesearchArray() throws WesearchException, 
+		OntoModelException {
 		wrapper = new JenaOntoModelWrapper(new FileOntologyLoader(ontologies));
 		JenaWesearchFactory factory = new JenaWesearchFactory();
 		Wesearch wesearch = factory.createWesearch(wrapper);

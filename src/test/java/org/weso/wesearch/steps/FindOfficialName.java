@@ -29,8 +29,6 @@ public class FindOfficialName extends Steps {
 	@Given("the ontology $ontology")
 	public void loadGeographicalOntology(String urlOntology) 
 			throws WesearchException, OntoModelException {
-		System.setProperty("http.proxyHost", "proxy.uniovi.es");
-		System.setProperty("http.proxyPort", "8888");
 		String[] ontologies = new String[1];
 		ontologies[0] = urlOntology;
 		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
@@ -42,8 +40,9 @@ public class FindOfficialName extends Steps {
 	}
 	
 	@When("I ask for property $stem and Matter $classUri")
-	public void askForProperties(String stem, String classUri) throws WesearchException {
-		Matter m = new MatterImpl("Pais", classUri, "La descripcion de un pais a nivel geografico.");
+	public void askForProperties(String stem, String classUri) 
+			throws WesearchException {
+		Matter m = new MatterImpl("", classUri, "");
 		properties = wesearch.getProperties(m, stem);
 		assertNotNull(properties);
 		assertTrue(properties.iterator().hasNext());

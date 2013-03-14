@@ -11,6 +11,6 @@ Scenario:
 An ontology is loaded with "Ministros" and property ("nacido_en"). The value selector for 
 property "nacido_en" is "textfield"
 
-Given an ontology is loaded with Minitros and nacido_en
-When I ask for value selector of nacido_en, Ministro and ""
+Given the ontology src/test/resources/ontoTest2.owl
+When I ask for value selector of http://datos.bcn.cl/ontologies/bcn-biographies#nacido_en and http://datos.bcn.cl/ontologies/bcn-biographies#Ministro
 Then I should get value selector textfield  

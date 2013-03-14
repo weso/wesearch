@@ -27,7 +27,8 @@ public class TestSPARQLFilters {
 	public void testConstructorOneParameter() 
 			throws NoSuchFieldException, SecurityException, 
 			IllegalArgumentException, IllegalAccessException {
-		SPARQLFilters filters = new SPARQLFilters(new SPARQLFilter("This is a test filter"));
+		SPARQLFilters filters = new SPARQLFilters(new SPARQLFilter(
+				"This is a test filter"));
 		Filter result = (Filter)field.get(filters);
 		assertNotNull(result);
 	}
@@ -60,7 +61,8 @@ public class TestSPARQLFilters {
 	public void testAddFilter() 
 			throws NoSuchFieldException, SecurityException, 
 			IllegalArgumentException, IllegalAccessException {
-		SPARQLFilters filters = new SPARQLFilters(new SPARQLFilter("This is a test filter"));
+		SPARQLFilters filters = new SPARQLFilters(new SPARQLFilter(
+				"This is a test filter"));
 		field = SPARQLFilters.class.getDeclaredField("op");
 		field.setAccessible(true);
 		assertNull(field.get(filters));
