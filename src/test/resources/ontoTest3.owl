@@ -7,8 +7,6 @@
 		<rdf:type>
 			<rdf:Description rdf:about="http://www.w3.org/2000/01/rdf-schema#Class"/>
 		</rdf:type>
-		<rdfs:comment xml:lang="es">Una persona que es parlamentario.</rdfs:comment>
-		<rdfs:label xml:lang="es">Parlamentario</rdfs:label>
 		<rdfs:isDefinedBy>
 			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
 		</rdfs:isDefinedBy>
@@ -61,8 +59,6 @@
 		<rdf:type>
 			<rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
 		</rdf:type>
-		<rdfs:comment xml:lang="es">Indica los datos de una persona cuando ha muerto.</rdfs:comment>
-		<rdfs:label xml:lang="es">Ha muerto</rdfs:label>
 		<rdfs:domain>
 			<rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Person"/>
 		</rdfs:domain>

@@ -186,7 +186,7 @@ public class OntologyHelper {
 	public static String getComment(String resource, OntModel model) {
 		OntClass res = model.getOntClass(resource);
 		if(res == null) {
-			return "Comment not avaible";
+			return "Comment not available";
 		}
 		return getComment(res);
 	}

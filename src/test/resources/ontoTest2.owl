@@ -18,9 +18,7 @@ xmlns:vs="http://www.w3.org/2003/06/sw-vocab-status/ns#">
 	
 	<rdfs:Class rdf:about="http://xmlns.com/foaf/0.1/Person" rdfs:label="Person" rdfs:comment="A person." vs:term_status="stable">
     <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
-<!--    <rdfs:subClassOf><owl:Class rdf:about="http://xmlns.com/wordnet/1.6/Person"/></rdfs:subClassOf> -->
     <rdfs:subClassOf><owl:Class rdf:about="http://xmlns.com/foaf/0.1/Agent"/></rdfs:subClassOf>
-<!--    <rdfs:subClassOf><owl:Class rdf:about="http://xmlns.com/wordnet/1.6/Agent"/></rdfs:subClassOf> -->
     <rdfs:subClassOf><owl:Class rdf:about="http://www.w3.org/2000/10/swap/pim/contact#Person" rdfs:label="Person"/></rdfs:subClassOf>
     <rdfs:subClassOf><owl:Class rdf:about="http://www.w3.org/2003/01/geo/wgs84_pos#SpatialThing" rdfs:label="Spatial Thing"/></rdfs:subClassOf>
     <!-- aside: 

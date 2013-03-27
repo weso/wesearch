@@ -2,7 +2,7 @@ User wants to find "Ministros nacidos en Chile"
 
 Narrative:
 In order to find "Ministros" that were born in "Chile"
-As a User of BCN
+As a User 
 I want to incrementally find and select the necessary Matters (Ministros, Country), 
  property ("bornPlace"), Value_selectors ("textfield", "numeric", "date", 
  "object" and "undefined") and Value ("Chile").

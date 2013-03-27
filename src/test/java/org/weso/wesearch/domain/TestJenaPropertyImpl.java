@@ -12,13 +12,14 @@ public class TestJenaPropertyImpl {
 	
 	@Before
 	public void setUp() {
-		property = new JenaPropertyImpl("uriTest", "nameTest", 
+		property = new JenaPropertyImpl(
+				"http://www.weso.es/ontologyTest/uriTest", "nameTest", 
 				"test description");
 	}
 	
 	@Test
 	public void testGetUri() {
-		String expected = "uriTest";
+		String expected = "http://www.weso.es/ontologyTest/uriTest";
 		assertEquals(expected, property.getUri());
 	}
 	
@@ -36,10 +37,10 @@ public class TestJenaPropertyImpl {
 	
 	@Test
 	public void testSetUri() {
-		String expected = "newUri";
-		property.setUri("newUri");
+		String expected = "http://www.weso.es/ontologyTest/newUri";
+		property.setUri("http://www.weso.es/ontologyTest/newUri");
 		assertEquals(expected, property.getUri());
-		assertTrue(!expected.equals("uriTest"));
+		assertTrue(!expected.equals("http://www.weso.es/ontologyTest/uriTest"));
 	}
 	
 	@Test
@@ -76,7 +77,7 @@ public class TestJenaPropertyImpl {
 	
 	@Test
 	public void testEquals() {
-		JenaPropertyImpl prop = new JenaPropertyImpl("uriTest", "name test", 
+		JenaPropertyImpl prop = new JenaPropertyImpl("http://www.weso.es/ontologyTest/uriTest", "name test", 
 				"other test description");
 		assertTrue(property.equals(prop));
 	}
@@ -84,10 +85,10 @@ public class TestJenaPropertyImpl {
 	@Test
 	public void testEqualsWithUriNull () {
 		property.setUri(null);
-		JenaPropertyImpl prop = new JenaPropertyImpl("uriTest", "name test", 
+		JenaPropertyImpl prop = new JenaPropertyImpl("http://www.weso.es/ontologyTest/uriTest", "name test", 
 				"other test description");
 		assertFalse(property.equals(prop));
-		property.setUri("uriTest");
+		property.setUri("http://www.weso.es/ontologyTest/uriTest");
 		prop.setUri(null);
 		assertFalse(property.equals(prop));
 	}
@@ -102,7 +103,8 @@ public class TestJenaPropertyImpl {
 	
 	@Test
 	public void testHashCode() {
-		JenaPropertyImpl prop = new JenaPropertyImpl("uriTest", "name test", 
+		JenaPropertyImpl prop = new JenaPropertyImpl(
+				"http://www.weso.es/ontologyTest/uriTest", "name test", 
 				"other test description");
 		assertEquals(property.hashCode(), prop.hashCode());
 	}

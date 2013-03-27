@@ -2,10 +2,9 @@ User wants to find "Ministros nacidos en Chile"
 
 Narrative:
 In order to find "Ministros" that were born in "Chile" 
-As a User of BCN
+As a User 
 I want to incrementally find and select the necessary Matters (Ministros) and 
- properties ("nacido_en") and Value_selectors ("textfield", "numeric", "date", 
- "object" and "undefined").
+ properties ("nacido_en") and Value_selectors ("textfield").
  
 Scenario: 
 An ontology is loaded with "Ministros" and property ("nacido_en"). The value selector for 

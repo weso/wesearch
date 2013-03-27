@@ -15,8 +15,8 @@ import org.weso.wesearch.domain.Matters;
 import org.weso.wesearch.factories.WesearchFactory;
 import org.weso.wesearch.factories.impl.JenaWesearchFactory;
 import org.weso.wesearch.model.OntoModelWrapper;
-import org.weso.wesearch.model.impl.FileOntologyLoader;
 import org.weso.wesearch.model.impl.JenaOntoModelWrapper;
+import org.weso.wesearch.model.impl.URLOntologyLoader;
 
 import weso.mediator.core.persistence.jena.JenaModelFileWrapper;
 
@@ -34,7 +34,7 @@ public class FindMinistros extends Steps {
 	    	String[] ontologies = {onto};
 	    	WesearchFactory factory = new JenaWesearchFactory();
 	    	OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
-	    			new FileOntologyLoader(ontologies));
+	    			new URLOntologyLoader(ontologies));
 	    	JenaModelFileWrapper.getInstance().loadModelFromModel(
 	    			(Model)modelWrapper.getModel());
 	    	wesearch = factory.createWesearch(modelWrapper);

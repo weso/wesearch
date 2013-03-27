@@ -2,10 +2,9 @@ User wants to find "Ministros nacidos en Chile"
 
 Narrative:
 In order to find "Ministros" that were born in "Chile" 
-As a User of BCN
+As a User 
 I want to incrementally find and select the necessary Matters (Ministros) and 
- properties ("nacido_en") and Value_selectors ("textfield", "numeric", "date", 
- "object" and "undefined").
+ properties ("nacido_en") and Value_selectors ("textfield").
  
 Scenario: 
 An ontology is loaded with "Ministros" and "Personas" and properties 
@@ -17,7 +16,7 @@ When I ask for property with "" and Matter http://datos.bcn.cl/ontologies/bcn-bi
 Then I should get property nacido_en
 Then I should get property representa_a
 
-Given an ontology is loaded with Ministros, nacido_en and representa_a
+Given the ontology src/test/resources/ontoTest2.owl
 When I ask for property with "nacido" and Matter http://datos.bcn.cl/ontologies/bcn-biographies#Ministro
 Then I should get property nacido_en
 Then I should not get property representa_a

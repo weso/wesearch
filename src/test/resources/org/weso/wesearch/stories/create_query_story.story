@@ -2,13 +2,13 @@ User wants to find "Ministros nacidos en Chile"
 
 Narrative:
 In order to find "Ministros" that were born in "Chile" 
-As a User of BCN
+As a User 
 I want to incrementally find and select the necessary Matters (Ministros) and 
- properties ("nacido_en") and Value_selectors ("textfield", "numeric", "date", 
- "object" and "undefined").
+ properties ("nacido_en") and Value_selectors ("textfield").
  
 Scenario:
-A user has selected Matter "Ministro", Property "nacido_en" and "Value selector" Chile
+A user has selected Matter "Ministro", Property "nacido_en" and 
+"Value selector" "textfield" with value "Chile"
 
 Given a matter http://datos.bcn.cl/ontologies/bcn-biographies#Ministro, property http://datos.bcn.cl/ontologies/bcn-biographies#nacido_en and value selector textfield with value Chile
 When I ask for a query

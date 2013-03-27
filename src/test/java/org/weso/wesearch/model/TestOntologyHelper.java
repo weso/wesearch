@@ -11,6 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -61,6 +62,11 @@ public class TestOntologyHelper {
         		"http://datos.bcn.cl/ontologies/bcn-biographies#Embassy");
 	}
 	
+	public void configure(String uri) throws FileNotFoundException {
+		ont = ModelFactory.createOntologyModel();
+		ont.read(new FileInputStream(new File(uri)), "");
+	}
+	
 	@Test
 	public void testCreateMatterFromResourceIdEquals() {
 		Matter expected = new MatterImpl("Parlamentario", 
@@ -83,6 +89,44 @@ public class TestOntologyHelper {
 	public void testGetLabelFromResourceIdEquals() {
 		String expected = "Parlamentario";
 		String label = OntologyHelper.getLabel(className, ont);
+		assertEquals(expected, label);
+	}
+	
+	@Test
+	public void testGetLabelFromNonexistentClass() {
+		String expected = "Label not available";
+		String label = OntologyHelper.getLabel(
+				"http://xmlns.com/foaf/0.1/Agent", ont);
+		assertEquals(expected, label);
+	}
+	
+	@Test
+	public void testGetLabelFromNonexistentProperty() {
+		String expected = "Label not available";
+		String label = OntologyHelper.getLabel(
+				"http://datos.bcn.cl/ontologies/bcn-biographies#hasDied", ont);
+		assertEquals(expected, label);
+	}
+	
+	@Test
+	public void testGetLabelFromClassWithoutProperty() 
+			throws FileNotFoundException {
+		configure("src/test/resources/ontoTest3.owl");
+		String expected = "bcnbio:Parliamentary";
+		String label = OntologyHelper.getLabel(
+				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary", 
+				ont);
+		assertEquals(expected, label);
+	}
+	
+	@Test
+	public void testGetLabelFromPropertyWithoutProperty() 
+			throws FileNotFoundException {
+		configure("src/test/resources/ontoTest3.owl");
+		String expected = "bcnbio:hasDied";
+		OntProperty prop = ont.getOntProperty(
+				"http://datos.bcn.cl/ontologies/bcn-biographies#hasDied");
+		String label = OntologyHelper.getLabel(prop);
 		assertEquals(expected, label);
 	}
 	
@@ -167,6 +211,44 @@ public class TestOntologyHelper {
 	}
 	
 	@Test
+	public void testGetCommentFromNonexistentClass() {
+		String expected = "Comment not available";
+		String label = OntologyHelper.getComment(
+				"http://xmlns.com/foaf/0.1/Agent", ont);
+		assertEquals(expected, label);
+	}
+	
+	@Test
+	public void testGetCommentFromNonexistentProperty() {
+		String expected = "Comment not available";
+		String label = OntologyHelper.getComment(
+				"http://datos.bcn.cl/ontologies/bcn-biographies#hasDied", ont);
+		assertEquals(expected, label);
+	}
+	
+	@Test
+	public void testGetCommnetFromClassWithoutProperty() 
+			throws FileNotFoundException {
+		configure("src/test/resources/ontoTest3.owl");
+		String expected = "bcnbio:Parliamentary";
+		String comment = OntologyHelper.getComment(
+				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary",
+				ont);
+		assertEquals(expected, comment);
+	}
+	
+	@Test
+	public void testGetCommentFromPropertyWithoutProperty() 
+			throws FileNotFoundException {
+		configure("src/test/resources/ontoTest3.owl");
+		String expected = "bcnbio:hasDied";
+		OntProperty prop = ont.getOntProperty(
+				"http://datos.bcn.cl/ontologies/bcn-biographies#hasDied");
+		String comment = OntologyHelper.getComment(prop);
+		assertEquals(expected, comment);
+	}
+	
+	@Test
 	public void testGetCommentFromResourceIdEquals() {
 		String expected = "Una persona que es parlamentario.";
 		String comment = OntologyHelper.getComment(className, ont);
@@ -217,7 +299,7 @@ public class TestOntologyHelper {
 	
 	@Test
 	public void testGetCommentFromResourceIdAnonymousClass() {
-		String expected = "Comment not avaible";
+		String expected = "Comment not available";
 		String comment = OntologyHelper.getComment(anonymousClassName, ont);
 		assertEquals(expected, comment);
 	}
@@ -383,6 +465,15 @@ public class TestOntologyHelper {
     }
     
     @Test
+    public void testExtractPropertyRangeWithouDefineIt() {
+    	String expected = ValueSelector.UNDEFINED;
+    	OntProperty p = ont.getOntProperty(
+    			"http://datos.bcn.cl/ontologies/bcn-biographies#propertyTest");
+    	String result = OntologyHelper.extractPropertyRange(p);
+    	assertEquals(expected, result);
+    }
+    
+    @Test
     public void testExtractValueSelectorFromListEmpty() 
     		throws NoSuchMethodException, SecurityException, 
     		IllegalAccessException, IllegalArgumentException, 
@@ -444,5 +535,23 @@ public class TestOntologyHelper {
     	Matters result = OntologyHelper.createRangeMatters(it);
     	assertNotNull(result);
     	assertTrue(result.size() > 0);
+    }
+    
+    @Test
+    public void testExtractSubclassesOk() throws FileNotFoundException {
+    	configure("src/test/resources/ontoTest2.owl");
+    	Matter matter = new MatterImpl("", "http://xmlns.com/foaf/0.1/Agent", 
+    			"");
+    	List<String> results = OntologyHelper.extractSubclasses(matter, ont);
+    	assertTrue(results.size() == 1);
+    	assertTrue(results.contains("http://xmlns.com/foaf/0.1/Person"));
+    }
+    
+    @Test
+    public void testExtractSubclassesNonExistingClass() {
+    	Matter matter = new MatterImpl("", "http://xmlns.com/foaf/0.1/Agent", 
+    			"");
+    	List<String> results = OntologyHelper.extractSubclasses(matter, ont);
+    	assertTrue(results.size() == 0);
     }
 }
