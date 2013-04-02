@@ -15,7 +15,7 @@ public interface Property {
 	 * This method returns the value of the property rdfs:label of the property
 	 * @return The value of the property rdfs:label
 	 */
-	String getName();
+	String getLabel();
 	
 	/**
 	 * This method returns the URI of the property

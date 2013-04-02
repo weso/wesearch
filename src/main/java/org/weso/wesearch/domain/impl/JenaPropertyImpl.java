@@ -19,7 +19,7 @@ public class JenaPropertyImpl implements Property{
 	/**
 	 * This variable represents the value of the property rdfs:label
 	 */
-	private String name;
+	private String label;
 	/**
 	 * This variable represents the value of the property rdfs:comment
 	 */
@@ -34,7 +34,7 @@ public class JenaPropertyImpl implements Property{
 	 */
 	public JenaPropertyImpl(String uri, String name, String description) {
 		this.uri = uri;
-		this.name = name;
+		this.label = name;
 		this.description = description;
 	}
 	
@@ -44,7 +44,7 @@ public class JenaPropertyImpl implements Property{
 	 */
 	public JenaPropertyImpl(){
 		this.uri = "";
-		this.name = "";
+		this.label = "";
 		this.description = "";
 	}
 
@@ -62,8 +62,8 @@ public class JenaPropertyImpl implements Property{
 	}
 
 	@Override
-	public String getName() {
-		return name;
+	public String getLabel() {
+		return label;
 	}
 
 	/**
@@ -71,8 +71,8 @@ public class JenaPropertyImpl implements Property{
 	 * representation of the property, not in the ontology
 	 * @param name The new value of rdfs:label
 	 */
-	public void setName(String name) {
-		this.name = name;
+	public void setLabel(String name) {
+		this.label = name;
 	}
 
 	@Override

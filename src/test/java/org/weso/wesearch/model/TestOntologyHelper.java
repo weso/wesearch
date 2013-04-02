@@ -417,7 +417,7 @@ public class TestOntologyHelper {
     			ont.getProperty("http://datos.bcn.cl/ontologies/" +
     					"bcn-biographies#hasBorn"));
     	assertEquals(uriExpected, prop.getUri());
-    	assertEquals(labelExpected, prop.getName());
+    	assertEquals(labelExpected, prop.getLabel());
     	assertEquals(commentExpected, prop.getDescription());
     }
     

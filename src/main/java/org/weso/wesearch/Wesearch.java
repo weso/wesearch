@@ -29,7 +29,8 @@ public interface Wesearch {
 	 * Returns a collection of properties for a given subject and string
 	 * @param s Given subject to obtains it's properties
 	 * @param stem Given string to search properties
-	 * @return A collection of properties according with the matter an
+	 * @return A collection of properties according with the matter received as
+	 * a parameter
 	 * @throws WesearchException This exception is thrown if there are 
 	 * some problem during the task
 	 */

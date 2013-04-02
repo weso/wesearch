@@ -62,7 +62,7 @@ public class FindNacidoEn extends Steps {
 	public void getProperty(String propertyName) throws WesearchException {
 		Property p = properties.getPropertyByName(propertyName);
 		assertNotNull(p);
-		assertEquals(propertyName, p.getName());
+		assertEquals(propertyName, p.getLabel());
 	}
 	
 	@Then("I should not get property $propertyName")

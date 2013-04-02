@@ -26,7 +26,7 @@ public class TestJenaPropertyImpl {
 	@Test
 	public void testGetName() {
 		String expected = "nameTest";
-		assertEquals(expected, property.getName());
+		assertEquals(expected, property.getLabel());
 	}
 	
 	@Test
@@ -54,8 +54,8 @@ public class TestJenaPropertyImpl {
 	@Test
 	public void testSetName() {
 		String expected = "new name";
-		property.setName("new name");
-		assertEquals(expected, property.getName());
+		property.setLabel("new name");
+		assertEquals(expected, property.getLabel());
 		assertTrue(!expected.equals("nameTest"));
 	}
 	
@@ -113,7 +113,7 @@ public class TestJenaPropertyImpl {
 	public void testContructorWithoutParameters() {
 		JenaPropertyImpl prop = new JenaPropertyImpl();
 		assertEquals("", prop.getDescription());
-		assertEquals("", prop.getName());
+		assertEquals("", prop.getLabel());
 		assertEquals("", prop.getUri());
 	}
 

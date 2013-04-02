@@ -38,8 +38,8 @@ public class PropertiesImpl implements Properties {
 		while(it.hasNext()) {
 			Property prop = it.next();
 			
-			if(prop.getName().equalsIgnoreCase(propertyName) 
-					|| prop.getName().contains(propertyName)) {
+			if(prop.getLabel().equalsIgnoreCase(propertyName) 
+					|| prop.getLabel().contains(propertyName)) {
 				return prop;
 			}
 		}
