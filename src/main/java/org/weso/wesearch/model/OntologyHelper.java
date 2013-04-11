@@ -357,9 +357,11 @@ public class OntologyHelper {
 		Matters matters = new SubjectsImpl();
 		while(listRange.hasNext()) {
 			OntResource res = listRange.next();
-			Matter m = new MatterImpl(getLabel(res), res.getURI(), 
-					getComment(res));
-			matters.addMatter(m);
+			if(res.getURI() != null) {
+				Matter m = new MatterImpl(getLabel(res), res.getURI(), 
+						getComment(res));
+				matters.addMatter(m);
+			}			
 		}
 		return matters;
 	}
