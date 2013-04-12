@@ -156,10 +156,12 @@ public class SPARQLQueryBuilder {
 			List<String> classes, SPARQLFilters aux) {
 		for(int i = 0; i < classes.size(); i++) {
 			String clazz = classes.get(i);
-			aux.setOp(Operator.OR);
-			String auxClause = "?" + varName + " = <" + clazz + "> ";
-			aux.setFilters(new SPARQLFilters(new SPARQLFilter(auxClause)));
-			aux = (SPARQLFilters)aux.getFilters();			
+			if(clazz != null) {
+				aux.setOp(Operator.OR);
+				String auxClause = "?" + varName + " = <" + clazz + "> ";
+				aux.setFilters(new SPARQLFilters(new SPARQLFilter(auxClause)));
+				aux = (SPARQLFilters)aux.getFilters();
+			}
 		}
 	}
 	
