@@ -74,6 +74,8 @@ public class JenaContext implements Context {
 	 * @param model The model that the method has to send to wesomed
 	 */
 	private void passModelToWesomed(OntModel model) {
+		if(model == null) 
+			throw new IllegalArgumentException("Model cannot be null");
 		JenaModelFileWrapper.getInstance().loadModelFromModel(model);
 		logger.info("Pass an instance of the model");
 	}

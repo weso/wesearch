@@ -16,7 +16,8 @@ import org.apache.log4j.Logger;
  */
 public class URLOntologyLoader extends FileOntologyLoader {
 	
-	private static final Logger logger = Logger.getLogger(URLOntologyLoader.class);
+	private static final Logger logger = Logger.getLogger(
+			URLOntologyLoader.class);
 
 	/**
 	 * The constructor that receives an array that contains all full names of
@@ -39,7 +40,8 @@ public class URLOntologyLoader extends FileOntologyLoader {
 	}
 	
 	@Override
-	protected InputStream openInputStream(String filename) throws FileNotFoundException {
+	protected InputStream openInputStream(String filename) 
+			throws FileNotFoundException {
 		logger.debug("Opening resource input stream for filename: " + filename);
         InputStream in = null;
         try {
@@ -50,7 +52,8 @@ public class URLOntologyLoader extends FileOntologyLoader {
 			throw e;
 		} catch (IOException e) {
 			logger.error("Ontology file can not be readed " + filename);
-			throw new FileNotFoundException("Ontology can not be readed " + filename);
+			throw new FileNotFoundException("Ontology can not be readed " 
+					+ filename);
 		}
         if (in == null) {
             logger.error("Ontology file not found: " + filename);

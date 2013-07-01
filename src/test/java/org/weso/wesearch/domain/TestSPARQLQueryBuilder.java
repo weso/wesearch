@@ -2,7 +2,11 @@ package org.weso.wesearch.domain;
 
 import static org.junit.Assert.assertEquals;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +16,7 @@ import org.weso.wesearch.domain.impl.JenaPropertyImpl;
 import org.weso.wesearch.domain.impl.MatterImpl;
 import org.weso.wesearch.domain.impl.ValueSelectorImpl;
 import org.weso.wesearch.domain.impl.filters.Filters;
+import org.weso.wesearch.domain.impl.filters.SPARQLFilters;
 import org.weso.wesearch.domain.impl.values.DateValue;
 import org.weso.wesearch.domain.impl.values.NumericValue;
 import org.weso.wesearch.domain.impl.values.StringValue;
@@ -193,6 +198,22 @@ public class TestSPARQLQueryBuilder {
 	public void testGetClassFilterModelNull() 
 			throws QueryBuilderException, OntoModelException {
 		SPARQLQueryBuilder.getClassFilter("subject", matter, null);
+	}
+	
+	@Test
+	public void testConcatAllClassFilter() throws NoSuchMethodException, 
+		SecurityException, IllegalAccessException, IllegalArgumentException, 
+		InvocationTargetException {
+		String aux = null;
+		List<String> classes = new LinkedList<String>();
+		classes.add(aux);
+		SPARQLFilters filters = new SPARQLFilters();
+		Method method = SPARQLQueryBuilder.class.getDeclaredMethod(
+				"concatAllClassFilter", String.class, List.class, 
+				SPARQLFilters.class);
+		method.setAccessible(true);
+		method.invoke(SPARQLQueryBuilder.class, "a", classes, filters);
+		assertEquals(filters.getOp(), null);
 	}
 	
 }

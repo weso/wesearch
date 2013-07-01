@@ -88,9 +88,21 @@ public class TestJenaPropertyImpl {
 		JenaPropertyImpl prop = new JenaPropertyImpl("http://www.weso.es/ontologyTest/uriTest", "name test", 
 				"other test description");
 		assertFalse(property.equals(prop));
-		property.setUri("http://www.weso.es/ontologyTest/uriTest");
-		prop.setUri(null);
+	}
+	
+	@Test
+	public void testNotEquals() {
+		JenaPropertyImpl prop = new JenaPropertyImpl("http://www.weso.es/ontologyTest/uri", "name test", 
+				"other test description");
 		assertFalse(property.equals(prop));
+	}
+	
+	@Test(expected=IllegalArgumentException.class)
+	public void testEqualsBothUrisNull() {
+		property.setUri(null);
+		JenaPropertyImpl prop = new JenaPropertyImpl(null, "name test", 
+				"other test description");
+		property.equals(prop);
 	}
 	
 	@Test

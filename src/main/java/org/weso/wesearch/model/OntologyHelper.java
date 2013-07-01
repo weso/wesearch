@@ -275,11 +275,11 @@ public class OntologyHelper {
 		while(it.hasNext()) {
 			OntResource ont = (OntResource)it.next();
 			result = extractValueSelector(ont);
-			if(result != null && !result.equals(ValueSelector.UNDEFINED)) {
+			if(!result.equals(ValueSelector.UNDEFINED)) {
 				return result;
 			}
 		}
-		return (result==null)?ValueSelector.UNDEFINED:result;
+		return ValueSelector.UNDEFINED;
 	}
 
 	/**

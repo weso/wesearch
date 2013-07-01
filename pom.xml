@@ -85,12 +85,12 @@
         <dependency>
         	<groupId>org.jbehave</groupId>
         	<artifactId>jbehave-core</artifactId>
-        	<version>3.7</version>
+        	<version>3.8</version>
         </dependency>
 		<dependency>
 			<groupId>org.jbehave</groupId>
 			<artifactId>jbehave-maven-plugin</artifactId>
-			<version>3.7</version>
+			<version>3.8</version>
 		</dependency>
 		
 		<dependency>
@@ -108,7 +108,7 @@
       <plugin>
         <groupId>org.jbehave</groupId>
         <artifactId>jbehave-maven-plugin</artifactId>
-        <version>3.7</version>
+        <version>3.8</version>
         <executions>
           <execution>
             <id>run-stories-as-embeddables</id>
@@ -117,7 +117,7 @@
               <includes>
                 <include>**/stories/*.java</include>
               </includes>
-              <ignoreFailureInStories>true</ignoreFailureInStories>
+              <ignoreFailureInStories>false</ignoreFailureInStories>
               <ignoreFailureInView>true</ignoreFailureInView>
            </configuration>
            <goals>

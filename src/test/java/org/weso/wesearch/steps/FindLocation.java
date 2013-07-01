@@ -26,29 +26,33 @@ public class FindLocation extends Steps {
 	private Wesearch wesearch;
 	private ValueSelector valueSelector;
 	
-	@Given("the ontology $onto")
+	@Given("The ontology $onto")
 	public void loadMinistrosOntology(String onto) throws WesearchException, 
 		OntoModelException {
 		String[] ontologies = {onto};
-    	WesearchFactory factory = new JenaWesearchFactory();
-    	OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
-    			new FileOntologyLoader(ontologies));
-    	wesearch = factory.createWesearch(modelWrapper);
+		WesearchFactory factory = new JenaWesearchFactory();
+		OntoModelWrapper modelWrapper = new JenaOntoModelWrapper(
+				new FileOntologyLoader(ontologies));
+		wesearch = factory.createWesearch(modelWrapper);
 	}
 	
-	@When("I ask for value selector of $p and $m")
-	public void askForValueSelector(String p, String m, String str) 
+	@When("I ask for value selector of $m and $p")
+	public void askForValueSelector(String p, String m) 
 			throws WesearchException {
+		p = p.replace("\"", "");
+		m = m.replace("\"", "");
 		Property prop = new JenaPropertyImpl(p, "", 
 				"");
 		Matter matter = new MatterImpl("", m, 
 				"");
 		valueSelector = wesearch.getValueSelector(matter, prop);
-		assertNotNull(valueSelector);
+		assertNotNull(valueSelector);		
 	}
 	
 	@Then("I should get value selector $valueSelectorType")
 	public void getValueSelector(String valueSelectorType) {
 		assertEquals(valueSelectorType, valueSelector.getType());
+		
 	}
+
 }

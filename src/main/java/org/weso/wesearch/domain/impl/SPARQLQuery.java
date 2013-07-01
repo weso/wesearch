@@ -156,8 +156,8 @@ public class SPARQLQuery implements Query {
 	 * @param filter The new filter to add
 	 */
 	private void concatFilterVariable(String varName, Filter filter) {
-		Filters fil;
-		if((fil = filters.get(varName)) == null ) {
+		Filters fil = filters.get(varName);
+		if(fil == null ) {
 			SPARQLFilters sparqlFilters = new SPARQLFilters(
 					(SPARQLFilter)filter);
 			filters.put(varName, sparqlFilters);

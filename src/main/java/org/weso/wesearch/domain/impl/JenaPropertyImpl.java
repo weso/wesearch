@@ -118,6 +118,9 @@ public class JenaPropertyImpl implements Property{
 		if (uri == null) {
 			if (other.uri != null)
 				return false;
+			else 
+				throw new IllegalArgumentException("Both uris are null and " +
+						"cannot determinate if they are equals");
 		} else if (!uri.equals(other.uri))
 			return false;
 		return true;
