@@ -40,5 +40,12 @@ public class TestURLOntologyLoader {
 		loader.openInputStream(uris[2]);
 	}
 	
+	@Test(expected=FileNotFoundException.class)
+	public void testOpenInputStreamWihtIncorrectUris() throws FileNotFoundException {
+		String[] uris = {"http://www.checkupdown.com/accounts/grpb/B1394343/"};
+		URLOntologyLoader loader = new URLOntologyLoader(uris);
+		loader.openInputStream(uris[0]);
+	}
+	
 
 }

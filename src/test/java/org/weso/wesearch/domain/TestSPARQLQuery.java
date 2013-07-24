@@ -187,6 +187,29 @@ public class TestSPARQLQuery {
 	}
 	
 	@Test
+	public void testIsPropertyForResultWithTrueResult() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		SPARQLQuery query = new SPARQLQuery();
+		boolean expected = true;
+		Map<String, Filters> filters = new HashMap<String, Filters>();
+		filters.put("test", new SPARQLFilters());
+		Field field = SPARQLQuery.class.getDeclaredField("filters");
+		field.setAccessible(true);
+		field.set(query, filters);
+		assertEquals(expected, query.isPropertyForResult());
+	}
+	
+	@Test(expected=RuntimeException.class)
+	public void testObtainAuxiliarVarName() throws IOException, NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+		SPARQLQuery query = new SPARQLQuery();
+		Map<String, Filters> filters = new HashMap<String, Filters>();
+		filters.put("test", new SPARQLFilters());
+		Field field = SPARQLQuery.class.getDeclaredField("filters");
+		field.setAccessible(true);
+		field.set(query, filters);
+		query.obtainAuxiliarVarName();
+	}
+	
+	@Test
 	public void testGetVariables() throws IOException {
 		assertNotNull(SPARQLQuery.getVariables());
 		assertEquals(26, SPARQLQuery.getVariables().size());

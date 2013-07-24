@@ -167,4 +167,44 @@
 		</rdfs:isDefinedBy>
 	</rdf:Description>
 	
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#lastName">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="es">Indica el nombre de un parlamentario</rdfs:comment>
+		<rdfs:label xml:lang="es">Nombre</rdfs:label>
+		<rdfs:domain>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#ClassTest"/>
+		</rdfs:domain>
+		<rdfs:range>
+			<rdf:Description rdf:about="http://www.w3.org/2001/XMLSchema#"/>
+		</rdfs:range>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
+	
+	<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#givenName">
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+		</rdf:type>
+		<rdf:type>
+			<rdf:Description rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Property"/>
+		</rdf:type>
+		<rdfs:comment xml:lang="es">Indica el nombre de un parlamentario</rdfs:comment>
+		<rdfs:label xml:lang="es">Nombre</rdfs:label>
+		<rdfs:domain>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#ClassTest"/>
+		</rdfs:domain>
+		<rdfs:range>
+			<rdf:Description />
+		</rdfs:range>
+		<rdfs:isDefinedBy>
+			<rdf:Description rdf:about="http://datos.bcn.cl/ontologies/bcn-biographies#"/>
+		</rdfs:isDefinedBy>
+	</rdf:Description>
+	
 </rdf:RDF>	

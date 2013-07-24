@@ -28,6 +28,7 @@ import com.hp.hpl.jena.ontology.OntClass;
 import com.hp.hpl.jena.ontology.OntModel;
 import com.hp.hpl.jena.ontology.OntProperty;
 import com.hp.hpl.jena.ontology.OntResource;
+import com.hp.hpl.jena.rdf.model.Model;
 import com.hp.hpl.jena.rdf.model.ModelFactory;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.util.iterator.ExtendedIterator;
@@ -90,6 +91,18 @@ public class TestOntologyHelper {
 		String expected = "Parlamentario";
 		String label = OntologyHelper.getLabel(className, ont);
 		assertEquals(expected, label);
+	}
+	
+	@Test
+	public void testGetLabelFromResourceWithUri() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		String expected = "rdf:Test";
+		Model model = ModelFactory.createDefaultModel();
+		model.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		Resource res = model.createResource("http://www.w3.org/1999/02/22-rdf-syntax-ns#Test");
+		Method method = OntologyHelper.class.getDeclaredMethod("getLabelFromResource", Resource.class);
+		method.setAccessible(true);
+		String result = (String)method.invoke(OntologyHelper.class, res);
+		assertEquals(expected, result);
 	}
 	
 	@Test
@@ -235,6 +248,18 @@ public class TestOntologyHelper {
 				"http://datos.bcn.cl/ontologies/bcn-biographies#Parliamentary",
 				ont);
 		assertEquals(expected, comment);
+	}
+	
+	@Test
+	public void testGetCommetFromResourceWithUri() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		String expected = "rdf:Test";
+		Model model = ModelFactory.createDefaultModel();
+		model.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+		Resource res = model.createResource("http://www.w3.org/1999/02/22-rdf-syntax-ns#Test");
+		Method method = OntologyHelper.class.getDeclaredMethod("getCommentFromResource", Resource.class);
+		method.setAccessible(true);
+		String result = (String)method.invoke(OntologyHelper.class, res);
+		assertEquals(expected, result);
 	}
 	
 	@Test
@@ -517,6 +542,24 @@ public class TestOntologyHelper {
     	String expected = ValueSelector.UNDEFINED;
     	String result = (String)method.invoke(OntologyHelper.class, ontClass);
     	assertEquals(expected, result);
+    }
+    
+    @Test
+    public void testExtractValueSelectorFromList() throws FileNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		configure("src/test/resources/ontoTest1.owl");
+    	OntProperty prop = ont.getOntProperty("http://datos.bcn.cl/ontologies/bcn-biographies#lastName");
+		Method method = OntologyHelper.class.getDeclaredMethod("extractValueSelectorFromList", ExtendedIterator.class);
+		method.setAccessible(true);
+		String result = (String)method.invoke(OntologyHelper.class, prop.asDatatypeProperty().listRange());
+		assertEquals(ValueSelector.UNDEFINED, result);
+    }
+    
+    @Test
+    public void testCreateRangeMatterWithoutUri() throws FileNotFoundException, OntoModelException {
+    	configure("src/test/resources/ontoTest1.owl");
+    	OntProperty prop = ont.getOntProperty("http://datos.bcn.cl/ontologies/bcn-biographies#givenName");
+    	Matters matters = OntologyHelper.createRangeMatters(prop.listRange());
+    	assertEquals(0, matters.size());
     }
     
     @Test(expected=OntoModelException.class)

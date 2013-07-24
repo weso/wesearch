@@ -77,6 +77,8 @@ public class SPARQLQuery implements Query {
 	private void readVariableFromProperties() throws IOException {
 		InputStream input = Configuration.getLocalStream(
 				Configuration.getProperty("sparql_variables"));
+		if(input == null)
+			throw new IOException("There was a problem reading variables");
 		ResourceBundle var = new PropertyResourceBundle(input);
 		variables = new LinkedList<String>(var.keySet());
 		Collections.sort(variables);

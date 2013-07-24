@@ -36,6 +36,13 @@ public class TestFileOntologyLoader {
 		assertTrue(streams.length == 2);
 	}
 	
+	@Test(expected=OntoModelException.class)
+	public void testGetOntologiesAsSourceData() throws OntoModelException {
+		String [] files = {"text.txt"};
+		FileOntologyLoader loader = new FileOntologyLoader(files);
+		loader.getOntologiesSourceData();
+	}
+	
 	@Test
 	public void testGetOntologiesAsNames() {
 		String []expected = {"src/test/resources/test.txt", 

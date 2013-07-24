@@ -1,1 +1,15 @@
+org.weso.utils
 org.weso.wesearch
+org.weso.wesearch.context
+org.weso.wesearch.context.impl
+org.weso.wesearch.domain
+org.weso.wesearch.domain.filter
+org.weso.wesearch.domain.impl
+org.weso.wesearch.domain.impl.filters
+org.weso.wesearch.domain.impl.values
+org.weso.wesearch.factories
+org.weso.wesearch.factories.impl
+org.weso.wesearch.model
+org.weso.wesearch.model.impl
+org.weso.wesearch.steps
+org.weso.wesearch.stories

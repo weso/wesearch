@@ -55,12 +55,7 @@ public class URLOntologyLoader extends FileOntologyLoader {
 			throw new FileNotFoundException("Ontology can not be readed " 
 					+ filename);
 		}
-        if (in == null) {
-            logger.error("Ontology file not found: " + filename);
-            throw new FileNotFoundException(filename);
-        } else {
-            return in;
-        }
+        return in;
 	}
 
 }

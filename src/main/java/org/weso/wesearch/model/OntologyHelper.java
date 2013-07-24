@@ -251,10 +251,8 @@ public class OntologyHelper {
 			ExtendedIterator ranges = null;
 			if(ontProperty.isDatatypeProperty()) {
 				ranges = ontProperty.asDatatypeProperty().listRange();
-				if(ranges != null) {
-					return extractValueSelectorFromList(ranges);
-				}
-			} else if(ontProperty.isObjectProperty()) {
+				return extractValueSelectorFromList(ranges);
+			} else {
 				return ValueSelector.OBJECT;
 			}
 		}		

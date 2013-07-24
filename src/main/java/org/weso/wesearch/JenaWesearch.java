@@ -249,7 +249,7 @@ public class JenaWesearch implements Wesearch {
 	@Override
 	public Query createQuery(Matter s, Property p, ValueSelector v) 
 			throws WesearchException {
-		validateParams(s, p, v);
+		validateParams(v);
 		try {
 			Query query = new SPARQLQuery();
 			addTypeClauseToQuery("res", query.getNextVarName(), query, s);
